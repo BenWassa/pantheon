@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "index": 1,
+  "slug": "hubris",
+  "theme": "Hubris",
+  "status": "published",
+  "registers": ["elegy"],
+  "regions": ["east-asia", "europe", "north-america", "south-america"],
+  "eras": ["ancient", "early-modern", "modern"],
+  "facets": {
+    "person": {
+      "key": "person",
+      "oneWord": "Emperor",
+      "title": "Qin Shi Huang",
+      "body": "He unified the warring states into the first Chinese empire in 221 BCE, then standardized the script, the coinage, even the axle width of carts, and joined older walls into the ancestor of the Great Wall. He also buried scholars who displeased him and burned their books. Terrified of dying, he sent expeditions to find an elixir of immortality and is thought to have swallowed mercury preparations meant to extend his life. He died on tour in 210 BCE. Within four years the dynasty he built to last ten thousand generations had fallen. His tomb, guarded by an army of terracotta soldiers, lay forgotten until farmers struck it while digging a well in 1974.",
+      "sources": [
+        {
+          "kind": "primary",
+          "title": "Records of the Grand Historian (Shiji)",
+          "author": "Sima Qian",
+          "note": "Han-era account; the mercury elixir is reported, not certain"
+        },
+        {
+          "kind": "secondary",
+          "title": "The First Emperor: China's Terracotta Army",
+          "author": "Jane Portal (ed.)",
+          "publisher": "British Museum Press",
+          "year": 2007
+        }
+      ],
+      "entities": [{ "slug": "qin-shi-huang", "qid": "Q7192", "role": "the first emperor" }]
+    },
+    "picture": {
+      "key": "picture",
+      "oneWord": "Falling",
+      "title": "Landscape with the Fall of Icarus",
+      "body": "Begin with the wide green harbor and the work going on inside it. A ploughman leans into his furrow. A shepherd tilts his face to the sky. An angler bends over the water. Everything is calm, prosperous, ordinary. Now look to the lower right, beside the stern of the ship. Two pale legs are vanishing into the sea, and a faint splash marks where a body went under. That is Icarus, fallen from the sky a moment ago, drowning while no one turns to look. The catastrophe is given a corner. The painting puts the whole weight of its meaning into how little space it spares for ruin.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Landscape with the Fall of Icarus",
+          "publisher": "Royal Museums of Fine Arts of Belgium",
+          "url": "https://www.fine-arts-museum.be/",
+          "note": "now generally regarded as a good early copy after Pieter Bruegel the Elder"
+        }
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Pieter%20Bruegel%20de%20Oude%20-%20De%20val%20van%20Icarus.jpg",
+        "commonsFile": "File:Pieter Bruegel de Oude - De val van Icarus.jpg",
+        "alt": "A wide Renaissance harbor landscape; a ploughman works in the foreground while two small pale legs disappear into the sea at lower right.",
+        "attribution": "After Pieter Bruegel the Elder, Royal Museums of Fine Arts of Belgium, Brussels. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pieter_Bruegel_de_Oude_-_De_val_van_Icarus.jpg"
+      },
+      "entities": [{ "slug": "bruegel-fall-of-icarus", "role": "the painting" }]
+    },
+    "poem": {
+      "key": "poem",
+      "oneWord": "Indifference",
+      "title": "Musée des Beaux Arts",
+      "poet": "W. H. Auden",
+      "body": "Auden wrote this poem after visiting the museum in Brussels where the Bruegel hangs. He turns the painting into an argument: suffering happens while someone else is eating, or opening a window, or just walking dully along. The torturer's horse scratches itself against a tree. In the Bruegel, he notices, everything turns away quite leisurely from the disaster. The ploughman may have heard the splash and the forsaken cry, but for him it was not an important failure, and the expensive ship sails calmly on. The poem says plainly what the picture only shows: the world does not stop for a fall.",
+      "poem": {
+        "status": "in-copyright",
+        "excerpt": "About suffering they were never wrong, / The Old Masters: how well they understood / Its human position;",
+        "pointerUrl": "https://poets.org/poem/musee-des-beaux-arts",
+        "pointerLabel": "Read the full poem at the Academy of American Poets"
+      },
+      "sources": [
+        {
+          "kind": "primary",
+          "title": "Musée des Beaux Arts",
+          "author": "W. H. Auden",
+          "publisher": "first collected in Another Time",
+          "year": 1940,
+          "note": "still in copyright; shown here as a short excerpt with a pointer to a licensed source"
+        },
+        {
+          "kind": "secondary",
+          "title": "Musée des Beaux Arts",
+          "publisher": "Academy of American Poets",
+          "url": "https://poets.org/poem/musee-des-beaux-arts"
+        }
+      ],
+      "entities": [{ "slug": "musee-des-beaux-arts", "role": "the poem" }]
+    },
+    "principle": {
+      "key": "principle",
+      "oneWord": "Nemesis",
+      "title": "Hubris and Nemesis",
+      "body": "In Greek thought hubris was not ordinary pride. It was insolence that humiliated another or reached for the standing of a god, and it was believed to summon nemesis, the force that restores proportion and cuts the overreacher back to size. Read as a model rather than a myth, the pairing names a real pattern. Confidence that stops listening, that mistakes a lucky run for a law of nature, tends to walk straight past the one warning it needs. The fall that follows is less a punishment sent from above than the overdue bill for limits that were there the whole time.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Hybris: A Study in the Values of Honour and Shame in Ancient Greece",
+          "author": "N. R. E. Fisher",
+          "publisher": "Aris and Phillips",
+          "year": 1992
+        }
+      ]
+    },
+    "passage": {
+      "key": "passage",
+      "oneWord": "Brim",
+      "title": "Tao Te Ching, Chapter 9",
+      "attribution": "Laozi, Tao Te Ching, chapter 9 (trans. James Legge, 1891)",
+      "body": "The Tao Te Ching, attributed to Laozi, gives the same warning in the plainest images. Fill a cup past the brim and it spills. Keep grinding a blade to sharpen it and the edge will not last. Hoard riches and titles with pride, the verses say, and you plant the cause of your own ruin. The counsel is not modesty for its own sake but accuracy about limits. The world has a grain, and force pushed against it rebounds. Retire when the work is done, the chapter ends. The empire meant to stand ten thousand years might have learned from nine short lines.",
+      "sources": [
+        {
+          "kind": "primary",
+          "title": "Tao Te Ching, chapter 9",
+          "author": "Laozi",
+          "note": "public-domain translation by James Legge, 1891"
+        }
+      ],
+      "entities": [{ "slug": "tao-te-ching", "role": "source text" }]
+    },
+    "parallel": {
+      "key": "parallel",
+      "oneWord": "Jungle",
+      "title": "Fordlandia",
+      "body": "In 1928 Henry Ford, the most efficient man alive, bought a piece of the Amazon the size of a small country to grow his own rubber. He built an American town to do it, with clapboard houses, a golf course, ice cream, a curfew, and a ban on the alcohol and tobacco his workers wanted. Ford never set foot there. His managers planted rubber trees close together, never having gone to the Amazon to learn that leaf blight would race through a dense stand. The plantation failed. In 1945 the company sold it back to Brazil at a heavy loss, and the forest closed over the ruined water tower.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Fordlandia: The Rise and Fall of Henry Ford's Forgotten Jungle City",
+          "author": "Greg Grandin",
+          "publisher": "Metropolitan Books",
+          "year": 2009
+        }
+      ],
+      "entities": [
+        { "slug": "henry-ford", "qid": "Q8023", "role": "industrialist" },
+        { "slug": "fordlandia", "role": "the failed plantation city" }
+      ]
+    }
+  },
+  "resonanceThreads": [
+    {
+      "facets": ["poem", "picture"],
+      "note": "Auden wrote Musée des Beaux Arts standing before this exact Bruegel; the poem is the painting put into words."
+    },
+    {
+      "facets": ["person", "parallel", "picture"],
+      "note": "Qin's dynasty, Ford's jungle city, and Icarus all vanish while an indifferent world keeps working its furrow."
+    },
+    {
+      "facets": ["passage", "principle", "person"],
+      "note": "The Tao Te Ching's overfilled cup is hubris meeting nemesis, and Qin's empire built for ten thousand generations is the cup that spilled."
+    }
+  ],
+  "notes": "Calibration day. Register is elegy: hubris without redemption, by design. Every other day is judged against this one."
+}
