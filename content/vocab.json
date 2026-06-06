@@ -1,0 +1,28 @@
+{
+  "registers": ["elegy", "redemption", "defiance", "tenderness", "comedy", "awe"],
+  "regions": [
+    { "id": "east-asia", "label": "East Asia" },
+    { "id": "south-asia", "label": "South Asia" },
+    { "id": "southeast-asia", "label": "Southeast Asia" },
+    { "id": "central-asia", "label": "Central Asia" },
+    { "id": "west-asia", "label": "West Asia and the Near East" },
+    { "id": "mediterranean", "label": "Mediterranean and Classical World" },
+    { "id": "europe", "label": "Europe" },
+    { "id": "north-africa", "label": "North Africa" },
+    { "id": "sub-saharan-africa", "label": "Sub-Saharan Africa" },
+    { "id": "north-america", "label": "North America" },
+    { "id": "mesoamerica", "label": "Mesoamerica" },
+    { "id": "south-america", "label": "South America" },
+    { "id": "oceania", "label": "Oceania and the Pacific" },
+    { "id": "arctic", "label": "Arctic and Circumpolar" },
+    { "id": "global", "label": "Global or transregional" }
+  ],
+  "eras": [
+    { "id": "prehistory", "label": "Prehistory", "to": -3000 },
+    { "id": "ancient", "label": "Ancient", "from": -3000, "to": 500 },
+    { "id": "post-classical", "label": "Post-Classical", "from": 500, "to": 1500 },
+    { "id": "early-modern", "label": "Early Modern", "from": 1500, "to": 1800 },
+    { "id": "modern", "label": "Modern", "from": 1800, "to": 1945 },
+    { "id": "contemporary", "label": "Contemporary", "from": 1945 }
+  ]
+}

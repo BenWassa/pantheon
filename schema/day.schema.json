@@ -1,0 +1,189 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pantheon.local/schema/day.schema.json",
+  "title": "Pantheon Day",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "index",
+    "slug",
+    "theme",
+    "status",
+    "registers",
+    "regions",
+    "eras",
+    "facets",
+    "resonanceThreads"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "index": { "type": "integer", "minimum": 1 },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "theme": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["draft", "review", "ready", "published"] },
+    "registers": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "enum": ["elegy", "redemption", "defiance", "tenderness", "comedy", "awe"] }
+    },
+    "regions": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "eras": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "facets": {
+      "type": "object",
+      "required": ["person", "picture", "poem", "principle", "passage", "parallel"],
+      "additionalProperties": false,
+      "properties": {
+        "person": { "$ref": "#/$defs/facetBase" },
+        "principle": { "$ref": "#/$defs/facetBase" },
+        "passage": { "$ref": "#/$defs/passageFacet" },
+        "parallel": { "$ref": "#/$defs/facetBase" },
+        "picture": { "$ref": "#/$defs/pictureFacet" },
+        "poem": { "$ref": "#/$defs/poemFacet" }
+      }
+    },
+    "resonanceThreads": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["facets", "note"],
+        "additionalProperties": false,
+        "properties": {
+          "facets": {
+            "type": "array",
+            "minItems": 2,
+            "items": {
+              "enum": ["person", "picture", "poem", "principle", "passage", "parallel"]
+            }
+          },
+          "note": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "notes": { "type": "string" }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["kind", "title"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "enum": ["primary", "secondary"] },
+        "title": { "type": "string", "minLength": 1 },
+        "author": { "type": "string" },
+        "url": { "type": "string", "format": "uri" },
+        "publisher": { "type": "string" },
+        "year": { "type": "integer" },
+        "accessed": { "type": "string", "format": "date" },
+        "note": { "type": "string" }
+      }
+    },
+    "entityRef": {
+      "type": "object",
+      "required": ["slug"],
+      "additionalProperties": false,
+      "properties": {
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "qid": { "type": "string", "pattern": "^Q[0-9]+$" },
+        "role": { "type": "string" }
+      }
+    },
+    "facetBase": {
+      "type": "object",
+      "required": ["key", "oneWord", "title", "body", "sources"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "enum": ["person", "picture", "poem", "principle", "passage", "parallel"] },
+        "oneWord": { "type": "string", "pattern": "^\\S+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "body": { "type": "string", "minLength": 1 },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
+        "entities": { "type": "array", "items": { "$ref": "#/$defs/entityRef" } }
+      }
+    },
+    "passageFacet": {
+      "type": "object",
+      "required": ["key", "oneWord", "title", "body", "sources"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "const": "passage" },
+        "oneWord": { "type": "string", "pattern": "^\\S+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "body": { "type": "string", "minLength": 1 },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
+        "entities": { "type": "array", "items": { "$ref": "#/$defs/entityRef" } },
+        "attribution": { "type": "string" }
+      }
+    },
+    "pictureFacet": {
+      "type": "object",
+      "required": ["key", "oneWord", "title", "body", "sources", "image"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "const": "picture" },
+        "oneWord": { "type": "string", "pattern": "^\\S+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "body": { "type": "string", "minLength": 1 },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
+        "entities": { "type": "array", "items": { "$ref": "#/$defs/entityRef" } },
+        "image": {
+          "type": "object",
+          "required": ["src", "alt", "attribution", "license", "sourceUrl"],
+          "additionalProperties": false,
+          "properties": {
+            "src": { "type": "string", "minLength": 1 },
+            "commonsFile": { "type": "string" },
+            "width": { "type": "integer" },
+            "height": { "type": "integer" },
+            "alt": { "type": "string", "minLength": 1 },
+            "attribution": { "type": "string", "minLength": 1 },
+            "license": {
+              "enum": ["PD", "CC0", "CC-BY", "CC-BY-SA", "CC-BY-4.0", "CC-BY-SA-4.0"]
+            },
+            "licenseUrl": { "type": "string", "format": "uri" },
+            "sourceUrl": { "type": "string", "format": "uri" }
+          }
+        }
+      }
+    },
+    "poemFacet": {
+      "type": "object",
+      "required": ["key", "oneWord", "title", "body", "sources", "poem"],
+      "additionalProperties": false,
+      "properties": {
+        "key": { "const": "poem" },
+        "oneWord": { "type": "string", "pattern": "^\\S+$" },
+        "title": { "type": "string", "minLength": 1 },
+        "body": { "type": "string", "minLength": 1 },
+        "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
+        "entities": { "type": "array", "items": { "$ref": "#/$defs/entityRef" } },
+        "poet": { "type": "string" },
+        "poem": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["status", "full"],
+              "additionalProperties": false,
+              "properties": {
+                "status": { "const": "public-domain" },
+                "full": { "type": "string", "minLength": 1 }
+              }
+            },
+            {
+              "type": "object",
+              "required": ["status", "pointerUrl", "pointerLabel"],
+              "additionalProperties": false,
+              "properties": {
+                "status": { "const": "in-copyright" },
+                "excerpt": { "type": "string" },
+                "pointerUrl": { "type": "string", "format": "uri" },
+                "pointerLabel": { "type": "string", "minLength": 1 }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

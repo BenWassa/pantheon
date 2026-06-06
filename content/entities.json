@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "entities": [
+    {
+      "slug": "qin-shi-huang",
+      "qid": "Q7192",
+      "type": "person",
+      "label": "Qin Shi Huang",
+      "status": "used",
+      "usedInDays": [1],
+      "registers": ["elegy"],
+      "regions": ["east-asia"],
+      "eras": ["ancient"],
+      "aliases": ["Ying Zheng", "First Emperor of China"]
+    },
+    {
+      "slug": "bruegel-fall-of-icarus",
+      "type": "artwork",
+      "label": "Landscape with the Fall of Icarus",
+      "status": "used",
+      "usedInDays": [1],
+      "regions": ["europe"],
+      "eras": ["early-modern"],
+      "notes": "Now generally regarded as a good early copy after Pieter Bruegel the Elder. QID intentionally omitted pending confident identification."
+    },
+    {
+      "slug": "musee-des-beaux-arts",
+      "type": "poem",
+      "label": "Musée des Beaux Arts (W. H. Auden)",
+      "status": "used",
+      "usedInDays": [1],
+      "regions": ["europe"],
+      "eras": ["modern"],
+      "notes": "In copyright; shown as a short excerpt with a pointer to a licensed source."
+    },
+    {
+      "slug": "tao-te-ching",
+      "type": "text",
+      "label": "Tao Te Ching",
+      "status": "used",
+      "usedInDays": [1],
+      "regions": ["east-asia"],
+      "eras": ["ancient"],
+      "aliases": ["Daodejing"]
+    },
+    {
+      "slug": "henry-ford",
+      "qid": "Q8023",
+      "type": "person",
+      "label": "Henry Ford",
+      "status": "used",
+      "usedInDays": [1],
+      "regions": ["north-america"],
+      "eras": ["modern"]
+    },
+    {
+      "slug": "fordlandia",
+      "type": "place",
+      "label": "Fordlândia",
+      "status": "used",
+      "usedInDays": [1],
+      "regions": ["south-america"],
+      "eras": ["modern"],
+      "notes": "Henry Ford's failed rubber-plantation town in the Brazilian Amazon. QID omitted pending confident identification."
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pantheon.local/schema/entities.schema.json",
+  "title": "Pantheon Entity Ledger",
+  "type": "object",
+  "required": ["schemaVersion", "entities"],
+  "additionalProperties": false,
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["slug", "type", "label", "status", "usedInDays"],
+        "additionalProperties": false,
+        "properties": {
+          "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "qid": { "type": "string", "pattern": "^Q[0-9]+$" },
+          "type": {
+            "enum": ["person", "artwork", "poem", "text", "place", "concept", "event"]
+          },
+          "label": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["candidate", "researched", "used", "rejected"] },
+          "usedInDays": { "type": "array", "items": { "type": "integer", "minimum": 1 } },
+          "registers": {
+            "type": "array",
+            "items": { "enum": ["elegy", "redemption", "defiance", "tenderness", "comedy", "awe"] }
+          },
+          "regions": { "type": "array", "items": { "type": "string" } },
+          "eras": { "type": "array", "items": { "type": "string" } },
+          "aliases": { "type": "array", "items": { "type": "string" } },
+          "notes": { "type": "string" }
+        }
+      }
+    }
+  }
+}
