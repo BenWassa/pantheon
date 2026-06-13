@@ -1,93 +1,65 @@
 #!/usr/bin/env tsx
 // Map: query the library's coverage. Read-only. Coverage is queried, not remembered,
-// so this reads the actual day files every run. Pass --json for a machine-readable dump.
-import { FACET_ORDER, REGISTERS } from '@/content/types';
-import type { Region } from '@/content/types';
+// so this reads the actual day files every run. The analysis lives in lib/coverage.ts
+// (pure and unit-tested); this file only loads content and prints. Pass --json for a
+// machine-readable dump.
+import { REGISTERS } from '@/content/types';
 import { loadDays, loadEntities, loadVocab } from './lib/content.ts';
+import { computeCoverage } from './lib/coverage.ts';
 
 const asJson = process.argv.includes('--json');
-
-const GREATEST_HITS = ['icarus', 'napoleon', 'ozymandias', 'theranos'];
-// Regions that are over-reached for by a tired search; the charter says pull away.
-const OVER_REACHED: Region[] = ['mediterranean', 'europe'];
 
 const days = loadDays();
 const vocab = loadVocab();
 const ledger = loadEntities();
 
-function tally<T extends string>(keys: readonly T[]): Record<T, number> {
-  return Object.fromEntries(keys.map((k) => [k, 0])) as Record<T, number>;
-}
-
-const registerCounts = tally(REGISTERS);
-const regionCounts: Record<string, number> = Object.fromEntries(
-  vocab.regions.map((r) => [r.id, 0]),
-);
-const eraCounts: Record<string, number> = Object.fromEntries(vocab.eras.map((e) => [e.id, 0]));
-
-const concentrationFlags: string[] = [];
-const greatestHitsFound: string[] = [];
-
-for (const { day } of days) {
-  for (const r of day.registers) registerCounts[r] += 1;
-  for (const region of day.regions) regionCounts[region] = (regionCounts[region] ?? 0) + 1;
-  for (const era of day.eras) eraCounts[era] = (eraCounts[era] ?? 0) + 1;
-
-  // Single-day region concentration: charter flags e.g. four Mediterranean facets.
-  for (const region of OVER_REACHED) {
-    if (day.regions.filter((x) => x === region).length >= 1 && day.regions.length === 1) {
-      concentrationFlags.push(`Day ${day.index} (${day.theme}) is wholly ${region}.`);
-    }
-  }
-}
-
-for (const e of ledger.entities) {
-  if (GREATEST_HITS.includes(e.slug) && e.status === 'used') {
-    greatestHitsFound.push(e.slug);
-  }
-}
-
-// Entity reuse across days.
-const reuse = ledger.entities
-  .filter((e) => e.usedInDays.length > 1)
-  .map((e) => `${e.slug} (${e.usedInDays.length} days)`);
-
-const gaps = {
-  registers: REGISTERS.filter((r) => registerCounts[r] === 0),
-  regions: vocab.regions.filter((r) => regionCounts[r.id] === 0).map((r) => r.id),
-  eras: vocab.eras.filter((e) => eraCounts[e.id] === 0).map((e) => e.id),
-};
-
-const coverage = {
-  daysCounted: days.length,
-  facetOrder: FACET_ORDER,
-  registerCounts,
-  regionCounts,
-  eraCounts,
-  gaps,
-  concentrationFlags,
-  greatestHitsFound,
-  entityReuse: reuse,
-};
+const report = computeCoverage(days, vocab, ledger);
 
 if (asJson) {
-  console.log(JSON.stringify(coverage, null, 2));
+  console.log(JSON.stringify(report, null, 2));
 } else {
-  console.log(`Pantheon coverage map  (${days.length} day(s))\n`);
+  console.log(
+    `Pantheon coverage map  (${report.daysCounted} day(s), ${report.publishedCount} published)\n`,
+  );
+
   console.log('Registers:');
-  for (const r of REGISTERS) console.log(`  ${r.padEnd(12)} ${registerCounts[r]}`);
+  for (const r of REGISTERS) console.log(`  ${r.padEnd(12)} ${report.registerCounts[r]}`);
+
   console.log('\nGaps to drive what gets researched next:');
-  console.log(`  registers: ${gaps.registers.join(', ') || '(none)'}`);
-  console.log(`  regions:   ${gaps.regions.join(', ') || '(none)'}`);
-  console.log(`  eras:      ${gaps.eras.join(', ') || '(none)'}`);
-  if (concentrationFlags.length) {
+  console.log(`  registers: ${report.gaps.registers.join(', ') || '(none)'}`);
+  console.log(`  regions:   ${report.gaps.regions.join(', ') || '(none)'}`);
+  console.log(`  eras:      ${report.gaps.eras.join(', ') || '(none)'}`);
+
+  if (report.prioritizedGaps.length) {
+    console.log('\nResearch next (highest-leverage gaps first):');
+    report.prioritizedGaps
+      .slice(0, 5)
+      .forEach((g, i) => console.log(`  ${i + 1}. ${g.kind}: ${g.id}  (${g.reason})`));
+  }
+
+  console.log(
+    `\nWestern region share: ${(report.westernShare * 100).toFixed(0)}%` +
+      (report.westernFlag ? '  [FLAG: leaning Western, pull toward the rest of the world]' : ''),
+  );
+
+  if (report.singleDayConcentration.length) {
     console.log('\nConcentration flags:');
-    concentrationFlags.forEach((f) => console.log(`  ${f}`));
+    report.singleDayConcentration.forEach((f) => console.log(`  ${f}`));
   }
-  if (greatestHitsFound.length) {
-    console.log(`\nGreatest hits in use: ${greatestHitsFound.join(', ')}`);
+  if (report.greatestHitsInUse.length) {
+    console.log(`\nGreatest hits in use (taste rule): ${report.greatestHitsInUse.join(', ')}`);
   }
-  if (reuse.length) {
-    console.log(`\nEntity reuse: ${reuse.join(', ')}`);
+  if (report.entityReuse.length) {
+    const tail = report.overReusedEntities.length
+      ? `  [over-reused: ${report.overReusedEntities.join(', ')}]`
+      : '';
+    console.log(
+      `\nEntity reuse: ${report.entityReuse.map((e) => `${e.slug} (${e.days} days)`).join(', ')}${tail}`,
+    );
   }
+
+  const s = report.ledgerStatusCounts;
+  console.log(
+    `\nLedger: ${s.candidate} candidate, ${s.researched} researched, ${s.used} used, ${s.rejected} rejected.`,
+  );
 }

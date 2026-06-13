@@ -49,4 +49,26 @@ describe('content gate', () => {
     const result = validateDayObject(broken);
     expect(result.errors.some((e) => e.message.includes('words'))).toBe(true);
   });
+
+  it('rejects a day whose grid words are not all distinct', () => {
+    const broken = loadHubris();
+    broken.facets.picture.oneWord = broken.facets.person.oneWord;
+    const result = validateDayObject(broken);
+    expect(result.errors.some((e) => e.message.includes('duplicates'))).toBe(true);
+  });
+
+  it('rejects a published day that still carries placeholder text', () => {
+    const broken = loadHubris();
+    broken.facets.person.body = `Placeholder content, pending research. ${broken.facets.person.body}`;
+    const result = validateDayObject(broken);
+    expect(result.errors.some((e) => e.message.includes('placeholder'))).toBe(true);
+  });
+
+  it('allows placeholder text on a non-published (draft) day', () => {
+    const draft = loadHubris();
+    draft.status = 'draft';
+    draft.facets.person.body = `Placeholder content, pending research. ${draft.facets.person.body}`;
+    const result = validateDayObject(draft);
+    expect(result.errors.some((e) => e.message.includes('placeholder'))).toBe(false);
+  });
 });

@@ -8,6 +8,8 @@ import { FACET_ORDER, QID_EXPECTED_TYPES, REGISTERS } from '@/content/types';
 import type { Day, DayFacets, Entity, FacetKey } from '@/content/types';
 import { countWords, FACET_BODY_MIN_WORDS, FACET_BODY_MAX_WORDS } from '@/lib/wordCount';
 import { loadDays, loadEntities, loadVocab, parseDayFileName } from './content.ts';
+import { deriveUsage } from './ledger.ts';
+import { ENTITY_REUSE_LIMIT, GREATEST_HITS } from './coverage.ts';
 import {
   formatAjvErrors,
   validateDaySchema,
@@ -29,6 +31,16 @@ export interface ValidationResult {
 
 const EM_DASH = '—';
 const EN_DASH = '–';
+
+// Sentinels left by the scaffolder (deep.ts) or by structural placeholder days. A day
+// carrying any of these has not been authored to charter standard and must never reach
+// the app as `published`.
+const PLACEHOLDER_PATTERNS: RegExp[] = [
+  /placeholder/i,
+  /\bTODO\b/,
+  /pending research/i,
+  /not for publication/i,
+];
 
 // All reader-facing text fields on a facet, used for the typographic checks.
 function facetTextFields(key: FacetKey, facet: DayFacets[FacetKey]): string[] {
@@ -181,6 +193,42 @@ function checkDay(
     }
   }
 
+  // The six grid words must be distinct: the dark grid shows one word per facet, and a
+  // repeat reads as a bug to the reader and weakens the day's resonance.
+  const seenWords = new Map<string, FacetKey>();
+  for (const key of FACET_ORDER) {
+    const word = day.facets[key].oneWord.toLocaleLowerCase();
+    const prior = seenWords.get(word);
+    if (prior) {
+      push({
+        level: 'error',
+        where: `${at} facets.${key}`,
+        message: `oneWord "${day.facets[key].oneWord}" duplicates facets.${prior}`,
+      });
+    } else {
+      seenWords.set(word, key);
+    }
+  }
+
+  // A published day must carry no scaffolding or placeholder sentinels. This is the
+  // trust gate's line against placeholder content masquerading as finished work.
+  if (day.status === 'published') {
+    const guarded: string[] = [];
+    for (const key of FACET_ORDER) {
+      const f = day.facets[key];
+      guarded.push(f.oneWord, f.title, f.body);
+      for (const src of f.sources) guarded.push(src.title, src.note ?? '');
+    }
+    const hit = PLACEHOLDER_PATTERNS.find((re) => guarded.some((t) => re.test(t)));
+    if (hit) {
+      push({
+        level: 'error',
+        where: at,
+        message: `published day contains placeholder/scaffold text (matched ${hit}); author it or lower its status`,
+      });
+    }
+  }
+
   // In-copyright poems must never carry full text (schema enforces; double-checked).
   const poem = day.facets.poem.poem;
   if (poem.status === 'in-copyright' && 'full' in poem) {
@@ -274,6 +322,41 @@ export function validateAll(): ValidationResult {
         message: `index sequence has a gap near ${indexes[i]} (expected ${i + 1})`,
       });
       break;
+    }
+  }
+
+  // Ledger drift: the stored usedInDays must match what the day files actually
+  // reference. Hand-maintained, this is the first thing to rot as the library grows,
+  // so the gate surfaces it (a warning; `npm run sync` repairs it).
+  const usage = deriveUsage(days);
+  for (const entity of ledger.entities) {
+    const derived = usage.get(entity.slug) ?? [];
+    const stored = [...entity.usedInDays].sort((a, b) => a - b);
+    if (derived.length !== stored.length || derived.some((v, i) => v !== stored[i])) {
+      warnings.push({
+        level: 'warning',
+        where: 'entities.json',
+        message: `entity "${entity.slug}" usedInDays [${stored.join(', ')}] != actual [${derived.join(', ')}] (run npm run sync)`,
+      });
+    }
+    // Taste rule: an entity leaned on across many days drifts toward a house style.
+    if (derived.length > ENTITY_REUSE_LIMIT) {
+      warnings.push({
+        level: 'warning',
+        where: 'entities.json',
+        message: `entity "${entity.slug}" is used in ${derived.length} days (> ${ENTITY_REUSE_LIMIT}); prefer fresh material`,
+      });
+    }
+  }
+
+  // Taste rule: the greatest hits are allowed only when genuinely best, never as a reflex.
+  for (const e of ledger.entities) {
+    if ((GREATEST_HITS as readonly string[]).includes(e.slug) && e.status === 'used') {
+      warnings.push({
+        level: 'warning',
+        where: 'entities.json',
+        message: `greatest-hits entity "${e.slug}" is in use; confirm it is genuinely the best choice`,
+      });
     }
   }
 
