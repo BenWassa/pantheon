@@ -41,6 +41,7 @@ Open the printed local URL. The app starts on Day 1, "Hubris".
 | `npm test` | Vitest (unit, component, and the content gate) |
 | `npm run validate` | run the content trust gate on its own |
 | `npm run build-manifest` | regenerate `content/manifest.json` and copy content to `public/` |
+| `npm run sync` | reconcile the entity ledger's `usedInDays`/status from the day files (`-- --check` to fail on drift) |
 
 ## Content pipeline
 
@@ -48,12 +49,18 @@ The library is produced separately from the app runtime. The app only reads fini
 
 | command | role |
 | --- | --- |
-| `npm run map` | query the library's coverage (registers, regions, eras) and report gaps |
-| `npm run scout` | propose candidate themes/entities aimed at the biggest gaps |
+| `npm run map` | query coverage (registers, regions, eras), prioritized gaps, Western-lean and reuse flags, ledger health |
+| `npm run scout` | propose candidates aimed at the biggest gaps; `-- --write --slug <s> --label <l> --type <t>` records one in the ledger |
 | `npm run deep -- --day N --slug <slug> --theme <Theme>` | scaffold a new day to charter standard |
 | `npm run validate` | the trust gate: schema plus the charter's enforceable rules |
+| `npm run sync` | reconcile the ledger to what the days actually reference |
 
 Coverage is queried, not remembered: the scripts read the actual content every run.
+
+The pipeline is a loop: **map** finds the biggest gap, **scout --write** records a candidate
+against it, **deep** scaffolds the day, the author researches and fills it, **validate** holds it
+to the charter, and **sync** keeps the ledger honest. The ledger's `usedInDays` and used-status are
+derived from the day files, never hand-kept, so the loop stays trustworthy as the library scales.
 
 ## Repository layout
 
@@ -72,5 +79,9 @@ src/
 
 Every claim rests on a source. Images are public domain or Creative Commons with
 attribution. Poems still in copyright are excerpted and pointed to, never reproduced in
-full. A day cannot ship without naming the threads that connect its facets. These rules
-are enforced by `npm run validate`, which also runs as part of `npm test` and CI.
+full. A day cannot ship without naming the threads that connect its facets. A
+`published` day may carry no placeholder or scaffold text, and its six grid words must be
+distinct. The gate also surfaces taste-rule and balance signals as warnings: greatest-hits
+entities in use, an entity leaned on across too many days, and a ledger that has drifted out
+of sync. These rules are enforced by `npm run validate`, which also runs as part of `npm test`
+and CI.

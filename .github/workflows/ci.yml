@@ -19,5 +19,7 @@ jobs:
       - run: npm run lint
       # The content trust gate. Fails the build on any charter or schema violation.
       - run: npm run validate
+      # The entity ledger must match what the day files actually reference.
+      - run: npm run sync -- --check
       - run: npm test
       - run: npm run build

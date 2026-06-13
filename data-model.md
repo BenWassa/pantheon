@@ -100,10 +100,25 @@ the same trust failure as a fabricated source.
 
 `scripts/validate.ts` (and the Vitest content gate) enforce, beyond the JSON Schema:
 at least one source per facet; no em dash (en dash warns); 80–130 word bodies;
-single-token `oneWord`; at least one resonance thread connecting ≥2 facets; register
-in the closed set and region/era in the vocab; filename ↔ index ↔ slug consistency;
-entity cross-references resolve with valid QIDs; in-copyright poems carry no full
-text; and unique, gap-free day indices (gaps warn).
+single-token `oneWord`, and the six grid words distinct within a day; at least one
+resonance thread connecting ≥2 facets; register in the closed set and region/era in the
+vocab; filename ↔ index ↔ slug consistency; entity cross-references resolve with valid
+QIDs; in-copyright poems carry no full text; no placeholder or scaffold text in a
+`published` day; and unique, gap-free day indices (gaps warn).
+
+Library-wide signals are reported as warnings (they shape editorial direction rather than
+block a single day): an entity's stored `usedInDays` drifting from what the days actually
+reference (`npm run sync` repairs it), an entity reused across too many days, and a
+greatest-hits entity in use.
+
+## Ledger reconciliation
+
+`usedInDays` and the `used` status are derived truth, not hand-kept bookkeeping.
+`scripts/lib/ledger.ts` recomputes them from the day files: `npm run sync` rewrites the
+ledger (promoting a referenced candidate to `used`, correcting `usedInDays`, and flagging
+orphans whose days no longer reference them), and `npm run sync -- --check` fails on any
+drift for CI. The validator surfaces the same drift as a warning. This is what keeps the
+ledger honest as the library scales past a handful of days.
 
 ## Open / deferred
 
