@@ -2,10 +2,12 @@ import { describe, it, expect } from 'vitest';
 import type { Judgment, JudgmentTarget } from '@/content/judgments';
 import {
   byLevel,
+  coverageForTargets,
   isStale,
   revisionQueue,
   staleJudgments,
   strongestKeeps,
+  unreviewedTargets,
   worstDays,
   worstFacets,
 } from './report.ts';
@@ -102,6 +104,41 @@ describe('byLevel', () => {
     const sentence = rows.find((r) => r.level === 'sentence')!;
     expect(sentence.total).toBe(2);
     expect(sentence.byVerdict).toMatchObject({ cut: 1, flat: 1 });
+  });
+});
+
+describe('coverageForTargets / unreviewedTargets', () => {
+  const targets = [
+    {
+      target: { level: 'day', day: 1, slug: 'hubris', field: 'theme' },
+    },
+    {
+      target: { level: 'facet', day: 1, slug: 'hubris', facet: 'person' },
+    },
+    {
+      target: { level: 'facet', day: 1, slug: 'hubris', facet: 'poem' },
+    },
+  ] satisfies { target: JudgmentTarget }[];
+
+  it('counts current judgments against the supplied targets', () => {
+    const current = [
+      j({ target: { level: 'day', day: 1, slug: 'hubris', facet: undefined, field: 'theme' } }),
+      j({ target: { level: 'facet', day: 1, slug: 'hubris', facet: 'person' } }),
+    ];
+    expect(coverageForTargets('Facet', targets, current)).toEqual({
+      label: 'Facet',
+      total: 3,
+      reviewed: 2,
+      unreviewed: 1,
+      percent: 67,
+    });
+  });
+
+  it('returns the first unreviewed targets in feed order', () => {
+    const current = [
+      j({ target: { level: 'day', day: 1, slug: 'hubris', facet: undefined, field: 'theme' } }),
+    ];
+    expect(unreviewedTargets(targets, current, 1).map((t) => t.target.facet)).toEqual(['person']);
   });
 });
 

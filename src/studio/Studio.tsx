@@ -15,12 +15,14 @@ import { type Lens, LENSES, LENS_HINT, LENS_LABELS, buildFeed } from './feed';
 import { StudioCard } from './StudioCard';
 
 type StatusFilter = 'all' | 'unpublished';
+type ReviewFilter = 'all' | 'needsReview';
 
 export function Studio() {
   const [days, setDays] = useState<Day[]>([]);
   const [judgments, setJudgments] = useState<Judgment[]>([]);
   const [lens, setLens] = useState<Lens>('day');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
+  const [reviewFilter, setReviewFilter] = useState<ReviewFilter>('all');
   const [focusIndex, setFocusIndex] = useState(0);
   const [draftTags, setDraftTags] = useState<JudgmentTag[]>([]);
   const [draftNote, setDraftNote] = useState('');
@@ -46,9 +48,13 @@ export function Studio() {
     [days, statusFilter],
   );
 
-  const feed = useMemo(() => buildFeed(filteredDays, lens), [filteredDays, lens]);
+  const rawFeed = useMemo(() => buildFeed(filteredDays, lens), [filteredDays, lens]);
   const latest = useMemo(() => latestByTarget(judgments), [judgments]);
   const totals = useMemo(() => rollup([...latest.values()]), [latest]);
+  const feed = useMemo(
+    () => (reviewFilter === 'needsReview' ? rawFeed.filter((i) => !latest.has(i.id)) : rawFeed),
+    [rawFeed, latest, reviewFilter],
+  );
 
   // Keep focus inside the feed as the lens or filter changes its length.
   useEffect(() => {
@@ -66,7 +72,13 @@ export function Studio() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusedItem?.id]);
 
-  const reviewedInLens = useMemo(() => feed.filter((i) => latest.has(i.id)).length, [feed, latest]);
+  const reviewedInLens = useMemo(
+    () => rawFeed.filter((i) => latest.has(i.id)).length,
+    [rawFeed, latest],
+  );
+  const unreviewedInLens = rawFeed.length - reviewedInLens;
+  const reviewedPercent =
+    rawFeed.length === 0 ? 0 : Math.round((reviewedInLens / rawFeed.length) * 100);
 
   const applyVerdict = useCallback(
     async (verdict: Verdict) => {
@@ -81,7 +93,7 @@ export function Studio() {
         note: draftNote.trim() || undefined,
       };
       setJudgments((prev) => [...prev, judgment]); // optimistic
-      setFocusIndex((i) => Math.min(i + 1, feed.length - 1)); // keep moving
+      setFocusIndex((i) => (reviewFilter === 'needsReview' ? i : Math.min(i + 1, feed.length - 1))); // keep moving
       try {
         await postJudgment(judgment);
       } catch (e) {
@@ -89,7 +101,7 @@ export function Studio() {
         setError(e instanceof Error ? e.message : String(e));
       }
     },
-    [feed, focusIndex, draftTags, draftNote],
+    [feed, focusIndex, draftTags, draftNote, reviewFilter],
   );
 
   const undo = useCallback(async () => {
@@ -152,7 +164,7 @@ export function Studio() {
             Pantheon <span className="text-ember">Studio</span>
           </h1>
           <p className="text-xs text-ink-faint">
-            {reviewedInLens}/{feed.length} reviewed in this lens
+            {reviewedInLens}/{rawFeed.length} reviewed in this lens
           </p>
         </div>
 
@@ -180,15 +192,41 @@ export function Studio() {
           >
             {statusFilter === 'all' ? 'All statuses' : 'Unpublished only'}
           </button>
+
+          <button
+            type="button"
+            onClick={() => setReviewFilter((s) => (s === 'all' ? 'needsReview' : 'all'))}
+            className={`rounded border px-2.5 py-1 text-xs ${
+              reviewFilter === 'needsReview'
+                ? 'border-ember/60 text-ember'
+                : 'border-night-raised text-ink-muted hover:text-ink'
+            }`}
+          >
+            {reviewFilter === 'all' ? 'All cards' : 'Needs review'}
+          </button>
         </div>
 
-        <div className="mt-2 flex flex-wrap items-center gap-3 text-[0.7rem] text-ink-faint">
+        <div className="mt-2 grid gap-2 text-[0.7rem] text-ink-faint sm:grid-cols-[1fr_auto] sm:items-center">
           <span>{LENS_HINT[lens]}</span>
-          <span className="ml-auto">
+          <span className="sm:text-right">
             {(['keep', 'flat', 'fix', 'cut'] as Verdict[])
               .map((v) => `${VERDICT_LABELS[v]} ${totals.byVerdict[v]}`)
               .join('  ·  ')}
           </span>
+        </div>
+
+        <div className="mt-3 grid gap-2 rounded border border-night-raised bg-night-soft px-3 py-2 text-xs text-ink-muted sm:grid-cols-[1fr_auto] sm:items-center">
+          <div>
+            <span className="text-ink">{reviewedPercent}%</span> current-lens coverage
+            <span className="text-ink-faint"> · {unreviewedInLens} still unjudged</span>
+          </div>
+          <div className="h-1.5 overflow-hidden rounded-full bg-night sm:w-40">
+            <div
+              className="h-full rounded-full bg-ember"
+              style={{ width: `${reviewedPercent}%` }}
+              aria-hidden="true"
+            />
+          </div>
         </div>
       </header>
 
@@ -199,7 +237,11 @@ export function Studio() {
       ) : null}
 
       {feed.length === 0 ? (
-        <Centered>No content matches this filter.</Centered>
+        <Centered>
+          {reviewFilter === 'needsReview'
+            ? 'Everything in this lens has a current judgment.'
+            : 'No content matches this filter.'}
+        </Centered>
       ) : (
         <div className="space-y-3">
           {feed.map((item, i) => (

@@ -62,4 +62,17 @@ describe('Studio', () => {
     // Facet lens surfaces the six facet titles; the first is the Person facet.
     expect(await screen.findByRole('heading', { name: 'Qin Shi Huang' })).toBeInTheDocument();
   });
+
+  it('can focus the feed on cards that still need judgment', async () => {
+    const user = userEvent.setup();
+    render(<Studio />);
+    await screen.findByRole('heading', { name: 'Hubris' });
+
+    await user.click(screen.getByRole('button', { name: /Keep/ }));
+    await user.click(screen.getByRole('button', { name: 'All cards' }));
+
+    expect(
+      await screen.findByText('Everything in this lens has a current judgment.'),
+    ).toBeInTheDocument();
+  });
 });

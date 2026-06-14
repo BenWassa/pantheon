@@ -34,7 +34,8 @@ judgment.
 | **Line** | a reveal word, a title, or a single sentence | clarity, rhythm, copy quality, factual claims |
 
 Switch lenses with the buttons or `g`. Filter to unpublished content to review the
-raw AI abundance before it reaches the reader.
+raw AI abundance before it reaches the reader. Use **Needs review** when you want the
+feed to hide anything that already has a current judgment in the selected lens.
 
 ## Capturing a judgment
 
@@ -67,6 +68,12 @@ re-review it.
 
 `npm run studio:report` reads the ledger and the live content and prints:
 
+- **promotion readiness**: whether the scope still has unjudged day/facet cards,
+  unresolved negative verdicts, source flags, or stale judgments;
+- **review coverage** by lens, so you can see how much day, facet, and line judgment
+  signal exists;
+- the **next judgment gaps**, pointing you to the next unreviewed cards before you
+  revise;
 - a **revision queue** (cut, then fix, then flat; then by day, facet, sentence) with
   location, tags, excerpt, and note;
 - **trust risks**: every current `source` flag, the claims that need verification,
@@ -133,11 +140,12 @@ A concrete script for the first real human pass. Budget about 30–45 minutes.
    trust-risk list, `cliché`/`voice` reveal voice problems, `copy`/`rhythm` flag
    word-level work. A verdict with no tag is a weaker signal.
 9. `npm run studio:report` — turn the session into a revision queue.
-10. **Read the report top-down.** The revision queue is your worklist (cut first, then
-    fix, then flat). The trust-risk list is what to verify or cut before anything is
-    promoted. The weakest-days/weakest-facets tables tell you where the rot is
-    concentrated; the strongest-keeps list tells you what to protect. Stale entries mean
-    re-review.
+10. **Read the report top-down.** Start with promotion readiness and review coverage:
+    if the report still names unjudged day or facet cards, go back to Studio and use
+    **Needs review**. Then work the revision queue (cut first, then fix, then flat).
+    The trust-risk list is what to verify or cut before anything is promoted. The
+    weakest-days/weakest-facets tables tell you where the rot is concentrated; the
+    strongest-keeps list tells you what to protect. Stale entries mean re-review.
 
 What "done" looks like for this first pass: roughly 75–150 judgments in the ledger, a
 revision queue that names specific sentences and facets to cut or fix, and a clear sense
@@ -147,6 +155,8 @@ of which two or three draft days are worth carrying forward versus rebuilding.
 
 - Verdicts and tags are captured per span, but there is no in-Studio diff view yet: when
   a span goes stale, the report tells you *that* it changed, not *how*.
+- Promotion readiness is advisory. It tells you what is missing, but it does not yet
+  block a status change in content JSON.
 - The seed pictures are placeholders and the poems use pointer stubs; sourcing real,
   licensed images and confirmed poem rights is the obvious next content pass.
 - The report ranks by a fixed negative-signal weighting; once you have real data you may

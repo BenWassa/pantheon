@@ -4,7 +4,7 @@
 // unit-testable without touching the disk or the live content.
 
 import type { Judgment, JudgmentLevel, JudgmentTarget, Verdict } from '@/content/judgments';
-import { JUDGMENT_LEVELS } from '@/content/judgments';
+import { JUDGMENT_LEVELS, targetId } from '@/content/judgments';
 
 // ---- Revision queue ---------------------------------------------------------
 
@@ -45,6 +45,48 @@ export function isStale(j: Judgment, resolve: TextResolver): boolean {
 
 export function staleJudgments(current: Judgment[], resolve: TextResolver): Judgment[] {
   return current.filter((j) => isStale(j, resolve));
+}
+
+// ---- Review coverage -------------------------------------------------------
+
+export interface ReviewTarget {
+  id?: string;
+  target: JudgmentTarget;
+}
+
+export interface CoverageRow {
+  label: string;
+  total: number;
+  reviewed: number;
+  unreviewed: number;
+  percent: number;
+}
+
+export function coverageForTargets(
+  label: string,
+  targets: ReviewTarget[],
+  current: Judgment[],
+): CoverageRow {
+  const reviewedIds = new Set(current.map((j) => targetId(j.target)));
+  const reviewed = targets.filter((t) => reviewedIds.has(t.id ?? targetId(t.target))).length;
+  const total = targets.length;
+  return {
+    label,
+    total,
+    reviewed,
+    unreviewed: total - reviewed,
+    percent: total === 0 ? 0 : Math.round((reviewed / total) * 100),
+  };
+}
+
+export function unreviewedTargets(
+  targets: ReviewTarget[],
+  current: Judgment[],
+  limit?: number,
+): ReviewTarget[] {
+  const reviewedIds = new Set(current.map((j) => targetId(j.target)));
+  const gaps = targets.filter((t) => !reviewedIds.has(t.id ?? targetId(t.target)));
+  return limit === undefined ? gaps : gaps.slice(0, limit);
 }
 
 // ---- Per-level rollup -------------------------------------------------------

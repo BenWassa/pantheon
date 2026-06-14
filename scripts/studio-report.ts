@@ -26,12 +26,15 @@ import {
 } from '@/content/judgments';
 import { loadDays } from './lib/content.ts';
 import { readLedger } from './lib/judgmentsFile.ts';
+import { LENSES, LENS_LABELS, buildFeed, type Lens } from '../src/studio/feed.ts';
 import {
   byLevel,
+  coverageForTargets,
   isStale,
   revisionQueue,
   staleJudgments,
   strongestKeeps,
+  unreviewedTargets,
   worstDays,
   worstFacets,
 } from './lib/report.ts';
@@ -46,6 +49,9 @@ const dayFilter = flag('day') ? Number(flag('day')) : undefined;
 const queueOnly = has('queue');
 
 const dayBySlug = new Map<string, Day>(loadDays().map(({ day }) => [day.slug, day]));
+const daysInScope = [...dayBySlug.values()]
+  .filter((day) => dayFilter === undefined || day.index === dayFilter)
+  .sort((a, b) => a.index - b.index);
 const { judgments, malformed } = readLedger();
 
 // The live text a target points at now, for staleness detection. Passed to the
@@ -84,6 +90,9 @@ const inScope = (j: Judgment) => dayFilter === undefined || j.target.day === day
 const scoped = judgments.filter(inScope);
 const current = [...latestByTarget(scoped).values()];
 const totals = rollup(current);
+const coverage = LENSES.map((lens) =>
+  coverageForTargets(LENS_LABELS[lens], buildFeed(daysInScope, lens), current),
+);
 
 console.log('Pantheon Studio report');
 console.log(dayFilter ? `Scope: day ${dayFilter}\n` : '');
@@ -91,11 +100,34 @@ console.log(dayFilter ? `Scope: day ${dayFilter}\n` : '');
 if (judgments.length === 0) {
   console.log('No judgments recorded yet. Open the Studio (npm run studio) and start reviewing.');
   console.log('Capture verdicts on day, facet, and line cards, then run this report again.');
+  printCoverage();
+  printNextGaps();
   process.exit(0);
 }
 
 // ---- Revision queue: cut, then fix, then flat -------------------------------
 const queue = revisionQueue(current);
+const stale = staleJudgments(current, currentText);
+const trust = current.filter((j) => j.tags.includes('source'));
+
+// ---- Readiness --------------------------------------------------------------
+const readinessBlockers = [
+  coverage[0]!.unreviewed > 0 ? `${coverage[0]!.unreviewed} day card(s) unjudged` : undefined,
+  coverage[1]!.unreviewed > 0 ? `${coverage[1]!.unreviewed} facet card(s) unjudged` : undefined,
+  queue.length > 0 ? `${queue.length} current negative verdict(s)` : undefined,
+  trust.length > 0 ? `${trust.length} source flag(s)` : undefined,
+  stale.length > 0 ? `${stale.length} stale judgment(s)` : undefined,
+].filter((x): x is string => Boolean(x));
+
+console.log('Promotion readiness:');
+if (readinessBlockers.length === 0) {
+  console.log('  Ready for content promotion review. No blocking judgment signals remain.');
+} else {
+  console.log(`  Not ready: ${readinessBlockers.join('; ')}.`);
+}
+
+printCoverage();
+printNextGaps();
 
 console.log(`Revision queue (${queue.length}):`);
 if (queue.length === 0) {
@@ -115,7 +147,6 @@ if (queue.length === 0) {
 if (queueOnly) process.exit(0);
 
 // ---- Trust risks: every current source flag ---------------------------------
-const trust = current.filter((j) => j.tags.includes('source'));
 console.log(`\nTrust risks — source flags (${trust.length}):`);
 if (trust.length === 0) {
   console.log('  None flagged.');
@@ -193,7 +224,6 @@ if (keeps.length) {
 }
 
 // ---- Staleness + integrity --------------------------------------------------
-const stale = staleJudgments(current, currentText);
 if (stale.length) {
   console.log(`\nStale (${stale.length}): judged before the content changed — re-review:`);
   for (const j of stale) console.log(`  ${locate(j.target)}`);
@@ -208,3 +238,25 @@ console.log(
     dayFilter ? ` in day ${dayFilter}` : ''
   }.`,
 );
+
+function printCoverage(): void {
+  console.log('\nReview coverage:');
+  for (const row of coverage) {
+    console.log(
+      `  ${row.label.padEnd(6)} ${String(row.percent).padStart(3)}%  ${String(row.reviewed).padStart(3)}/${String(row.total).padEnd(3)} reviewed  ·  ${row.unreviewed} gap(s)`,
+    );
+  }
+}
+
+function printNextGaps(): void {
+  const lens: Lens =
+    coverage[0]!.unreviewed > 0 ? 'day' : coverage[1]!.unreviewed > 0 ? 'facet' : 'line';
+  const gaps = unreviewedTargets(buildFeed(daysInScope, lens), current, 8);
+  console.log('\nNext judgment gaps:');
+  if (gaps.length === 0) {
+    console.log('  No unjudged targets in scope.');
+    return;
+  }
+  console.log(`  Lens: ${LENS_LABELS[lens]}`);
+  for (const gap of gaps) console.log(`  ${locate(gap.target)}`);
+}
