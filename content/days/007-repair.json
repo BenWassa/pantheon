@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "index": 7,
+  "slug": "repair",
+  "theme": "Repair",
+  "status": "draft",
+  "registers": ["redemption"],
+  "regions": ["sub-saharan-africa", "east-asia", "north-america", "west-asia", "europe"],
+  "eras": ["ancient", "early-modern", "contemporary"],
+  "facets": {
+    "person": {
+      "key": "person",
+      "oneWord": "Truth",
+      "title": "Desmond Tutu",
+      "body": "After apartheid ended, South Africa faced a choice between revenge and amnesia. Desmond Tutu chaired a third path, the Truth and Reconciliation Commission, where perpetrators could confess their crimes in public, before the families of their victims, in exchange for amnesty. It was not forgiveness imposed from above. It was a national attempt to set the record straight so that a country could go on living with itself. Tutu wept openly during the hearings. He argued, drawing on the idea of ubuntu, that a person is a person through other people, and that a broken society could only be mended together, in the open.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "No Future Without Forgiveness",
+          "author": "Desmond Tutu",
+          "publisher": "Doubleday",
+          "year": 1999,
+          "note": "Seed draft: source indicative, not verified to charter standard."
+        }
+      ]
+    },
+    "picture": {
+      "key": "picture",
+      "oneWord": "Gold",
+      "title": "Kintsugi",
+      "body": "Kintsugi is the Japanese art of repairing broken pottery with lacquer mixed with powdered gold. The technique refuses to hide the break. Instead it traces every crack in a bright vein of gold, so that the mended bowl is more valuable, and more beautiful, than it was before it shattered. The philosophy behind it holds that a history of damage is part of an object's worth, not a flaw to be disguised. A repaired thing is not a failed version of an unbroken one. It is a different thing, marked by what happened to it, and stronger at the broken places for being named.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Kintsugi: the art of golden repair",
+          "note": "Seed draft: source indicative. The placeholder image must be replaced with a properly licensed photograph before publication."
+        }
+      ],
+      "image": {
+        "src": "images/placeholder.svg",
+        "alt": "Draft placeholder image standing in for a kintsugi-repaired bowl.",
+        "attribution": "Draft placeholder image, not a final selection. Source and license a real image before publication.",
+        "license": "CC0",
+        "sourceUrl": "https://example.org/pantheon-draft-placeholder"
+      }
+    },
+    "poem": {
+      "key": "poem",
+      "oneWord": "Anthem",
+      "title": "Anthem",
+      "poet": "Leonard Cohen",
+      "body": "Leonard Cohen spent years on this song, and its most famous lines have outlived almost everything else he wrote. Ring the bells that still can ring, he sings; forget your perfect offering. There is a crack in everything. That is how the light gets in. It is the same thought as kintsugi, set to music: do not despair over the flaw, because the flaw is the opening. Cohen was not naive about damage; the verses also speak of war and grief and the wreckage of failed reconciliation. But the refrain insists that wholeness was never the point. The break is where the meaning enters.",
+      "poem": {
+        "status": "in-copyright",
+        "pointerUrl": "https://www.leonardcohen.com/",
+        "pointerLabel": "Find the lyrics on the official site (draft pointer, verify before use)"
+      },
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Anthem",
+          "author": "Leonard Cohen",
+          "note": "Seed draft, SOURCE RISK: this song is in copyright and the body quotes its refrain. The quotation must be licensed, paraphrased, or cut before publication; rights and pointer are unverified."
+        }
+      ]
+    },
+    "principle": {
+      "key": "principle",
+      "oneWord": "Mending",
+      "title": "The Right to Repair",
+      "body": "For most of history, to own a thing was to be free to fix it. That changed as manufacturers began gluing batteries shut, withholding spare parts, and writing software locks that void a warranty the moment a stranger opens the case. The right to repair movement argues that this is both wasteful and a quiet theft of ownership. Electronic waste is now among the fastest growing waste streams on earth, much of it discarded only because repair was made deliberately hard. The movement reframes mending as a right rather than a nuisance, and a broken object as something owed a second life.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "The Right to Repair: a primer",
+          "note": "Seed draft, SOURCE RISK: the 'fastest growing waste stream' claim is unverified; confirm against a current source or soften before publication."
+        }
+      ]
+    },
+    "passage": {
+      "key": "passage",
+      "oneWord": "Tikkun",
+      "title": "Tikkun Olam",
+      "attribution": "Mishnah and later Lurianic Kabbalah",
+      "body": "In Jewish tradition the phrase tikkun olam means the repair of the world. In the Kabbalah of Isaac Luria it carries a startling image: at creation the vessels meant to hold the divine light shattered, scattering sparks of holiness into every corner of a broken world. The task of human beings is to gather those sparks, one act of justice or kindness at a time, and so help mend what was broken at the very beginning. It is a theology that makes repair the point of existence. The world arrives cracked, and we are not its victims but its menders.",
+      "sources": [
+        {
+          "kind": "primary",
+          "title": "Tikkun olam in the Mishnah and Lurianic Kabbalah",
+          "note": "Seed draft: the Lurianic reading is one tradition among several; verify the attribution before publication."
+        }
+      ]
+    },
+    "parallel": {
+      "key": "parallel",
+      "oneWord": "Notre-Dame",
+      "title": "Rebuilding Notre-Dame",
+      "body": "When fire tore through Notre-Dame de Paris in 2019 and brought down its spire, the world watched a piece of itself burn. The debate that followed was a debate about repair itself. Should it be rebuilt exactly as it was, or boldly reimagined for a new century? France chose faithful restoration, and a small army of stonemasons, carpenters, and foresters relearned medieval techniques to do it. Oaks were felled for beams as they had been eight hundred years before. The cathedral reopened in 2024. Repair, here, was also an act of remembering how the thing was made in the first place.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "The reconstruction of Notre-Dame de Paris",
+          "note": "Seed draft: source indicative; the 'eight hundred years' figure is approximate and should be checked."
+        }
+      ]
+    }
+  },
+  "resonanceThreads": [
+    {
+      "facets": ["picture", "poem", "passage"],
+      "note": "Kintsugi's golden seams, Cohen's crack that lets the light in, and tikkun olam's scattered sparks are one idea in three traditions: the break is not the end of the thing but the way meaning enters it."
+    },
+    {
+      "facets": ["person", "parallel"],
+      "note": "Tutu's Truth Commission and the rebuilding of Notre-Dame both insist that real repair means facing what was broken in the open, not papering over it."
+    },
+    {
+      "facets": ["principle", "picture"],
+      "note": "The right to repair and kintsugi both treat a broken object as something owed a second life rather than thrown away."
+    }
+  ],
+  "notes": "Seed/test draft for Studio review, intended as a strong, tightly resonant day to anchor the 'keep' end of the scale alongside Vastness. Source risks flagged: the poem body quotes copyrighted Leonard Cohen lyrics and must be cleared or paraphrased before any publication; the principle's e-waste claim is unverified; several dates are approximate. Poem rights and the placeholder image are unverified. Not researched to publication standard."
+}

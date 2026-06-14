@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "index": 5,
+  "slug": "defiance",
+  "theme": "Defiance",
+  "status": "draft",
+  "registers": ["defiance"],
+  "regions": ["north-america", "east-asia", "europe", "mediterranean"],
+  "eras": ["ancient", "modern", "contemporary"],
+  "facets": {
+    "person": {
+      "key": "person",
+      "oneWord": "Witness",
+      "title": "Ida B. Wells",
+      "body": "Born into slavery in Mississippi in 1862, Ida B. Wells became a journalist who refused to look away. After three friends were lynched in Memphis for the crime of running a successful grocery, she investigated dozens of such killings and published the evidence, showing that the usual excuse was a lie and the real motive was often economic. A mob destroyed her newspaper's offices and threatened her life, so she carried on the work from the North and from Britain. She helped found the NAACP. Where others counted the dead, she named the killers and asked the country to look.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Ida: A Sword Among Lions",
+          "author": "Paula J. Giddings",
+          "note": "Seed draft: source indicative, not verified to charter standard."
+        }
+      ]
+    },
+    "picture": {
+      "key": "picture",
+      "oneWord": "Tank",
+      "title": "Tank Man",
+      "body": "On the morning after the Tiananmen Square crackdown in June 1989, a single unidentified man in a white shirt stepped in front of a column of tanks leaving the square. He carried what look like shopping bags. When the lead tank tried to go around him, he stepped sideways to block it again. At one point he climbed onto the tank and appeared to speak to the crew. Then he was pulled away into the crowd, and to this day no one knows for certain who he was or what became of him. The photograph is defiance reduced to its smallest possible unit: one person, unarmed, saying no.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Tank Man, Tiananmen Square, 1989",
+          "note": "Seed draft: identity and fate of the man are genuinely unknown and flagged. The placeholder image must be replaced with a properly licensed photograph before publication; press photographs of this scene are in copyright."
+        }
+      ],
+      "image": {
+        "src": "images/placeholder.svg",
+        "alt": "Draft placeholder image standing in for the Tank Man photograph.",
+        "attribution": "Draft placeholder image, not a final selection. The real photograph is in copyright and must be licensed before publication.",
+        "license": "CC0",
+        "sourceUrl": "https://example.org/pantheon-draft-placeholder"
+      }
+    },
+    "poem": {
+      "key": "poem",
+      "oneWord": "Gentle",
+      "title": "Do Not Go Gentle into That Good Night",
+      "poet": "Dylan Thomas",
+      "body": "Dylan Thomas wrote this villanelle for his dying father, and it has become the most famous refusal in English poetry. Do not go gentle into that good night, it commands; rage, rage against the dying of the light. The poem runs through different kinds of men, the wise, the good, the wild, the grave, and finds each one defiant at the end, unwilling to accept the dark quietly. The form itself is defiant, hammering the same two lines back again and again like someone refusing to be talked out of an argument. It is a son ordering his father not to die.",
+      "poem": {
+        "status": "in-copyright",
+        "pointerUrl": "https://www.poetryfoundation.org/",
+        "pointerLabel": "Read the poem at the Poetry Foundation (draft pointer, verify before use)"
+      },
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Do Not Go Gentle into That Good Night",
+          "author": "Dylan Thomas",
+          "note": "Seed draft, SOURCE RISK: this poem is in copyright. The body quotes its refrain and must be cleared or paraphrased before publication; rights and pointer are unverified."
+        }
+      ]
+    },
+    "principle": {
+      "key": "principle",
+      "oneWord": "Civil",
+      "title": "Civil Disobedience",
+      "body": "Civil disobedience is the deliberate, public, nonviolent breaking of a law one believes to be unjust, accepting the legal penalty in order to expose the injustice. Thoreau gave it a name; Gandhi and King turned it into a discipline. Its power is paradoxical: by submitting to punishment while refusing to obey, the protester forces the watching public to choose a side. Some scholars argue it only works against opponents who can still feel shame, and is useless against a regime willing to kill quietly in the dark. Defiance, on this view, depends on an audience. A refusal no one witnesses changes nothing.",
+      "sources": [
+        {
+          "kind": "primary",
+          "title": "Civil Disobedience",
+          "author": "Henry David Thoreau",
+          "note": "Seed draft, SOURCE RISK: the 'some scholars argue' claim is vaguely attributed; name a source or cut before publication."
+        }
+      ]
+    },
+    "passage": {
+      "key": "passage",
+      "oneWord": "Antigone",
+      "title": "Antigone before Creon",
+      "attribution": "Sophocles, Antigone",
+      "body": "In Sophocles' play, King Creon forbids the burial of Antigone's brother, branding him a traitor. Antigone buries him anyway. Dragged before the king, she does not deny it. The edict was yours, she tells him, but it was not Zeus who made it, nor the eternal justice that lives with the gods below; and no decree of yours could override the unwritten and unfailing laws of heaven. She chooses death over obedience. The play refuses to make her simply right; her defiance destroys her family along with the king's. It asks the hardest question defiance asks. What is a just law worth disobeying?",
+      "sources": [
+        {
+          "kind": "primary",
+          "title": "Antigone",
+          "author": "Sophocles",
+          "note": "Seed draft: translation paraphrased; verify the rendering and choose a public-domain translation before publication."
+        }
+      ]
+    },
+    "parallel": {
+      "key": "parallel",
+      "oneWord": "Singing",
+      "title": "The Singing Revolution",
+      "body": "Between 1987 and 1991, the people of Estonia, Latvia, and Lithuania helped end Soviet rule over the Baltic states largely by singing. Banned national songs were sung by hundreds of thousands gathered in festival grounds. In 1989 some two million people joined hands in a human chain six hundred kilometres long, linking the three capitals. There were no massacres because there was almost nothing to shoot at but a choir. It is the gentlest image of defiance imaginable and one of the most effective: a refusal so unified and so unarmed that force had no purchase on it.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "The Singing Revolution and the Baltic Way",
+          "note": "Seed draft: the chain length (about six hundred kilometres) and crowd figures are approximate and flagged; verify before publication."
+        }
+      ]
+    }
+  },
+  "resonanceThreads": [
+    {
+      "facets": ["picture", "parallel"],
+      "note": "Tank Man alone before the column and two million Balts singing in a chain are the same defiance at opposite scales: one body and a whole people, both unarmed."
+    },
+    {
+      "facets": ["passage", "principle"],
+      "note": "Antigone's appeal to unwritten law and the logic of civil disobedience both stake everything on a justice higher than the state's decree."
+    },
+    {
+      "facets": ["person", "poem"],
+      "note": "Ida B. Wells refusing to look away and Dylan Thomas raging against the dark are both refusals to go quietly; this thread is deliberately looser than the others."
+    }
+  ],
+  "notes": "Seed/test draft for Studio review. Strong defiance day with deliberately mixed resonance: the person/poem thread is looser than the others. Source risks flagged: the principle's 'some scholars argue' claim is vaguely attributed, several figures are approximate (the Baltic Way length, exact dates), the Dylan Thomas refrain is quoted from an in-copyright poem, and the Tank Man image is a placeholder for a copyrighted photograph. The person body deliberately includes the abbreviation 'Ida B. Wells' to exercise sentence splitting in the line lens. Not researched to publication standard."
+}

@@ -67,7 +67,9 @@ the corpus as a fast feed at three scales (whole day, single facet, single line)
 captures instinctive verdicts (keep / flat / fix / cut), signal tags, and notes into a
 durable, git-tracked ledger (`content/judgments.jsonl`). `npm run studio:report` turns
 those judgments into a prioritized revision queue and surfaces trust risks. The reader
-build never includes the Studio or the ledger. See [`studio.md`](studio.md).
+build never includes the Studio, the ledger, or any unpublished draft day. The repo ships
+a seed corpus of deliberately uneven **draft** days for testing the review loop; see the
+"First testing session" script in [`studio.md`](studio.md).
 
 The pipeline is a loop: **map** finds the biggest gap, **scout --write** records a candidate
 against it, **deep** scaffolds the day, the author researches and fills it, **validate** holds it

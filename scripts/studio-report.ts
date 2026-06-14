@@ -3,9 +3,9 @@
 //
 // Reads the append-only judgment ledger (content/judgments.jsonl), collapses it to
 // the current verdict per target, and prints what to act on: what to cut, what to
-// fix, where trust is at risk (source flags), and where the content has been edited
-// since it was judged (stale). This is the bridge from instinctive review back to
-// improving the corpus.
+// fix, where trust is at risk (source flags), which days and facets are weakest, and
+// where the content has been edited since it was judged (stale). This is the bridge
+// from instinctive review back to improving the corpus.
 //
 // Usage:
 //   npm run studio:report                 # full report
@@ -26,6 +26,15 @@ import {
 } from '@/content/judgments';
 import { loadDays } from './lib/content.ts';
 import { readLedger } from './lib/judgmentsFile.ts';
+import {
+  byLevel,
+  isStale,
+  revisionQueue,
+  staleJudgments,
+  strongestKeeps,
+  worstDays,
+  worstFacets,
+} from './lib/report.ts';
 
 function flag(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
@@ -39,7 +48,8 @@ const queueOnly = has('queue');
 const dayBySlug = new Map<string, Day>(loadDays().map(({ day }) => [day.slug, day]));
 const { judgments, malformed } = readLedger();
 
-// The live text a target points at now, for staleness detection.
+// The live text a target points at now, for staleness detection. Passed to the
+// pure report helpers so they never import the day loader themselves.
 function currentText(t: JudgmentTarget): string | undefined {
   const day = dayBySlug.get(t.slug);
   if (!day) return undefined;
@@ -52,12 +62,6 @@ function currentText(t: JudgmentTarget): string | undefined {
   if (t.level === 'sentence' && t.sentenceIndex !== undefined)
     return splitSentences(facet.body)[t.sentenceIndex];
   return undefined;
-}
-
-function isStale(j: Judgment): boolean {
-  if (j.target.text === undefined) return false;
-  const live = currentText(j.target);
-  return live !== undefined && live !== j.target.text;
 }
 
 function locate(t: JudgmentTarget): string {
@@ -86,18 +90,12 @@ console.log(dayFilter ? `Scope: day ${dayFilter}\n` : '');
 
 if (judgments.length === 0) {
   console.log('No judgments recorded yet. Open the Studio (npm run studio) and start reviewing.');
+  console.log('Capture verdicts on day, facet, and line cards, then run this report again.');
   process.exit(0);
 }
 
 // ---- Revision queue: cut, then fix, then flat -------------------------------
-const QUEUE_ORDER: Verdict[] = ['cut', 'fix', 'flat'];
-const queue = current
-  .filter((j) => QUEUE_ORDER.includes(j.verdict))
-  .sort(
-    (a, b) =>
-      QUEUE_ORDER.indexOf(a.verdict) - QUEUE_ORDER.indexOf(b.verdict) ||
-      a.target.day - b.target.day,
-  );
+const queue = revisionQueue(current);
 
 console.log(`Revision queue (${queue.length}):`);
 if (queue.length === 0) {
@@ -105,7 +103,7 @@ if (queue.length === 0) {
 } else {
   for (const j of queue) {
     const tags = j.tags.length ? `  [${j.tags.map((t) => TAG_LABELS[t]).join(', ')}]` : '';
-    const stale = isStale(j) ? '  (stale: content changed since judged)' : '';
+    const stale = isStale(j, currentText) ? '  (stale: content changed since judged)' : '';
     console.log(
       `  ${VERDICT_LABELS[j.verdict].toUpperCase().padEnd(4)} ${locate(j.target)}${tags}${stale}`,
     );
@@ -122,7 +120,10 @@ console.log(`\nTrust risks — source flags (${trust.length}):`);
 if (trust.length === 0) {
   console.log('  None flagged.');
 } else {
-  for (const j of trust) console.log(`  ${locate(j.target)}: “${excerpt(j.target.text)}”`);
+  for (const j of trust) {
+    const note = j.note ? ` — ${j.note}` : '';
+    console.log(`  ${locate(j.target)}: “${excerpt(j.target.text)}”${note}`);
+  }
 }
 
 // ---- Signal summary ---------------------------------------------------------
@@ -132,9 +133,20 @@ for (const v of ['keep', 'flat', 'fix', 'cut'] as Verdict[]) {
 }
 
 console.log('\nTag signals:');
-const tagEntries = Object.entries(totals.byTag).filter(([, n]) => n > 0);
+const tagEntries = Object.entries(totals.byTag)
+  .filter(([, n]) => n > 0)
+  .sort((a, b) => b[1] - a[1]);
 if (tagEntries.length === 0) console.log('  (none)');
 else for (const [tag, n] of tagEntries) console.log(`  ${tag.padEnd(10)} ${n}`);
+
+// ---- Per-level (lens) summary -----------------------------------------------
+console.log('\nBy level:');
+for (const row of byLevel(current)) {
+  const v = row.byVerdict;
+  console.log(
+    `  ${LEVEL_LABELS[row.level].padEnd(12)} ${String(row.total).padStart(3)} judged  ·  keep ${v.keep}  flat ${v.flat}  fix ${v.fix}  cut ${v.cut}`,
+  );
+}
 
 // ---- Per-day rollup ---------------------------------------------------------
 console.log('\nPer day:');
@@ -146,8 +158,42 @@ for (const row of dayRows) {
   );
 }
 
+// ---- Worst days / facets by negative signal ---------------------------------
+const badDays = worstDays(current);
+if (badDays.length) {
+  console.log('\nWeakest days (by negative signal: cut x3, fix x2, flat x1):');
+  for (const row of badDays.slice(0, 5)) {
+    const v = row.byVerdict;
+    console.log(
+      `  ${String(row.negative).padStart(3)}  Day ${row.day} ${row.slug.padEnd(16)} cut ${v.cut}  fix ${v.fix}  flat ${v.flat}  keep ${v.keep}`,
+    );
+  }
+}
+
+const badFacets = worstFacets(current);
+if (badFacets.length) {
+  console.log('\nWeakest facets (by negative signal):');
+  for (const row of badFacets.slice(0, 8)) {
+    const v = row.byVerdict;
+    console.log(
+      `  ${String(row.negative).padStart(3)}  ${row.key.padEnd(24)} cut ${v.cut}  fix ${v.fix}  flat ${v.flat}  keep ${v.keep}`,
+    );
+  }
+}
+
+// ---- Strongest keeps --------------------------------------------------------
+const keeps = strongestKeeps(current, 8);
+if (keeps.length) {
+  console.log(`\nStrongest keeps (${totals.byVerdict.keep} total, top ${keeps.length}):`);
+  for (const j of keeps) {
+    const tags = j.tags.length ? `  [${j.tags.map((t) => TAG_LABELS[t]).join(', ')}]` : '';
+    console.log(`  ${locate(j.target)}${tags}`);
+    if (j.target.text) console.log(`       “${excerpt(j.target.text)}”`);
+  }
+}
+
 // ---- Staleness + integrity --------------------------------------------------
-const stale = current.filter(isStale);
+const stale = staleJudgments(current, currentText);
 if (stale.length) {
   console.log(`\nStale (${stale.length}): judged before the content changed — re-review:`);
   for (const j of stale) console.log(`  ${locate(j.target)}`);
