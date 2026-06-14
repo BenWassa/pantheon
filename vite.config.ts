@@ -3,8 +3,11 @@ import react from '@vitejs/plugin-react';
 import { fileURLToPath, URL } from 'node:url';
 import { studioServer } from './scripts/lib/studioServer.ts';
 
+const base = process.env.GITHUB_PAGES === 'true' ? '/pantheon/' : '/';
+
 // https://vitejs.dev/config/
 export default defineConfig({
+  base,
   // studioServer adds the Studio's dev-only review API (see scripts/lib/studioServer.ts).
   // It applies to `serve` only, so production builds stay backend-free.
   plugins: [react(), studioServer()],

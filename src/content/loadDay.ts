@@ -1,4 +1,5 @@
 import type { Day, ManifestEntry } from './types';
+import { contentUrl } from './urls';
 
 // Lazy-load a single day's JSON, one day at a time. Results are memoized so revisiting
 // today's facets never refetches.
@@ -8,7 +9,7 @@ export async function loadDay(entry: ManifestEntry): Promise<Day> {
   const cached = cache.get(entry.file);
   if (cached) return cached;
 
-  const res = await fetch(`/content/${entry.file}`, { cache: 'no-cache' });
+  const res = await fetch(contentUrl(entry.file), { cache: 'no-cache' });
   if (!res.ok) {
     throw new Error(`Failed to load ${entry.file} (${res.status}).`);
   }

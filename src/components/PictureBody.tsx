@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { PictureFacet } from '@/content/types';
+import { contentUrl } from '@/content/urls';
 import { Attribution } from './Attribution';
 
 export function PictureBody({ facet }: { facet: PictureFacet }) {
@@ -13,7 +14,9 @@ export function PictureBody({ facet }: { facet: PictureFacet }) {
         </div>
       ) : (
         <img
-          src={facet.image.src}
+          src={
+            facet.image.src.startsWith('/content/') ? contentUrl(facet.image.src) : facet.image.src
+          }
           alt={facet.image.alt}
           width={facet.image.width}
           height={facet.image.height}
