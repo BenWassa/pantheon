@@ -17,6 +17,8 @@
       }
     },
     "note": { "type": "string" },
+    "severity": { "enum": ["minor", "major"] },
+    "suggestion": { "type": "string" },
     "target": {
       "type": "object",
       "required": ["level", "day", "slug"],

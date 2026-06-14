@@ -58,6 +58,7 @@ export function removeJudgment(id: string, file: string = JUDGMENTS_FILE): boole
 }
 
 const VERDICTS = new Set(['keep', 'flat', 'fix', 'cut']);
+const SEVERITIES = new Set(['minor', 'major']);
 const LEVELS = new Set(['day', 'facet', 'title', 'oneWord', 'sentence']);
 const TAGS = new Set([
   'resonance',
@@ -89,6 +90,10 @@ export function validateJudgment(
     return { ok: false, error: 'tags must be an array of known tags' };
   if (v.note !== undefined && typeof v.note !== 'string')
     return { ok: false, error: 'note must be a string' };
+  if (v.severity !== undefined && (typeof v.severity !== 'string' || !SEVERITIES.has(v.severity)))
+    return { ok: false, error: `severity must be one of ${[...SEVERITIES].join(', ')}` };
+  if (v.suggestion !== undefined && typeof v.suggestion !== 'string')
+    return { ok: false, error: 'suggestion must be a string' };
 
   const t = v.target as Record<string, unknown> | undefined;
   if (typeof t !== 'object' || t === null) return { ok: false, error: 'target is required' };

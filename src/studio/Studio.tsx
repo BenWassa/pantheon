@@ -1,8 +1,10 @@
-import { type ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { Day } from '@/content/types';
 import {
   type Judgment,
   type JudgmentTag,
+  type Severity,
+  SEVERITIES,
   type Verdict,
   VERDICT_KEYS,
   VERDICT_LABELS,
@@ -13,6 +15,7 @@ import {
 import { deleteJudgment, fetchDays, fetchJudgments, postJudgment } from './api';
 import { type Lens, LENSES, LENS_HINT, LENS_LABELS, buildFeed } from './feed';
 import { StudioCard } from './StudioCard';
+import { StudioRail } from './StudioRail';
 
 type StatusFilter = 'all' | 'unpublished';
 type ReviewFilter = 'all' | 'needsReview';
@@ -26,6 +29,9 @@ export function Studio() {
   const [focusIndex, setFocusIndex] = useState(0);
   const [draftTags, setDraftTags] = useState<JudgmentTag[]>([]);
   const [draftNote, setDraftNote] = useState('');
+  const [draftSuggestion, setDraftSuggestion] = useState('');
+  const [draftSeverity, setDraftSeverity] = useState<Severity | undefined>(undefined);
+  const [echoId, setEchoId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -69,6 +75,8 @@ export function Studio() {
   useEffect(() => {
     setDraftTags(focusedCurrent?.tags ?? []);
     setDraftNote(focusedCurrent?.note ?? '');
+    setDraftSuggestion(focusedCurrent?.suggestion ?? '');
+    setDraftSeverity(focusedCurrent?.severity);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusedItem?.id]);
 
@@ -91,8 +99,12 @@ export function Studio() {
         verdict,
         tags: draftTags,
         note: draftNote.trim() || undefined,
+        // Severity only sharpens a negative verdict; never attach it to a keep.
+        severity: verdict === 'keep' ? undefined : draftSeverity,
+        suggestion: draftSuggestion.trim() || undefined,
       };
       setJudgments((prev) => [...prev, judgment]); // optimistic
+      setEchoId(item.id); // pulse the verdict so fast keying still gives feedback
       setFocusIndex((i) => (reviewFilter === 'needsReview' ? i : Math.min(i + 1, feed.length - 1))); // keep moving
       try {
         await postJudgment(judgment);
@@ -101,8 +113,15 @@ export function Studio() {
         setError(e instanceof Error ? e.message : String(e));
       }
     },
-    [feed, focusIndex, draftTags, draftNote, reviewFilter],
+    [feed, focusIndex, draftTags, draftNote, draftSuggestion, draftSeverity, reviewFilter],
   );
+
+  // Clear the verdict echo a beat after it fires.
+  useEffect(() => {
+    if (echoId === null) return;
+    const t = setTimeout(() => setEchoId(null), 350);
+    return () => clearTimeout(t);
+  }, [echoId]);
 
   const undo = useCallback(async () => {
     const item = feed[focusIndex];
@@ -127,7 +146,39 @@ export function Studio() {
     setDraftTags((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
   }, []);
 
-  // Global hotkeys. Typing in the note field is exempt so prose can contain digits.
+  // Cycle severity through none -> minor -> major -> none, in either direction.
+  const cycleSeverity = useCallback((dir: 1 | -1) => {
+    const order: (Severity | undefined)[] = [undefined, ...SEVERITIES];
+    setDraftSeverity((cur) => {
+      const i = order.indexOf(cur);
+      return order[(i + dir + order.length) % order.length];
+    });
+  }, []);
+
+  // Jump to the next/previous card with no current judgment, wrapping around.
+  const jumpToGap = useCallback(
+    (dir: 1 | -1) => {
+      if (feed.length === 0) return;
+      for (let step = 1; step <= feed.length; step += 1) {
+        const i = (focusIndex + dir * step + feed.length * step) % feed.length;
+        const item = feed[i];
+        if (item && !latest.has(item.id)) {
+          setFocusIndex(i);
+          return;
+        }
+      }
+    },
+    [feed, focusIndex, latest],
+  );
+
+  // Focus a draft textarea by its data attribute (suggestion hotkey).
+  const cardRef = useRef<HTMLDivElement>(null);
+  const focusField = useCallback((attr: string) => {
+    const el = cardRef.current?.querySelector<HTMLTextAreaElement>(`[${attr}]`);
+    el?.focus();
+  }, []);
+
+  // Global hotkeys. Typing in a field is exempt so prose can contain digits.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const el = e.target as HTMLElement | null;
@@ -141,8 +192,21 @@ export function Studio() {
       } else if (e.key === 'k' || e.key === 'ArrowUp') {
         e.preventDefault();
         setFocusIndex((i) => Math.max(i - 1, 0));
+      } else if (e.key === 'n') {
+        e.preventDefault();
+        jumpToGap(1);
+      } else if (e.key === 'b') {
+        e.preventDefault();
+        jumpToGap(-1);
       } else if (e.key === 'g') {
         setLens((l) => LENSES[(LENSES.indexOf(l) + 1) % LENSES.length]!);
+      } else if (e.key === '[') {
+        cycleSeverity(-1);
+      } else if (e.key === ']') {
+        cycleSeverity(1);
+      } else if (e.key === 's') {
+        e.preventDefault();
+        focusField('data-studio-suggestion');
       } else if (e.key === 'u') {
         void undo();
       } else if (VERDICT_KEYS[e.key]) {
@@ -151,7 +215,7 @@ export function Studio() {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [feed.length, applyVerdict, undo]);
+  }, [feed.length, applyVerdict, undo, jumpToGap, cycleSeverity, focusField]);
 
   if (loading) return <Centered>Loading the corpus…</Centered>;
   if (error && !days.length) return <Centered>Studio API error: {error}</Centered>;
@@ -164,7 +228,8 @@ export function Studio() {
             Pantheon <span className="text-ember">Studio</span>
           </h1>
           <p className="text-xs text-ink-faint">
-            {reviewedInLens}/{rawFeed.length} reviewed in this lens
+            {feed.length === 0 ? 0 : focusIndex + 1}/{feed.length} · {reviewedInLens}/
+            {rawFeed.length} reviewed
           </p>
         </div>
 
@@ -206,15 +271,9 @@ export function Studio() {
           </button>
         </div>
 
-        <div className="mt-2 grid gap-2 text-[0.7rem] text-ink-faint sm:grid-cols-[1fr_auto] sm:items-center">
-          <span>{LENS_HINT[lens]}</span>
-          <span className="sm:text-right">
-            {(['keep', 'flat', 'fix', 'cut'] as Verdict[])
-              .map((v) => `${VERDICT_LABELS[v]} ${totals.byVerdict[v]}`)
-              .join('  ·  ')}
-          </span>
-        </div>
+        <p className="mt-2 text-[0.7rem] text-ink-faint">{LENS_HINT[lens]}</p>
 
+        {/* HUD: in-flow signal summary for the current corpus, without the report. */}
         <div className="mt-3 grid gap-2 rounded border border-night-raised bg-night-soft px-3 py-2 text-xs text-ink-muted sm:grid-cols-[1fr_auto] sm:items-center">
           <div>
             <span className="text-ink">{reviewedPercent}%</span> current-lens coverage
@@ -226,6 +285,19 @@ export function Studio() {
               style={{ width: `${reviewedPercent}%` }}
               aria-hidden="true"
             />
+          </div>
+          <div className="text-[0.7rem] text-ink-faint sm:col-span-2">
+            {(['keep', 'flat', 'fix', 'cut'] as Verdict[])
+              .map((v) => `${VERDICT_LABELS[v]} ${totals.byVerdict[v]}`)
+              .join('  ·  ')}
+            {'  ·  '}
+            <span title="negative verdicts rated by severity">
+              major {totals.bySeverity.major} / minor {totals.bySeverity.minor}
+            </span>
+            {'  ·  '}
+            <span title="judgments carrying a suggested rewrite">
+              {totals.withSuggestion} suggestion{totals.withSuggestion === 1 ? '' : 's'}
+            </span>
           </div>
         </div>
       </header>
@@ -243,27 +315,63 @@ export function Studio() {
             : 'No content matches this filter.'}
         </Centered>
       ) : (
-        <div className="space-y-3">
-          {feed.map((item, i) => (
-            <StudioCard
-              key={item.id}
-              item={item}
-              focused={i === focusIndex}
-              current={latest.get(item.id)}
-              draftTags={i === focusIndex ? draftTags : (latest.get(item.id)?.tags ?? [])}
-              draftNote={i === focusIndex ? draftNote : ''}
-              onFocus={() => setFocusIndex(i)}
-              onVerdict={(v) => void applyVerdict(v)}
-              onToggleTag={toggleTag}
-              onNote={setDraftNote}
-              onUndo={() => void undo()}
-            />
-          ))}
+        <div className="flex gap-3">
+          <StudioRail
+            feed={feed}
+            focusIndex={focusIndex}
+            latest={latest}
+            onJump={(i) => setFocusIndex(i)}
+          />
+
+          <div className="min-w-0 flex-1">
+            {focusedItem ? (
+              <div ref={cardRef}>
+                <StudioCard
+                  key={focusedItem.id}
+                  item={focusedItem}
+                  focused
+                  current={focusedCurrent}
+                  draftTags={draftTags}
+                  draftNote={draftNote}
+                  draftSuggestion={draftSuggestion}
+                  draftSeverity={draftSeverity}
+                  echo={echoId === focusedItem.id}
+                  onFocus={() => undefined}
+                  onVerdict={(v) => void applyVerdict(v)}
+                  onToggleTag={toggleTag}
+                  onNote={setDraftNote}
+                  onSuggestion={setDraftSuggestion}
+                  onSeverity={setDraftSeverity}
+                  onUndo={() => void undo()}
+                />
+              </div>
+            ) : null}
+
+            <div className="mt-3 flex items-center justify-between text-[0.7rem] text-ink-faint">
+              <button
+                type="button"
+                onClick={() => setFocusIndex((i) => Math.max(i - 1, 0))}
+                disabled={focusIndex === 0}
+                className="rounded border border-night-raised px-2 py-1 hover:text-ink disabled:opacity-40"
+              >
+                ← prev (k)
+              </button>
+              <span>{feed[focusIndex]?.kicker}</span>
+              <button
+                type="button"
+                onClick={() => setFocusIndex((i) => Math.min(i + 1, feed.length - 1))}
+                disabled={focusIndex >= feed.length - 1}
+                className="rounded border border-night-raised px-2 py-1 hover:text-ink disabled:opacity-40"
+              >
+                next (j) →
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
       <footer className="mt-8 text-center text-[0.7rem] text-ink-faint">
-        j/k move · 1–4 verdict · g lens · u undo · run{' '}
+        j/k move · n/b next gap · 1–4 verdict · [ ] severity · s suggest · g lens · u undo · run{' '}
         <code className="text-ink-muted">npm run studio:report</code> to turn judgments into a
         revision queue
       </footer>

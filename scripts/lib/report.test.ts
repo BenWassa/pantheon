@@ -59,6 +59,23 @@ describe('revisionQueue', () => {
       [2, 'poem', undefined],
     ]);
   });
+
+  it('within a verdict, orders by severity: major, then minor, then unrated', () => {
+    const queue = revisionQueue([
+      j({ verdict: 'fix', target: { day: 1, facet: 'poem' } }), // unrated
+      j({ verdict: 'fix', severity: 'minor', target: { day: 1, facet: 'picture' } }),
+      j({ verdict: 'fix', severity: 'major', target: { day: 1, facet: 'parallel' } }),
+    ]);
+    expect(queue.map((x) => x.severity)).toEqual(['major', 'minor', undefined]);
+  });
+
+  it('orders by verdict before severity (a cut outranks a major fix)', () => {
+    const queue = revisionQueue([
+      j({ verdict: 'fix', severity: 'major', target: { day: 1, facet: 'picture' } }),
+      j({ verdict: 'cut', target: { day: 1, facet: 'parallel' } }),
+    ]);
+    expect(queue.map((x) => x.verdict)).toEqual(['cut', 'fix']);
+  });
 });
 
 describe('staleness', () => {

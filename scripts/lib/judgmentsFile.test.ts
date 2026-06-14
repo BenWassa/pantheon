@@ -91,4 +91,15 @@ describe('validateJudgment', () => {
       validateJudgment(j('1', { target: { level: 'facet', day: 0, slug: '' } as never })).ok,
     ).toBe(false);
   });
+
+  it('accepts optional severity and suggestion', () => {
+    expect(validateJudgment(j('1', { severity: 'major', suggestion: 'a rewrite' })).ok).toBe(true);
+    // Omitting both stays valid (every pre-upgrade ledger line lacks them).
+    expect(validateJudgment(j('1')).ok).toBe(true);
+  });
+
+  it('rejects an unknown severity or a non-string suggestion', () => {
+    expect(validateJudgment(j('1', { severity: 'huge' as never })).ok).toBe(false);
+    expect(validateJudgment(j('1', { suggestion: 42 as never })).ok).toBe(false);
+  });
 });

@@ -4,7 +4,13 @@
 // unit-testable without touching the disk or the live content.
 
 import type { Judgment, JudgmentLevel, JudgmentTarget, Verdict } from '@/content/judgments';
-import { JUDGMENT_LEVELS, targetId } from '@/content/judgments';
+import { JUDGMENT_LEVELS, SEVERITY_WEIGHT, targetId } from '@/content/judgments';
+
+// A judgment's severity weight, treating an unrated negative as 0 so rated items
+// of the same verdict rank ahead of unrated ones.
+function severityWeight(j: Judgment): number {
+  return j.severity ? SEVERITY_WEIGHT[j.severity] : 0;
+}
 
 // ---- Revision queue ---------------------------------------------------------
 
@@ -15,14 +21,17 @@ export const QUEUE_ORDER: readonly Verdict[] = ['cut', 'fix', 'flat'] as const;
 // keep is zero: a kept span is not a problem to triage.
 export const NEGATIVE_WEIGHT: Record<Verdict, number> = { cut: 3, fix: 2, flat: 1, keep: 0 };
 
-// Build the revision queue: cut, then fix, then flat; within a verdict, by day,
-// then by facet, then by sentence position, so a day reads top to bottom.
+// Build the revision queue: cut, then fix, then flat; within a verdict, by
+// severity (major before minor before unrated), then by day, then by facet, then
+// by sentence position, so the most damaging items surface first and a day still
+// reads top to bottom.
 export function revisionQueue(current: Judgment[]): Judgment[] {
   return current
     .filter((j) => QUEUE_ORDER.includes(j.verdict))
     .sort(
       (a, b) =>
         QUEUE_ORDER.indexOf(a.verdict) - QUEUE_ORDER.indexOf(b.verdict) ||
+        severityWeight(b) - severityWeight(a) ||
         a.target.day - b.target.day ||
         (a.target.facet ?? '').localeCompare(b.target.facet ?? '') ||
         (a.target.sentenceIndex ?? -1) - (b.target.sentenceIndex ?? -1),

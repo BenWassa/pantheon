@@ -125,4 +125,15 @@ describe('rollup', () => {
     expect(r.byDay.get('hubris')?.byVerdict).toMatchObject({ keep: 1, cut: 1 });
     expect(r.byDay.get('patience')?.byVerdict.fix).toBe(1);
   });
+
+  it('counts severities and judgments carrying a suggestion', () => {
+    const r = rollup([
+      j({ id: '1', at: 't1', verdict: 'cut', severity: 'major' }),
+      j({ id: '2', at: 't2', verdict: 'fix', severity: 'minor', suggestion: 'a rewrite' }),
+      j({ id: '3', at: 't3', verdict: 'keep' }), // no severity, no suggestion
+    ]);
+
+    expect(r.bySeverity).toEqual({ major: 1, minor: 1 });
+    expect(r.withSuggestion).toBe(1);
+  });
 });

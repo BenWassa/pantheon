@@ -3,6 +3,9 @@ import {
   JUDGMENT_TAGS,
   type Judgment,
   type JudgmentTag,
+  type Severity,
+  SEVERITIES,
+  SEVERITY_LABELS,
   type Verdict,
   TAG_LABELS,
   VERDICTS,
@@ -36,10 +39,15 @@ export interface StudioCardProps {
   current?: Judgment; // the latest verdict recorded for this target
   draftTags: JudgmentTag[];
   draftNote: string;
+  draftSuggestion: string;
+  draftSeverity?: Severity; // the severity to attach to the next negative verdict
+  echo?: boolean; // pulse the just-recorded verdict for fast-keying feedback
   onFocus: () => void;
   onVerdict: (verdict: Verdict) => void;
   onToggleTag: (tag: JudgmentTag) => void;
   onNote: (note: string) => void;
+  onSuggestion: (suggestion: string) => void;
+  onSeverity: (severity: Severity | undefined) => void;
   onUndo: () => void;
 }
 
@@ -49,10 +57,15 @@ export function StudioCard({
   current,
   draftTags,
   draftNote,
+  draftSuggestion,
+  draftSeverity,
+  echo,
   onFocus,
   onVerdict,
   onToggleTag,
   onNote,
+  onSuggestion,
+  onSeverity,
   onUndo,
 }: StudioCardProps) {
   const ref = useRef<HTMLDivElement>(null);
@@ -95,9 +108,10 @@ export function StudioCard({
         <div className="flex items-center gap-2">
           {current ? (
             <span
-              className={`rounded border px-1.5 py-0.5 text-[0.6rem] uppercase tracking-widest2 ${VERDICT_STYLE[current.verdict]}`}
+              className={`rounded border px-1.5 py-0.5 text-[0.6rem] uppercase tracking-widest2 ${VERDICT_STYLE[current.verdict]} ${echo ? 'animate-pulse' : ''}`}
             >
               {VERDICT_LABELS[current.verdict]}
+              {current.severity ? ` · ${current.severity}` : ''}
             </span>
           ) : null}
           <StatusBadge status={item.status} />
@@ -150,6 +164,32 @@ export function StudioCard({
             ) : null}
           </div>
 
+          {/* Severity refines a negative verdict; it is optional and off by default. */}
+          <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs">
+            <span className="text-ink-faint">Severity</span>
+            {SEVERITIES.map((sev) => {
+              const on = draftSeverity === sev;
+              return (
+                <button
+                  key={sev}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSeverity(on ? undefined : sev);
+                  }}
+                  className={`rounded border px-2 py-0.5 ${
+                    on
+                      ? 'border-ember bg-ember/10 text-ember'
+                      : 'border-night-raised text-ink-faint hover:text-ink-muted'
+                  }`}
+                >
+                  {SEVERITY_LABELS[sev]}
+                </button>
+              );
+            })}
+            <span className="text-[0.65rem] text-ink-faint">[ ] to set</span>
+          </div>
+
           <div className="mt-3 flex flex-wrap gap-1.5">
             {JUDGMENT_TAGS.map((tag) => {
               const on = draftTags.includes(tag);
@@ -183,8 +223,21 @@ export function StudioCard({
             className="mt-3 w-full resize-y rounded border border-night-raised bg-night px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:border-ember/60 focus:outline-none"
           />
 
+          <textarea
+            value={draftSuggestion}
+            onChange={(e) => onSuggestion(e.target.value)}
+            onClick={(e) => e.stopPropagation()}
+            placeholder="Suggested rewrite (s): the version you'd ship instead. Carried into the report."
+            rows={2}
+            data-studio-suggestion
+            className="mt-2 w-full resize-y rounded border border-night-raised bg-night px-3 py-2 text-sm text-ink placeholder:text-ink-faint focus:border-ember/60 focus:outline-none"
+          />
+
           {current?.note ? (
             <p className="mt-2 text-xs text-ink-faint">Last note: {current.note}</p>
+          ) : null}
+          {current?.suggestion ? (
+            <p className="mt-1 text-xs text-ink-faint">Last suggestion: {current.suggestion}</p>
           ) : null}
         </div>
       ) : null}

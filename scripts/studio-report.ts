@@ -24,6 +24,12 @@ import {
   rollup,
   splitSentences,
 } from '@/content/judgments';
+
+// "FIX" or "FIX (major)" — the verdict, with severity when the reviewer rated it.
+function verdictLabel(j: Judgment): string {
+  const base = VERDICT_LABELS[j.verdict].toUpperCase();
+  return j.severity ? `${base} (${j.severity})` : base;
+}
 import { loadDays } from './lib/content.ts';
 import { readLedger } from './lib/judgmentsFile.ts';
 import { LENSES, LENS_LABELS, buildFeed, type Lens } from '../src/studio/feed.ts';
@@ -129,17 +135,19 @@ if (readinessBlockers.length === 0) {
 printCoverage();
 printNextGaps();
 
-console.log(`Revision queue (${queue.length}):`);
+const queueSuggestions = queue.filter((j) => j.suggestion).length;
+console.log(
+  `Revision queue (${queue.length}${queueSuggestions ? `, ${queueSuggestions} with suggestions` : ''}):`,
+);
 if (queue.length === 0) {
   console.log('  Nothing flagged. Everything reviewed currently reads as keep.');
 } else {
   for (const j of queue) {
     const tags = j.tags.length ? `  [${j.tags.map((t) => TAG_LABELS[t]).join(', ')}]` : '';
     const stale = isStale(j, currentText) ? '  (stale: content changed since judged)' : '';
-    console.log(
-      `  ${VERDICT_LABELS[j.verdict].toUpperCase().padEnd(4)} ${locate(j.target)}${tags}${stale}`,
-    );
+    console.log(`  ${verdictLabel(j).padEnd(12)} ${locate(j.target)}${tags}${stale}`);
     if (j.target.text) console.log(`       “${excerpt(j.target.text)}”`);
+    if (j.suggestion) console.log(`       → suggested: “${excerpt(j.suggestion, 120)}”`);
     if (j.note) console.log(`       note: ${j.note}`);
   }
 }
@@ -161,6 +169,13 @@ if (trust.length === 0) {
 console.log('\nVerdicts (current opinion per target):');
 for (const v of ['keep', 'flat', 'fix', 'cut'] as Verdict[]) {
   console.log(`  ${VERDICT_LABELS[v].padEnd(5)} ${totals.byVerdict[v]}`);
+}
+
+const rated = totals.bySeverity.major + totals.bySeverity.minor;
+if (rated > 0 || totals.withSuggestion > 0) {
+  console.log(
+    `\nSeverity: major ${totals.bySeverity.major}  minor ${totals.bySeverity.minor}  ·  ${totals.withSuggestion} with a suggested rewrite`,
+  );
 }
 
 console.log('\nTag signals:');

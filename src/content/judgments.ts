@@ -63,6 +63,24 @@ export const VERDICT_KEYS: Record<string, Verdict> = {
   '4': 'cut',
 };
 
+// ---- Severity --------------------------------------------------------------
+
+// How badly a negative verdict needs attention. Only meaningful for flat/fix/cut
+// (a kept span has nothing to triage); optional, so a fast reviewer can skip it.
+// It refines the revision queue: within a verdict, majors surface before minors.
+export type Severity = 'minor' | 'major';
+
+export const SEVERITIES: readonly Severity[] = ['minor', 'major'] as const;
+
+export const SEVERITY_LABELS: Record<Severity, string> = {
+  minor: 'minor',
+  major: 'major',
+};
+
+// Ordering weight for the revision queue: heavier sorts first. Absent severity
+// counts as 0, so an unrated negative falls below a rated one of the same verdict.
+export const SEVERITY_WEIGHT: Record<Severity, number> = { major: 2, minor: 1 };
+
 // ---- Tags ------------------------------------------------------------------
 
 // Optional signal tags naming what kind of judgment this is. A controlled set so
@@ -122,6 +140,8 @@ export interface Judgment {
   verdict: Verdict;
   tags: JudgmentTag[];
   note?: string;
+  severity?: Severity; // how badly a negative verdict needs work; orders the queue
+  suggestion?: string; // the reviewer's proposed rewrite, carried into the report
 }
 
 // ---- Identity --------------------------------------------------------------
@@ -196,11 +216,17 @@ export interface JudgmentRollup {
   total: number; // judgments in the current view
   byVerdict: Record<Verdict, number>;
   byTag: Record<JudgmentTag, number>;
+  bySeverity: Record<Severity, number>; // rated negatives, by how bad
+  withSuggestion: number; // how many carry a proposed rewrite
   byDay: Map<string, { slug: string; day: number; byVerdict: Record<Verdict, number> }>;
 }
 
 function zeroVerdicts(): Record<Verdict, number> {
   return { keep: 0, flat: 0, fix: 0, cut: 0 };
+}
+
+function zeroSeverities(): Record<Severity, number> {
+  return { minor: 0, major: 0 };
 }
 
 function zeroTags(): Record<JudgmentTag, number> {
@@ -223,12 +249,16 @@ export function rollup(judgments: Judgment[]): JudgmentRollup {
     total: judgments.length,
     byVerdict: zeroVerdicts(),
     byTag: zeroTags(),
+    bySeverity: zeroSeverities(),
+    withSuggestion: 0,
     byDay: new Map(),
   };
 
   for (const j of judgments) {
     out.byVerdict[j.verdict] += 1;
     for (const tag of j.tags) out.byTag[tag] += 1;
+    if (j.severity) out.bySeverity[j.severity] += 1;
+    if (j.suggestion) out.withSuggestion += 1;
 
     const dayKey = j.target.slug;
     const day = out.byDay.get(dayKey) ?? {

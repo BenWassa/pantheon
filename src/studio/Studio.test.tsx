@@ -25,6 +25,12 @@ const hubris = JSON.parse(
 ) as Day;
 
 beforeEach(() => {
+  // Clear call history so a test's assertions on call counts never see calls
+  // leaked from an earlier test in the file.
+  fetchDays.mockClear();
+  fetchJudgments.mockClear();
+  postJudgment.mockClear();
+  deleteJudgment.mockClear();
   fetchDays.mockResolvedValue([hubris]);
   fetchJudgments.mockResolvedValue([]);
   postJudgment.mockImplementation((j: Judgment) => Promise.resolve(j));
@@ -35,7 +41,7 @@ describe('Studio', () => {
   it('loads the corpus and shows the day-lens card', async () => {
     render(<Studio />);
     expect(await screen.findByRole('heading', { name: 'Hubris' })).toBeInTheDocument();
-    expect(screen.getByText(/reviewed in this lens/)).toBeInTheDocument();
+    expect(screen.getByText(/reviewed/)).toBeInTheDocument();
   });
 
   it('records a verdict for the focused card and advances', async () => {
@@ -73,6 +79,44 @@ describe('Studio', () => {
 
     expect(
       await screen.findByText('Everything in this lens has a current judgment.'),
+    ).toBeInTheDocument();
+  });
+
+  it('carries a typed suggestion onto the recorded judgment', async () => {
+    const user = userEvent.setup();
+    render(<Studio />);
+    await screen.findByRole('heading', { name: 'Hubris' });
+
+    await user.type(
+      screen.getByPlaceholderText(/Suggested rewrite/),
+      'A tighter line about overreach.',
+    );
+    await user.click(screen.getByRole('button', { name: /Fix/ }));
+
+    await waitFor(() => expect(postJudgment).toHaveBeenCalledTimes(1));
+    const sent = postJudgment.mock.calls[0]![0] as Judgment;
+    expect(sent.verdict).toBe('fix');
+    expect(sent.suggestion).toBe('A tighter line about overreach.');
+  });
+
+  it('skips judged cards when jumping to the next gap with n', async () => {
+    const user = userEvent.setup();
+    render(<Studio />);
+    await screen.findByRole('heading', { name: 'Hubris' });
+
+    // Facet lens: six cards in charter order, the first is the Person facet.
+    await user.click(screen.getByRole('button', { name: 'Facet' }));
+    expect(await screen.findByRole('heading', { name: 'Qin Shi Huang' })).toBeInTheDocument();
+
+    // Judge facets 0 and 1 (each Keep auto-advances), then walk back to facet 0.
+    await user.click(screen.getByRole('button', { name: /Keep/ })); // facet 0 -> 1
+    await user.click(screen.getByRole('button', { name: /Keep/ })); // facet 1 -> 2
+    await user.keyboard('kk'); // back to facet 0
+
+    // n from facet 0 must skip the two judged facets and land on facet 2.
+    await user.keyboard('n');
+    expect(
+      await screen.findByRole('heading', { name: 'Musée des Beaux Arts' }),
     ).toBeInTheDocument();
   });
 });
