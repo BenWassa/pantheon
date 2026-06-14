@@ -10,8 +10,9 @@ hidden until tapped, then reveals a short, sourced piece: a **Person**, a **Pict
 rhyme. A new theme unlocks once per day; the sequence waits if you miss a day.
 
 See [`prd-1.md`](prd-1.md) for the product spec, [`editorial-charter.md`](editorial-charter.md)
-for the standard every day of content is held to, and [`data-model.md`](data-model.md)
-for the content model.
+for the standard every day of content is held to, [`data-model.md`](data-model.md)
+for the content model, and [`studio.md`](studio.md) for the private review layer
+where AI-generated content is judged before it ships.
 
 ## Tech
 
@@ -42,6 +43,8 @@ Open the printed local URL. The app starts on Day 1, "Hubris".
 | `npm run validate` | run the content trust gate on its own |
 | `npm run build-manifest` | regenerate `content/manifest.json` and copy content to `public/` |
 | `npm run sync` | reconcile the entity ledger's `usedInDays`/status from the day files (`-- --check` to fail on drift) |
+| `npm run studio` | open the private review layer (the Studio) for judging AI-generated content |
+| `npm run studio:report` | turn captured judgments into a prioritized revision queue |
 
 ## Content pipeline
 
@@ -56,6 +59,15 @@ The library is produced separately from the app runtime. The app only reads fini
 | `npm run sync` | reconcile the ledger to what the days actually reference |
 
 Coverage is queried, not remembered: the scripts read the actual content every run.
+
+## Review layer (Studio)
+
+The Studio is a private, dev-only judgment layer for AI-generated content. It presents
+the corpus as a fast feed at three scales (whole day, single facet, single line) and
+captures instinctive verdicts (keep / flat / fix / cut), signal tags, and notes into a
+durable, git-tracked ledger (`content/judgments.jsonl`). `npm run studio:report` turns
+those judgments into a prioritized revision queue and surfaces trust risks. The reader
+build never includes the Studio or the ledger. See [`studio.md`](studio.md).
 
 The pipeline is a loop: **map** finds the biggest gap, **scout --write** records a candidate
 against it, **deep** scaffolds the day, the author researches and fills it, **validate** holds it

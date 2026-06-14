@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pantheon.local/schema/judgments.schema.json",
+  "title": "Pantheon Studio Judgment",
+  "description": "One captured human judgment about a span of AI-generated content. Mirrors src/content/judgments.ts.",
+  "type": "object",
+  "required": ["id", "at", "target", "verdict", "tags"],
+  "additionalProperties": false,
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "at": { "type": "string", "format": "date-time" },
+    "verdict": { "enum": ["keep", "flat", "fix", "cut"] },
+    "tags": {
+      "type": "array",
+      "items": {
+        "enum": ["resonance", "coherence", "voice", "clarity", "rhythm", "cliche", "source", "copy"]
+      }
+    },
+    "note": { "type": "string" },
+    "target": {
+      "type": "object",
+      "required": ["level", "day", "slug"],
+      "additionalProperties": false,
+      "properties": {
+        "level": { "enum": ["day", "facet", "title", "oneWord", "sentence"] },
+        "day": { "type": "integer", "minimum": 1 },
+        "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "facet": { "enum": ["person", "picture", "poem", "principle", "passage", "parallel"] },
+        "field": { "type": "string" },
+        "sentenceIndex": { "type": "integer", "minimum": 0 },
+        "text": { "type": "string" }
+      }
+    }
+  }
+}

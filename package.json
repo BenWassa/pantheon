@@ -7,6 +7,8 @@
   "scripts": {
     "predev": "tsx scripts/build-manifest.ts && tsx scripts/validate.ts",
     "dev": "vite",
+    "studio": "vite --open /studio.html",
+    "studio:report": "tsx scripts/studio-report.ts",
     "prebuild": "tsx scripts/build-manifest.ts && tsx scripts/validate.ts",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
