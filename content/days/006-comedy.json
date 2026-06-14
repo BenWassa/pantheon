@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "index": 6,
+  "slug": "comedy",
+  "theme": "Comedy",
+  "status": "draft",
+  "registers": ["comedy"],
+  "regions": ["europe", "north-america", "global"],
+  "eras": ["post-classical", "modern", "contemporary"],
+  "facets": {
+    "person": {
+      "key": "person",
+      "oneWord": "Tramp",
+      "title": "Charlie Chaplin",
+      "body": "Charlie Chaplin grew up in such poverty in London that his mother was committed to an asylum and he spent time in a workhouse. Out of that childhood he built the Tramp, a shabby gentleman with a bowler hat and a cane who kept his dignity no matter how often the world knocked him down. The films were funny. They were also a quiet argument that the smallest, poorest person on screen deserved the audience's love. In Modern Times he turns the misery of factory life into ballet. Comedy, in his hands, was a way of insisting that the underdog mattered.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "My Autobiography",
+          "author": "Charlie Chaplin",
+          "note": "Seed draft: source indicative. The throwaway sentence 'The films were funny.' is deliberately weak and a candidate for cut or rewrite."
+        }
+      ]
+    },
+    "picture": {
+      "key": "picture",
+      "oneWord": "Jester",
+      "title": "The Court Jester",
+      "body": "This is a placeholder description of a painting or photograph of a court jester. The jester was a figure in royal courts who was allowed to make jokes about the king. Because he was seen as a fool, he could say things that would get a normal person punished. This made comedy a kind of safety valve in society. The image would show the jester in his colourful costume with bells. It is a good example of how humour and power are connected throughout history. The painting reminds us that laughter has always had a serious side underneath it as well.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Placeholder image and description, pending research",
+          "note": "Seed draft, FLAT BY DESIGN: generic prose with clichés ('good example', 'reminds us', 'throughout history') and no actual artwork chosen. A candidate for cut; not for publication."
+        }
+      ],
+      "image": {
+        "src": "images/placeholder.svg",
+        "alt": "Draft placeholder image; no artwork has been selected for this facet.",
+        "attribution": "Draft placeholder image, not a final selection. Choose, source, and license a real image before publication.",
+        "license": "CC0",
+        "sourceUrl": "https://example.org/pantheon-draft-placeholder"
+      }
+    },
+    "poem": {
+      "key": "poem",
+      "oneWord": "Jabberwock",
+      "title": "Jabberwocky",
+      "poet": "Lewis Carroll",
+      "body": "Jabberwocky is the most famous nonsense poem in English, and it should not work at all. Half its words were invented: slithy, brillig, the vorpal blade going snicker snack. And yet the story is perfectly clear. A young hero goes out, slays a monster, and comes home to his father's joy. Carroll proved that the music and grammar of language carry meaning even when the words mean nothing, that we are wired to find sense in shape and rhythm. It is comedy as delight in pure sound. You laugh before you understand, and then you realise there was nothing to understand.",
+      "poem": {
+        "status": "in-copyright",
+        "pointerUrl": "https://www.poetryfoundation.org/",
+        "pointerLabel": "Read the poem at the Poetry Foundation (draft pointer, verify before use)"
+      },
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Jabberwocky, from Through the Looking-Glass",
+          "author": "Lewis Carroll",
+          "note": "Seed draft: poem text, rights, and pointer are unverified placeholders. The work is public domain but this has not been confirmed for this build."
+        }
+      ]
+    },
+    "principle": {
+      "key": "principle",
+      "oneWord": "Incongruity",
+      "title": "The Incongruity Theory",
+      "body": "Why do we laugh? One of the oldest answers is the incongruity theory, defended by Kant and Schopenhauer: laughter is what happens when an expectation is set up and then suddenly violated in a harmless way. The mind braces for one thing and gets another, and the released tension comes out as a laugh. A rival, the superiority theory, says we laugh at others' misfortune to feel above it. A third, relief theory, treats humour as a pressure valve for forbidden thoughts. None of the three explains every joke. Laughter may simply be too quick and too various to be caught by one rule.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Theories of humour: incongruity, superiority, relief",
+          "note": "Seed draft: attributions to Kant and Schopenhauer are indicative and should be checked before publication."
+        }
+      ]
+    },
+    "passage": {
+      "key": "passage",
+      "oneWord": "Twain",
+      "title": "Reports of My Death",
+      "attribution": "attributed to Mark Twain (attribution disputed)",
+      "body": "The reports of my death are greatly exaggerated, Mark Twain supposedly cabled from London after a newspaper printed his obituary by mistake. It is one of the most quoted lines in the language. The trouble is that he probably never said it in that neat form. What he actually wrote was clumsier, something about the report of his illness growing out of his cousin's, and the report of his death being an exaggeration. The polished version is funnier, so the polished version survived. The anecdote is itself a small comedy about how a good joke will always edit a true story to improve the timing.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Mark Twain misquotations",
+          "note": "Seed draft, SOURCE RISK by design: the famous wording is a known misquotation. The facet is about the misattribution itself; verify Twain's actual phrasing before publication."
+        }
+      ]
+    },
+    "parallel": {
+      "key": "parallel",
+      "oneWord": "Emoji",
+      "title": "The Laughing Emoji",
+      "body": "Today the most common way to show laughter is the emoji of a face crying with laughter, which was named word of the year in 2015. Billions of these are sent every day. In a way this connects back to the court jester, because both are ways that society uses humour. The emoji lets people add comedy to their messages just as the jester added comedy to the court. It shows that humans have always needed to laugh together, even when they are far apart and communicating through screens. Technology changes but the human need for comedy stays the same as it ever was.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Oxford word of the year 2015",
+          "note": "Seed draft, WEAK PARALLEL by design: forced link to the jester, flat clichés, and an empty closing line. A strong candidate for cut or full rewrite."
+        }
+      ]
+    }
+  },
+  "resonanceThreads": [
+    {
+      "facets": ["poem", "principle"],
+      "note": "Jabberwocky's harmless violation of sense is the incongruity theory in action: you laugh because the expected meaning is set up and then cheerfully broken."
+    },
+    {
+      "facets": ["person", "passage"],
+      "note": "Chaplin's Tramp keeping his dignity and the polished Twain quip both show comedy editing hardship into something the audience can love."
+    },
+    {
+      "facets": ["picture", "parallel"],
+      "note": "The court jester and the laughing emoji are both licensed outlets for humour; this thread is deliberately weak, linking the day's two flattest facets."
+    }
+  ],
+  "notes": "Seed/test draft for Studio review. Deliberately uneven: the picture and parallel facets are flat and cliché-ridden with a forced analogy (jester to emoji), and the person body contains a weak throwaway sentence ('The films were funny.'). Use this day to exercise flat, fix, and cut verdicts and the cliché, voice, copy, and rhythm tags. The passage facet is built around a knowingly misattributed quote and is flagged for source review. Poem rights and the placeholder image are unverified. Not researched to publication standard."
+}

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "index": 3,
+  "slug": "mercy",
+  "theme": "Mercy",
+  "status": "draft",
+  "registers": ["redemption", "tenderness"],
+  "regions": ["europe", "west-asia", "north-america", "global"],
+  "eras": ["ancient", "early-modern", "contemporary"],
+  "facets": {
+    "person": {
+      "key": "person",
+      "oneWord": "Forgiveness",
+      "title": "Eva Mozes Kor",
+      "body": "Eva Mozes Kor was a survivor of Auschwitz, where she and her twin sister were subjected to experiments. After the war she moved to the United States and built a life. Many years later she decided to forgive the people who had hurt her. She said that forgiveness was not for them but for herself, a way to stop carrying the weight. This decision was controversial and many other survivors disagreed with her strongly. She founded a small museum to educate people. She continued to speak about her experiences until her death in 2019. Her message was about healing.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Echoes from Auschwitz",
+          "author": "Eva Mozes Kor",
+          "note": "Seed draft: source indicative, not verified to charter standard."
+        }
+      ]
+    },
+    "picture": {
+      "key": "picture",
+      "oneWord": "Prodigal",
+      "title": "The Return of the Prodigal Son",
+      "body": "Rembrandt painted the parable near the end of his own ruined life. The son kneels in rags, his shaved head buried against his father's chest, one shoe fallen off. The father bends over him, and his two hands resting on the son's back are painted differently, one strong and one soft, as if mercy needed both a firm grip and a gentle one. An older brother stands apart in shadow, unable to join the welcome. The light does not fall on the one who stayed faithful. It falls on the one who came home. The painting forgives before a single word is spoken.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "The Return of the Prodigal Son",
+          "publisher": "The State Hermitage Museum",
+          "url": "https://www.hermitagemuseum.org/",
+          "note": "Seed draft: the reading of the two hands follows Henri Nouwen and is interpretive; verify and the placeholder image before publication."
+        }
+      ],
+      "image": {
+        "src": "images/placeholder.svg",
+        "alt": "Draft placeholder image standing in for Rembrandt's Return of the Prodigal Son.",
+        "attribution": "Draft placeholder image, not a final selection. Source and license a real image before publication.",
+        "license": "CC0",
+        "sourceUrl": "https://example.org/pantheon-draft-placeholder"
+      }
+    },
+    "poem": {
+      "key": "poem",
+      "oneWord": "Rain",
+      "title": "The Quality of Mercy",
+      "poet": "William Shakespeare",
+      "body": "In The Merchant of Venice, Portia argues that mercy is not strained, that it drops as the gentle rain from heaven upon the place beneath. It blesses twice, she says, the one who gives and the one who takes. Mercy is mightiest in the mighty; it becomes a king better than his crown, because a crown shows earthly power but mercy is an attribute of God himself. Her speech is a plea inside a courtroom that will not, in the end, be merciful. The argument is beautiful and the verdict is cruel, which is part of what the play is about.",
+      "poem": {
+        "status": "in-copyright",
+        "pointerUrl": "https://www.folger.edu/",
+        "pointerLabel": "Read the speech at the Folger Shakespeare Library (draft pointer, verify before use)"
+      },
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "The Merchant of Venice, Act 4 Scene 1",
+          "author": "William Shakespeare",
+          "note": "Seed draft: poem text, rights, and pointer are unverified placeholders. The work is public domain but this has not been confirmed for this build."
+        }
+      ]
+    },
+    "principle": {
+      "key": "principle",
+      "oneWord": "Restorative",
+      "title": "Restorative Justice",
+      "body": "Restorative justice asks a different question than ordinary courts. Instead of asking which law was broken and what punishment fits, it asks who was harmed and what they need. Victim and offender, where both agree, meet face to face. Studies suggest that such programs reduce repeat offending by as much as forty percent and leave victims far more satisfied than conventional trials. The approach has roots in many traditional and indigenous practices that treated crime as a wound in a community rather than an offense against the state. Mercy here is not weakness. It is a more demanding accounting than revenge.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Restorative Justice: Ideas, Values, Debates",
+          "author": "Gerry Johnstone",
+          "note": "Seed draft, SOURCE RISK: the 'forty percent' reduction figure is unverified and likely overstated; confirm or cut before publication."
+        }
+      ]
+    },
+    "passage": {
+      "key": "passage",
+      "oneWord": "Seventy",
+      "title": "Seventy Times Seven",
+      "attribution": "Gospel of Matthew 18:21-22",
+      "body": "Peter comes to Jesus with a reasonable question. How many times must I forgive someone who wrongs me? As many as seven? Seven already sounds generous. The answer he gets is not seventy, but seventy times seven, a number meant to break the calculator rather than set a limit. The point is not to count to four hundred and ninety and then stop. The point is that mercy kept on a ledger is not yet mercy. As long as you are still counting the wrongs, you have not actually let any of them go. Forgiveness ends when the arithmetic does.",
+      "sources": [
+        {
+          "kind": "primary",
+          "title": "Gospel of Matthew 18:21-22",
+          "note": "Seed draft: translation and citation indicative; verify the rendering before publication."
+        }
+      ]
+    },
+    "parallel": {
+      "key": "parallel",
+      "oneWord": "Reset",
+      "title": "Ctrl-Alt-Delete",
+      "body": "When a computer freezes, the user presses three keys at once and the machine restarts, wiping the cluttered memory and beginning fresh. In a way this is like mercy. Mercy also wipes the slate and lets a person begin again with a clean memory, free of the errors that were slowing them down. Just as the reboot does not physically repair the hardware, mercy does not undo what was done. Both simply clear the state so that work can continue. The inventor of the key combination meant it only as a tool for engineers, never imagining it would become a symbol.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "David Bradley and the origin of Control-Alt-Delete",
+          "note": "Seed draft, WEAK PARALLEL by design: the analogy is forced and clichéd; a candidate for cut or replacement."
+        }
+      ]
+    }
+  },
+  "resonanceThreads": [
+    {
+      "facets": ["person", "passage"],
+      "note": "Eva Kor's choice to forgive without counting is Matthew's seventy times seven lived out in the worst place imaginable."
+    },
+    {
+      "facets": ["picture", "poem"],
+      "note": "Rembrandt's father and Portia's gentle rain both insist that mercy is freely given, not earned or strained."
+    },
+    {
+      "facets": ["principle", "parallel"],
+      "note": "Restorative justice and the reboot both promise a fresh start, but one repairs the wound and the other only hides it; the link to the parallel is deliberately loose."
+    }
+  ],
+  "notes": "Seed/test draft for Studio review. Mixed quality by design: the person facet is deliberately flat and expository, the parallel is a deliberately forced analogy, and the principle contains an unverified statistic (the forty percent claim) flagged in its source note. Not researched to publication standard; poem rights and the placeholder image are unverified."
+}

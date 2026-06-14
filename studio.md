@@ -67,10 +67,18 @@ re-review it.
 
 `npm run studio:report` reads the ledger and the live content and prints:
 
-- a **revision queue** (cut, then fix, then flat) with location, tags, excerpt, note;
-- **trust risks**: every current `source` flag, the claims that need verification;
-- verdict and tag signal counts, and a per-day rollup;
-- **stale** judgments to re-review.
+- a **revision queue** (cut, then fix, then flat; then by day, facet, sentence) with
+  location, tags, excerpt, and note;
+- **trust risks**: every current `source` flag, the claims that need verification,
+  with the reviewer's note;
+- **verdict** counts and **tag** counts (most-used first);
+- a **by-level** summary (day / facet / title / reveal word / sentence), so you can see
+  which scale you have actually reviewed;
+- a **per-day** rollup;
+- the **weakest days** and **weakest facets**, ranked by a negative signal score
+  (cut ×3, fix ×2, flat ×1), so the worst material rises to the top;
+- the **strongest keeps**, the clearest "this is alive" signals worth protecting;
+- **stale** judgments to re-review (the text changed after you judged it).
 
 ```
 npm run studio:report -- --day 1    # focus one day
@@ -87,3 +95,59 @@ The content pipeline (`map → scout → deep → validate → sync`) produces a
 days. The Studio sits between `deep` (a day is drafted) and `validate`/publish (a day
 is trusted): it is the human pass that decides whether the prose is alive and the
 claims are safe before a day is promoted toward `published`.
+
+## The seed corpus
+
+The repo ships one published calibration day (Hubris) plus six **draft** days seeded
+specifically for Studio testing: Vastness, Mercy, Exile, Defiance, Comedy, and Repair.
+They are deliberately uneven. Vastness and Repair are meant to read as strong, tightly
+resonant days; Mercy, Exile, and Comedy each carry intentionally flat prose, weak reveal
+words, forced parallels, and sentences that should probably be cut. Several facets carry
+**source-risk** notes (an unverified statistic, a vague attribution, quoted in-copyright
+lyrics, placeholder images). Every seed day's `notes` field says what is wrong with it on
+purpose.
+
+These days are **draft**, never `published`. They are not researched to charter standard,
+their pictures are placeholders, and their poem rights are unverified. They exist to give
+the review loop something real to chew on, not to ship. The default reader build
+(`npm run build`) includes only `published` days, so none of this seed content reaches a
+reader.
+
+## First testing session
+
+A concrete script for the first real human pass. Budget about 30–45 minutes.
+
+1. `npm install`
+2. `npm run validate` — confirms the corpus passes the trust gate (expect 0 errors).
+3. `npm test` — confirms the Studio logic is green.
+4. `npm run studio` — opens the feed against the dev server.
+5. **Review 5–7 day cards** (Day lens). Ask: does the day cohere? Do the six reveal
+   words sing together? Are the resonance threads real or forced? Verdict + tags
+   (`resonance`, `coherence`), one-line note.
+6. **Review 20–40 facet cards** (Facet lens, press `g`). Ask: does this facet earn its
+   place? Is the prose alive or lifeless? Use `voice`, `cliché`, `source` freely.
+7. **Review 50–100 line cards** (Line lens). Reveal words, titles, single sentences.
+   This is where copy quality and factual claims surface. Use `copy`, `rhythm`,
+   `clarity`, `source`.
+8. **Tag aggressively.** The tags are the report's raw material: `source` becomes the
+   trust-risk list, `cliché`/`voice` reveal voice problems, `copy`/`rhythm` flag
+   word-level work. A verdict with no tag is a weaker signal.
+9. `npm run studio:report` — turn the session into a revision queue.
+10. **Read the report top-down.** The revision queue is your worklist (cut first, then
+    fix, then flat). The trust-risk list is what to verify or cut before anything is
+    promoted. The weakest-days/weakest-facets tables tell you where the rot is
+    concentrated; the strongest-keeps list tells you what to protect. Stale entries mean
+    re-review.
+
+What "done" looks like for this first pass: roughly 75–150 judgments in the ledger, a
+revision queue that names specific sentences and facets to cut or fix, and a clear sense
+of which two or three draft days are worth carrying forward versus rebuilding.
+
+### What is still weak (for after the first session)
+
+- Verdicts and tags are captured per span, but there is no in-Studio diff view yet: when
+  a span goes stale, the report tells you *that* it changed, not *how*.
+- The seed pictures are placeholders and the poems use pointer stubs; sourcing real,
+  licensed images and confirmed poem rights is the obvious next content pass.
+- The report ranks by a fixed negative-signal weighting; once you have real data you may
+  want to tune those weights or filter by tag.

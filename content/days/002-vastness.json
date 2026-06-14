@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "index": 2,
+  "slug": "vastness",
+  "theme": "Vastness",
+  "status": "draft",
+  "registers": ["awe"],
+  "regions": ["north-america", "south-america", "global"],
+  "eras": ["modern", "contemporary"],
+  "facets": {
+    "person": {
+      "key": "person",
+      "oneWord": "Computer",
+      "title": "Henrietta Swan Leavitt",
+      "body": "At Harvard College Observatory she was hired as a computer, one of the women paid to measure stars on glass photographic plates. Studying variable stars in the Magellanic Clouds, she noticed that the brightest ones pulsed most slowly, and that the rhythm of a star could betray its true brightness. From that single regularity astronomers learned to read distance from light, and the universe stopped being a flat ceiling of dots and became deep. She was paid thirty cents an hour. Hubble used her law to prove that other galaxies exist, far beyond our own.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Miss Leavitt's Stars",
+          "author": "George Johnson",
+          "publisher": "W. W. Norton",
+          "year": 2005,
+          "note": "Seed draft: source indicative, not verified to charter standard."
+        }
+      ]
+    },
+    "picture": {
+      "key": "picture",
+      "oneWord": "Field",
+      "title": "The Hubble Deep Field",
+      "body": "For ten days in 1995 the Hubble telescope stared at a patch of empty sky no bigger than a grain of sand held at arm's length. Astronomers had argued against wasting the time on nothing. The nothing turned out to hold roughly three thousand galaxies, each a city of billions of suns, layered back almost to the beginning of time. Look at the image and every smudge of light is not a star but an entire galaxy. The emptiest direction you could choose was crowded. There is no empty sky, only sky we have not yet looked at hard enough.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Hubble Deep Field",
+          "publisher": "NASA / Space Telescope Science Institute",
+          "url": "https://www.nasa.gov/",
+          "note": "Seed draft: source and figures indicative; verify before publication."
+        }
+      ],
+      "image": {
+        "src": "images/placeholder.svg",
+        "alt": "Draft placeholder image standing in for the Hubble Deep Field.",
+        "attribution": "Draft placeholder image, not a final selection. Source and license a real image before publication.",
+        "license": "CC0",
+        "sourceUrl": "https://example.org/pantheon-draft-placeholder"
+      }
+    },
+    "poem": {
+      "key": "poem",
+      "oneWord": "Silence",
+      "title": "When I Heard the Learn'd Astronomer",
+      "poet": "Walt Whitman",
+      "body": "Whitman sits in a lecture hall while an astronomer ranges the proofs and figures in neat columns, adds, divides, and measures the heavens with much applause. The speaker grows tired and sick of it. He rises, glides out alone into the moist night air, and looks up in perfect silence at the stars. The poem does not argue that the science is wrong. It argues that a chart of the sky is not the sky. Knowing the distance to a star and standing dumbstruck beneath it are two different kinds of knowledge, and the second one cannot be lectured.",
+      "poem": {
+        "status": "in-copyright",
+        "pointerUrl": "https://www.poetryfoundation.org/",
+        "pointerLabel": "Find this poem at the Poetry Foundation (draft pointer, verify before use)"
+      },
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "When I Heard the Learn'd Astronomer",
+          "author": "Walt Whitman",
+          "note": "Seed draft: poem text, rights, and pointer are unverified placeholders. The work is likely public domain but this has not been confirmed for this build. Do not publish as is."
+        }
+      ]
+    },
+    "principle": {
+      "key": "principle",
+      "oneWord": "Scale",
+      "title": "The Cosmic Calendar",
+      "body": "Carl Sagan compressed the whole history of the universe into a single year. The Big Bang falls on the first of January. The Milky Way forms in spring. Our sun and earth do not appear until September. Dinosaurs arrive on Christmas Eve and are gone by the morning of the twenty eighth. All of recorded human history, every empire and war and poem, fits into the last few seconds before midnight on the thirty first of December. The calendar is not meant to make you feel small. It is meant to make you feel astonishingly recent, and briefly, improbably here.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "The Cosmic Calendar",
+          "author": "Carl Sagan",
+          "note": "Seed draft: source indicative; dates within the calendar are approximate and should be checked."
+        }
+      ]
+    },
+    "passage": {
+      "key": "passage",
+      "oneWord": "Pale",
+      "title": "Pale Blue Dot",
+      "attribution": "Carl Sagan, Pale Blue Dot, 1994 (paraphrased)",
+      "body": "In 1990 the Voyager spacecraft, four billion miles out, turned its camera back toward home and photographed the earth as a single pale blue dot, smaller than a pixel, suspended in a beam of scattered sunlight. Sagan wrote that on that dot lives everyone you have ever heard of. Every saint and sinner, every pair of lovers, every confident emperor, the whole cast of human history occupies one bright speck. He drew no comfort from cosmic religion. The lesson he took was responsibility. There is no hint that help will come from elsewhere to save us from ourselves.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Pale Blue Dot: A Vision of the Human Future in Space",
+          "author": "Carl Sagan",
+          "publisher": "Random House",
+          "year": 1994,
+          "note": "Seed draft: body paraphrases Sagan; quote any wording exactly and verify before publication."
+        }
+      ]
+    },
+    "parallel": {
+      "key": "parallel",
+      "oneWord": "Library",
+      "title": "The Library of Babel",
+      "body": "Jorge Luis Borges imagined a library containing every possible book: every arrangement of letters, and therefore every truth, every lie, and every nonsense in between. Somewhere in it sits the true history of your life, and beside it thousands of false ones, indistinguishable on the shelf. The librarians wander galleries that never end, mad with the knowledge that all answers exist and none can be found. It rhymes with the deep field. Both face a vastness so total that meaning is not given but chosen. Abundance without judgment is just another kind of darkness, whether the smudges are galaxies or books.",
+      "sources": [
+        {
+          "kind": "primary",
+          "title": "The Library of Babel",
+          "author": "Jorge Luis Borges",
+          "year": 1941,
+          "note": "Seed draft: source indicative, not verified to charter standard."
+        }
+      ]
+    }
+  },
+  "resonanceThreads": [
+    {
+      "facets": ["picture", "parallel"],
+      "note": "The Hubble Deep Field and Borges's infinite library are the same problem: a vastness so full that meaning must be chosen, not found."
+    },
+    {
+      "facets": ["person", "principle", "passage"],
+      "note": "Leavitt's yardstick, Sagan's calendar, and the pale blue dot all convert raw cosmic scale into a human measure you can stand inside."
+    },
+    {
+      "facets": ["poem", "passage"],
+      "note": "Whitman walks out of the lecture to look up in silence; Sagan looks back from four billion miles. Both trade the chart for the awe."
+    }
+  ],
+  "notes": "Seed/test draft for Studio review. Intended as a strong, high-resonance day to calibrate the 'keep' end of the scale. Not researched to publication standard: sources are indicative, the picture uses a placeholder image, and poem rights are unverified placeholders."
+}

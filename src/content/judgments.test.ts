@@ -43,6 +43,20 @@ describe('splitSentences', () => {
     );
   });
 
+  it('keeps a mid-name initial together (real seed content)', () => {
+    // From the Defiance seed day: a middle initial must not start a new card, and an
+    // all-caps acronym followed by a period is a real sentence end.
+    expect(
+      splitSentences(
+        'Ida B. Wells became a journalist who refused to look away. She helped found the NAACP. She named the killers.',
+      ),
+    ).toEqual([
+      'Ida B. Wells became a journalist who refused to look away.',
+      'She helped found the NAACP.',
+      'She named the killers.',
+    ]);
+  });
+
   it('returns an empty array for blank input', () => {
     expect(splitSentences('   ')).toEqual([]);
   });

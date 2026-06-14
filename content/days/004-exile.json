@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "index": 4,
+  "slug": "exile",
+  "theme": "Exile",
+  "status": "draft",
+  "registers": ["elegy"],
+  "regions": ["mediterranean", "west-asia", "europe", "global"],
+  "eras": ["ancient", "modern", "contemporary"],
+  "facets": {
+    "person": {
+      "key": "person",
+      "oneWord": "Tomis",
+      "title": "Ovid at Tomis",
+      "body": "At the height of his fame the poet Ovid was banished by the emperor Augustus to Tomis, a cold outpost on the Black Sea at the edge of the Roman world. The reason was never fully stated; Ovid wrote only of a poem and a mistake. There he spent the last decade of his life among people whose language he did not speak, writing letters home in elegant verse, begging to be recalled. He never was. He died in exile around 17 CE. His sorrows survive him, while the offense that earned them is lost. We mourn a wound whose cause no one can name.",
+      "sources": [
+        {
+          "kind": "primary",
+          "title": "Tristia and Epistulae ex Ponto",
+          "author": "Ovid",
+          "note": "Seed draft: the year of death (17 or 18 CE) and the reason for exile are uncertain and flagged; verify before publication."
+        }
+      ]
+    },
+    "picture": {
+      "key": "picture",
+      "oneWord": "Boat",
+      "title": "The Boat",
+      "body": "This facet describes a painting of refugees in a small boat on a grey sea. There are many people crowded together and the water looks cold and dangerous. The sky is dark and there is no land in sight. The painting is meant to show how hard it is for people who have to leave their homes. It makes the viewer feel sad and think about the situation of migrants today. The artist used dark colours to create a serious mood. It is an important subject and the painting handles it in a thoughtful and moving way for the audience.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Placeholder image and description, pending research",
+          "note": "Seed draft, FLAT BY DESIGN: generic prose, weak reveal word, no actual artwork chosen. A candidate for rewrite or cut; not for publication."
+        }
+      ],
+      "image": {
+        "src": "images/placeholder.svg",
+        "alt": "Draft placeholder image; no artwork has been selected for this facet.",
+        "attribution": "Draft placeholder image, not a final selection. Choose, source, and license a real image before publication.",
+        "license": "CC0",
+        "sourceUrl": "https://example.org/pantheon-draft-placeholder"
+      }
+    },
+    "poem": {
+      "key": "poem",
+      "oneWord": "Ithaka",
+      "title": "Ithaka",
+      "poet": "C. P. Cavafy",
+      "body": "Cavafy takes the return of Odysseus and turns it inside out. He tells the traveler to hope the road is long, full of adventure and discovery, and not to hurry the journey home. Ithaka gave you the marvelous voyage, the poem says; without her you would never have set out. And if you find her poor at the end, she has not deceived you. By then you will have understood what these Ithakas mean. Exile, in Cavafy's hands, is not only loss. The home you cannot return to is also the thing that gave your wandering its shape and meaning.",
+      "poem": {
+        "status": "in-copyright",
+        "pointerUrl": "https://www.poetryfoundation.org/",
+        "pointerLabel": "Find a licensed translation at the Poetry Foundation (draft pointer, verify before use)"
+      },
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Ithaka",
+          "author": "C. P. Cavafy",
+          "note": "Seed draft: translation, rights, and pointer are unverified placeholders. Confirm which translation is licensed before publication."
+        }
+      ]
+    },
+    "principle": {
+      "key": "principle",
+      "oneWord": "Diaspora",
+      "title": "Diaspora",
+      "body": "The word diaspora comes from the Greek for a scattering of seed. It first described the dispersal of the Jewish people from their homeland, but it now names any community spread far from where it began while still holding a thread back to it. A diaspora lives in two places at once: in the country it inhabits and in the memory of the one it left. This double life can be a grief and also a strength. Languages, recipes, and songs that vanish at home are sometimes kept alive abroad. What is scattered does not only disperse. Sometimes it takes root somewhere new.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Diaspora: An Introduction",
+          "note": "Seed draft: source indicative, not verified to charter standard."
+        }
+      ]
+    },
+    "passage": {
+      "key": "passage",
+      "oneWord": "Rivers",
+      "title": "By the Rivers of Babylon",
+      "attribution": "Psalm 137",
+      "body": "By the rivers of Babylon, the psalm begins, there we sat down and wept when we remembered Zion. The exiles hang their harps on the willows, because their captors demand a song and they cannot sing the Lord's song in a strange land. How shall we sing, they ask, in a foreign place? It is one of the oldest surviving cries of homesickness, three thousand years old and still exact. The psalm ends in a verse so violent that many congregations refuse to read it aloud. Grief and rage, it admits, are often the same wound seen from two sides.",
+      "sources": [
+        {
+          "kind": "primary",
+          "title": "Psalm 137",
+          "note": "Seed draft: the 'three thousand years' dating is approximate and flagged; verify translation and citation before publication."
+        }
+      ]
+    },
+    "parallel": {
+      "key": "parallel",
+      "oneWord": "Voyager",
+      "title": "The Voyager Golden Record",
+      "body": "In 1977 NASA bolted a gold-plated record to each Voyager probe, carrying greetings in fifty five languages, the sound of a kiss, a mother's first words to her child, and music from Bach to Chuck Berry. The probes are now beyond the solar system, the first human objects in interstellar space. They are a kind of exile in reverse: not a people driven from home, but a message that can never come home, drifting outward for a billion years toward listeners who may not exist. Every exile sends something back that it knows will never return. So did we.",
+      "sources": [
+        {
+          "kind": "secondary",
+          "title": "Murmurs of Earth: The Voyager Interstellar Record",
+          "author": "Carl Sagan and others",
+          "note": "Seed draft: source indicative. Note this repeats Voyager from the Vastness day; reviewers may flag the reuse."
+        }
+      ]
+    }
+  },
+  "resonanceThreads": [
+    {
+      "facets": ["person", "poem"],
+      "note": "Ovid begging Rome to recall him and Cavafy telling the traveler not to hurry home are two answers to the same exile: one cannot return, the other learns not to want to."
+    },
+    {
+      "facets": ["passage", "principle"],
+      "note": "Psalm 137's harps on the willows and the idea of diaspora both hold the paradox of keeping a homeland alive precisely by being kept from it."
+    },
+    {
+      "facets": ["picture", "parallel"],
+      "note": "The refugee boat and the Voyager record both send a human signal across a hostile void; this thread is deliberately loose, anchored to the day's weakest facet."
+    }
+  ],
+  "notes": "Seed/test draft for Studio review. The picture facet is deliberately flat and cliché-ridden with a weak reveal word ('Boat'); use it to exercise flat and cut verdicts and the cliché, voice, and copy tags. Dates (Ovid's death, the age of Psalm 137) are approximate and flagged as source risks. The Voyager parallel deliberately repeats material from the Vastness day. Poem rights and the placeholder image are unverified. Not researched to publication standard."
+}

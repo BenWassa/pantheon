@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import type { Day, Facet, FacetKey } from '@/content/types';
 import { FACET_ORDER } from '@/content/types';
 import { buildFeed } from './feed';
+import { loadDays } from '../../scripts/lib/content.ts';
 
 function facet(key: FacetKey, over: Partial<Facet> = {}): Facet {
   return {
@@ -75,5 +76,23 @@ describe('buildFeed', () => {
   it('carries the day status onto each item for filtering', () => {
     const feed = buildFeed([day({ status: 'draft' })], 'facet');
     expect(feed.every((i) => i.status === 'draft')).toBe(true);
+  });
+});
+
+describe('buildFeed over the real seed corpus', () => {
+  // Guards the "definition of done": the Studio must have a non-trivial feed to
+  // review on a clean checkout, including unpublished draft days.
+  const days = loadDays().map(({ day }) => day);
+
+  it('loads multiple days and includes drafts to review', () => {
+    expect(days.length).toBeGreaterThanOrEqual(5);
+    expect(days.some((d) => d.status === 'draft')).toBe(true);
+  });
+
+  it('produces a substantial line feed for fast judgment', () => {
+    const lineFeed = buildFeed(days, 'line');
+    // 6 facets/day, each at least a reveal word + a title + 1 sentence.
+    expect(lineFeed.length).toBeGreaterThan(days.length * 6 * 3);
+    expect(new Set(lineFeed.map((i) => i.id)).size).toBe(lineFeed.length); // ids stay unique
   });
 });
