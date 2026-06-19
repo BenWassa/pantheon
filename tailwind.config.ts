@@ -15,7 +15,7 @@ export default {
         ink: {
           DEFAULT: '#e8e4d9', // parchment foreground
           muted: '#9a958a',
-          faint: '#5c5950',
+          faint: '#8a8680',
         },
         ember: '#c9a35b', // a single restrained accent
       },

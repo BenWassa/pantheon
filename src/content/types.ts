@@ -89,25 +89,30 @@ interface FacetBase {
 
 export interface PersonFacet extends FacetBase {
   key: 'person';
+  image?: ImageRef;
 }
 export interface PrincipleFacet extends FacetBase {
   key: 'principle';
+  image?: ImageRef;
 }
 export interface ParallelFacet extends FacetBase {
   key: 'parallel';
+  image?: ImageRef;
 }
 export interface PassageFacet extends FacetBase {
   key: 'passage';
   attribution?: string; // where the passage is drawn from
-}
-export interface PictureFacet extends FacetBase {
-  key: 'picture';
-  image: ImageRef;
+  image?: ImageRef;
 }
 export interface PoemFacet extends FacetBase {
   key: 'poem';
   poet?: string;
   poem: PoemText;
+  image?: ImageRef;
+}
+export interface PictureFacet extends FacetBase {
+  key: 'picture';
+  image: ImageRef;
 }
 
 export type Facet =

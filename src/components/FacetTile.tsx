@@ -34,7 +34,7 @@ export function FacetTile({
       aria-label={`Reveal the ${label} facet: ${oneWord}`}
       style={{ animationDelay: `${index * 70}ms` }}
       className={[
-        'group relative flex aspect-square min-h-32 overflow-hidden rounded-lg border p-4 text-left',
+        'group relative flex min-h-0 w-full overflow-hidden rounded-lg border p-4 text-left',
         'animate-rise transition-colors duration-300 ease-out',
         'border-night-raised bg-night-soft hover:border-ember/40 hover:bg-night-raised',
         'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ember/60',
@@ -53,15 +53,15 @@ export function FacetTile({
           />
           <span
             aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-b from-night/45 via-night/20 to-night/80"
+            className="absolute inset-0 bg-gradient-to-b from-night/70 via-night/30 to-night/85"
           />
         </>
       ) : null}
       <span className="relative z-10 flex h-full w-full flex-col justify-between">
-        <span className="font-sans text-[0.65rem] font-semibold uppercase tracking-widest2 text-ink-faint transition-colors duration-300 group-hover:text-ink-muted">
+        <span className="font-sans text-[0.65rem] font-semibold uppercase tracking-widest2 text-ink transition-colors duration-300 group-hover:text-ink [text-shadow:0_1px_4px_rgba(0,0,0,0.8)]">
           {label}
         </span>
-        <span className="font-display text-2xl tracking-wide transition-transform duration-300 group-hover:-translate-y-0.5 sm:text-3xl">
+        <span className="font-display text-2xl tracking-wide transition-transform duration-300 group-hover:-translate-y-0.5 sm:text-3xl [text-shadow:0_1px_6px_rgba(0,0,0,0.6)]">
           {oneWord}
         </span>
       </span>

@@ -12,6 +12,14 @@
       "key": "person",
       "oneWord": "Mercury",
       "title": "Qin Shi Huang",
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Portrait_of_Qin_Shi_Huang.jpg",
+        "commonsFile": "File:Portrait_of_Qin_Shi_Huang.jpg",
+        "alt": "Traditional portrait of Qin Shi Huang, the First Emperor of China.",
+        "attribution": "Unknown artist. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_Qin_Shi_Huang.jpg"
+      },
       "body": "He unified the warring states into the first Chinese empire in 221 BCE, then standardized the script, the coinage, even the axle width of carts, and joined older walls into the ancestor of the Great Wall. He also buried scholars who displeased him and burned their books. Terrified of dying, he sent expeditions to find an elixir of immortality and is thought to have swallowed mercury preparations meant to extend his life. He died on tour in 210 BCE. Within four years the dynasty he built to last ten thousand generations had fallen. His tomb, guarded by an army of terracotta soldiers, lay forgotten until farmers struck it while digging a well in 1974.",
       "sources": [
         {
@@ -60,6 +68,14 @@
       "oneWord": "Leisurely",
       "title": "Musée des Beaux Arts",
       "poet": "W. H. Auden",
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/AudenVanVechten1939.jpg",
+        "commonsFile": "File:AudenVanVechten1939.jpg",
+        "alt": "Portrait photograph of W. H. Auden taken by Carl Van Vechten in 1939.",
+        "attribution": "Carl Van Vechten, 1939. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:AudenVanVechten1939.jpg"
+      },
       "body": "Auden wrote this poem after visiting the museum in Brussels where the Bruegel hangs. He turns the painting into an argument: suffering happens while someone else is eating, or opening a window, or just walking dully along. The torturer's horse scratches itself against a tree. In the Bruegel, he notices, everything turns away quite leisurely from the disaster. The ploughman may have heard the splash and the forsaken cry, but for him it was not an important failure, and the expensive ship sails calmly on. The poem says plainly what the picture only shows: the world does not stop for a fall.",
       "poem": {
         "status": "in-copyright",
@@ -89,6 +105,15 @@
       "key": "principle",
       "oneWord": "Nemesis",
       "title": "Hubris and Nemesis",
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Roman_copy_of_the_statue_of_Nemesis_at_Ramnous._National_Archaeological_Museum_of_Athens_inv_3349_(01).jpg",
+        "commonsFile": "File:Roman_copy_of_the_statue_of_Nemesis_at_Ramnous._National_Archaeological_Museum_of_Athens_inv_3349_(01).jpg",
+        "alt": "Roman copy of the statue of Nemesis, goddess of retribution and balance.",
+        "attribution": "Zde / Wikimedia Commons, CC BY-SA 4.0.",
+        "license": "CC-BY-SA-4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Roman_copy_of_the_statue_of_Nemesis_at_Ramnous._National_Archaeological_Museum_of_Athens_inv_3349_(01).jpg"
+      },
       "body": "In Greek thought hubris was not ordinary pride. It was insolence that humiliated another or reached for the standing of a god, and it was believed to summon nemesis, the force that restores proportion and cuts the overreacher back to size. Read as a model rather than a myth, the pairing names a real pattern. Confidence that stops listening, that mistakes a lucky run for a law of nature, tends to walk straight past the one warning it needs. The fall that follows is less a punishment sent from above than the overdue bill for limits that were there the whole time.",
       "sources": [
         {
@@ -105,6 +130,14 @@
       "oneWord": "Brim",
       "title": "Tao Te Ching, Chapter 9",
       "attribution": "Laozi, Tao Te Ching, chapter 9 (trans. James Legge, 1891)",
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Zhang_Lu-Laozi_Riding_an_Ox.jpg",
+        "commonsFile": "File:Zhang_Lu-Laozi_Riding_an_Ox.jpg",
+        "alt": "Laozi riding an ox in a traditional Chinese painting by Zhang Lu.",
+        "attribution": "Zhang Lu (c. 1490–1563). Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Zhang_Lu-Laozi_Riding_an_Ox.jpg"
+      },
       "body": "The Tao Te Ching, attributed to Laozi, gives the same warning in the plainest images. Fill a cup past the brim and it spills. Keep grinding a blade to sharpen it and the edge will not last. Hoard riches and titles with pride, the verses say, and you plant the cause of your own ruin. The counsel is not modesty for its own sake but accuracy about limits. The world has a grain, and force pushed against it rebounds. Retire when the work is done, the chapter ends. The empire meant to stand ten thousand years might have learned from nine short lines.",
       "sources": [
         {
@@ -120,6 +153,15 @@
       "key": "parallel",
       "oneWord": "Blight",
       "title": "Fordlandia",
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Fordlandia.JPG",
+        "commonsFile": "File:Fordlandia.JPG",
+        "alt": "Ruins of Fordlandia in the Brazilian Amazon, including the iconic water tower.",
+        "attribution": "Naldinho / Wikimedia Commons, CC BY-SA 3.0.",
+        "license": "CC-BY-SA",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fordlandia.JPG"
+      },
       "body": "In 1928 Henry Ford, the most efficient man alive, bought a piece of the Amazon the size of a small country to grow his own rubber. He built an American town to do it, with clapboard houses, a golf course, ice cream, a curfew, and a ban on the alcohol and tobacco his workers wanted. Ford never set foot there. His managers planted rubber trees close together, never having gone to the Amazon to learn that leaf blight would race through a dense stand. The plantation failed. In 1945 the company sold it back to Brazil at a heavy loss, and the forest closed over the ruined water tower.",
       "sources": [
         {

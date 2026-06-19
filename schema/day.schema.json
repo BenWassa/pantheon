@@ -89,6 +89,24 @@
         "role": { "type": "string" }
       }
     },
+    "imageRef": {
+      "type": "object",
+      "required": ["src", "alt", "attribution", "license", "sourceUrl"],
+      "additionalProperties": false,
+      "properties": {
+        "src": { "type": "string", "minLength": 1 },
+        "commonsFile": { "type": "string" },
+        "width": { "type": "integer" },
+        "height": { "type": "integer" },
+        "alt": { "type": "string", "minLength": 1 },
+        "attribution": { "type": "string", "minLength": 1 },
+        "license": {
+          "enum": ["PD", "CC0", "CC-BY", "CC-BY-SA", "CC-BY-4.0", "CC-BY-SA-4.0"]
+        },
+        "licenseUrl": { "type": "string", "format": "uri" },
+        "sourceUrl": { "type": "string", "format": "uri" }
+      }
+    },
     "facetBase": {
       "type": "object",
       "required": ["key", "oneWord", "title", "body", "sources"],
@@ -99,7 +117,8 @@
         "title": { "type": "string", "minLength": 1 },
         "body": { "type": "string", "minLength": 1 },
         "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
-        "entities": { "type": "array", "items": { "$ref": "#/$defs/entityRef" } }
+        "entities": { "type": "array", "items": { "$ref": "#/$defs/entityRef" } },
+        "image": { "$ref": "#/$defs/imageRef" }
       }
     },
     "passageFacet": {
@@ -113,7 +132,8 @@
         "body": { "type": "string", "minLength": 1 },
         "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
         "entities": { "type": "array", "items": { "$ref": "#/$defs/entityRef" } },
-        "attribution": { "type": "string" }
+        "attribution": { "type": "string" },
+        "image": { "$ref": "#/$defs/imageRef" }
       }
     },
     "pictureFacet": {
@@ -127,24 +147,7 @@
         "body": { "type": "string", "minLength": 1 },
         "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
         "entities": { "type": "array", "items": { "$ref": "#/$defs/entityRef" } },
-        "image": {
-          "type": "object",
-          "required": ["src", "alt", "attribution", "license", "sourceUrl"],
-          "additionalProperties": false,
-          "properties": {
-            "src": { "type": "string", "minLength": 1 },
-            "commonsFile": { "type": "string" },
-            "width": { "type": "integer" },
-            "height": { "type": "integer" },
-            "alt": { "type": "string", "minLength": 1 },
-            "attribution": { "type": "string", "minLength": 1 },
-            "license": {
-              "enum": ["PD", "CC0", "CC-BY", "CC-BY-SA", "CC-BY-4.0", "CC-BY-SA-4.0"]
-            },
-            "licenseUrl": { "type": "string", "format": "uri" },
-            "sourceUrl": { "type": "string", "format": "uri" }
-          }
-        }
+        "image": { "$ref": "#/$defs/imageRef" }
       }
     },
     "poemFacet": {
@@ -158,6 +161,7 @@
         "body": { "type": "string", "minLength": 1 },
         "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/source" } },
         "entities": { "type": "array", "items": { "$ref": "#/$defs/entityRef" } },
+        "image": { "$ref": "#/$defs/imageRef" },
         "poet": { "type": "string" },
         "poem": {
           "oneOf": [

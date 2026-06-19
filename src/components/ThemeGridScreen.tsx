@@ -41,16 +41,16 @@ export function ThemeGridScreen({ day }: { day: Day }) {
   }
 
   return (
-    <div className="mx-auto max-w-xl px-6 py-12">
+    <div className="mx-auto flex h-dvh max-w-xl flex-col px-4 pb-4 pt-10">
       <DayHeader index={day.index} theme={day.theme} facetsRead={facetsRead} />
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-4">
+      <div className="grid min-h-0 flex-1 grid-cols-2 grid-rows-3 gap-3">
         {FACET_ORDER.map((key, i) => (
           <FacetTile
             key={key}
             facetKey={key}
             index={i}
-            image={key === 'picture' ? day.facets.picture.image : undefined}
+            image={day.facets[key].image}
             oneWord={day.facets[key].oneWord}
             read={Boolean(facetsRead[key])}
             onOpen={() => handleOpen(key)}
