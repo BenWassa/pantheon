@@ -29,13 +29,14 @@ export function ThemeGridScreen({ day }: { day: Day }) {
 
   return (
     <div className="mx-auto max-w-xl px-6 py-12">
-      <DayHeader index={day.index} theme={day.theme} />
+      <DayHeader index={day.index} theme={day.theme} facetsRead={facetsRead} />
 
       <div className="grid grid-cols-2 gap-3 sm:gap-4">
-        {FACET_ORDER.map((key) => (
+        {FACET_ORDER.map((key, i) => (
           <FacetTile
             key={key}
             facetKey={key}
+            index={i}
             oneWord={day.facets[key].oneWord}
             read={Boolean(facetsRead[key])}
             onOpen={() => handleOpen(key)}

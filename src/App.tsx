@@ -14,7 +14,7 @@ export default function App() {
   }, [init]);
 
   if (loading) {
-    return <EmptyState title="Pantheon" message="Opening today’s theme." />;
+    return <EmptyState title="Pantheon" message="Opening today’s theme." pulse />;
   }
 
   if (error) {
