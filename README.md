@@ -5,8 +5,8 @@ reader's pace. An antidote to shallow feeds, built by and for one reader. The go
 depth and delight, not reach.
 
 Each day presents one theme as six facet tiles on a dark field. Each tile carries the
-fixed facet type and a single evocative word for that day's entry; the Picture tile also
-uses the image itself as a thumbnail. Each facet is hidden until tapped, then reveals a
+fixed facet type and a single evocative word for that day's entry; tiles with sourced
+images use them as backgrounds. Each facet is hidden until tapped, then reveals a
 short, sourced piece: a **Person**, a **Picture**, a **Poem**, a **Principle**, a
 **Passage**, and a **Parallel**. The six are chosen to rhyme. A new theme unlocks once
 per day; the sequence waits if you miss a day.
@@ -45,6 +45,7 @@ Open the printed local URL. The app starts on Day 1, "Hubris".
 | `npm run validate` | run the content trust gate on its own |
 | `npm run build-manifest` | regenerate `content/manifest.json` and copy content to `public/` |
 | `npm run sync` | reconcile the entity ledger's `usedInDays`/status from the day files (`-- --check` to fail on drift) |
+| `npm run ingest-images` | merge verified Wikimedia image data from `*-wikimedia-sourced-verified.json` files into canonical day files, then delete the sourced files (`-- --dry-run` to preview) |
 | `npm run studio` | open the private review layer (the Studio) for judging AI-generated content |
 | `npm run studio:report` | turn captured judgments into a prioritized revision queue |
 
@@ -58,6 +59,7 @@ The library is produced separately from the app runtime. The app only reads fini
 | `npm run scout` | propose candidates aimed at the biggest gaps; `-- --write --slug <s> --label <l> --type <t>` records one in the ledger |
 | `npm run deep -- --day N --slug <slug> --theme <Theme>` | scaffold a new day to charter standard |
 | `npm run validate` | the trust gate: schema plus the charter's enforceable rules |
+| `npm run ingest-images` | merge verified Wikimedia images into canonical day files and delete the sourced copies |
 | `npm run sync` | reconcile the ledger to what the days actually reference |
 
 Coverage is queried, not remembered: the scripts read the actual content every run.
