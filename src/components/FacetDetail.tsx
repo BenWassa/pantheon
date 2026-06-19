@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import type { Facet } from '@/content/types';
 import { FACET_LABELS } from '@/lib/facetLabels';
+import { FacetImagePlate } from './FacetImagePlate';
 import { PoemBody } from './PoemBody';
-import { PictureBody } from './PictureBody';
 import { SourcesList } from './SourcesList';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -115,7 +115,7 @@ export function FacetDetail({ facet, onClose, onPrev, onNext, prevWord, nextWord
         </div>
 
         <div className="mt-6">
-          {facet.key === 'picture' ? <PictureBody facet={facet} /> : null}
+          {'image' in facet && facet.image ? <FacetImagePlate image={facet.image} /> : null}
           {facet.key === 'poem' ? <PoemBody facet={facet} /> : null}
 
           <p className="font-body text-base leading-relaxed text-ink">{facet.body}</p>

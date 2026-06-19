@@ -27,10 +27,12 @@ describe('ThemeGridScreen', () => {
     render(<ThemeGridScreen day={hubris} />);
     expect(screen.getByRole('heading', { name: 'Hubris' })).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: /Reveal the Person facet: Mercury/ }),
+      screen.getByRole('button', {
+        name: `Reveal the Person facet: ${hubris.facets.person.oneWord}`,
+      }),
     ).toBeInTheDocument();
     expect(screen.getByText('Picture')).toBeInTheDocument();
-    expect(screen.getByText('Splash')).toBeInTheDocument();
+    expect(screen.getByText(hubris.facets.picture.oneWord)).toBeInTheDocument();
     // The body text is hidden until a tile is tapped.
     expect(screen.queryByText(/Qin Shi Huang/)).not.toBeInTheDocument();
   });

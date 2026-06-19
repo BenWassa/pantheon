@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FacetDetail } from './FacetDetail';
 import type { Facet } from '@/content/types';
@@ -17,6 +17,19 @@ afterEach(() => {
 });
 
 const noNav = { onPrev: null, onNext: null, prevWord: null, nextWord: null };
+
+const imageFacet: Facet = {
+  ...facet,
+  image: {
+    src: '/content/images/placeholder.svg',
+    width: 800,
+    height: 600,
+    alt: 'A quiet landscape used as facet context',
+    attribution: 'Some Artist, a museum',
+    license: 'CC-BY-4.0',
+    sourceUrl: 'https://example.org/file',
+  },
+};
 
 describe('FacetDetail', () => {
   it('moves focus to the heading on open and restores it on close', async () => {
@@ -73,5 +86,17 @@ describe('FacetDetail', () => {
     expect(onPrev).toHaveBeenCalledTimes(1);
     await user.click(screen.getByRole('button', { name: /next facet/i }));
     expect(onNext).toHaveBeenCalledTimes(1);
+  });
+
+  it('shows an image plate for image-backed facets', () => {
+    render(<FacetDetail facet={imageFacet} onClose={vi.fn()} {...noNav} />);
+    expect(screen.getByAltText('A quiet landscape used as facet context')).toBeInTheDocument();
+    expect(screen.getByText(/Some Artist, a museum/)).toBeInTheDocument();
+  });
+
+  it('keeps the image area useful when an image fails', () => {
+    render(<FacetDetail facet={imageFacet} onClose={vi.fn()} {...noNav} />);
+    fireEvent.error(screen.getByAltText('A quiet landscape used as facet context'));
+    expect(screen.getByText('A quiet landscape used as facet context')).toBeInTheDocument();
   });
 });
