@@ -4,9 +4,21 @@
   "slug": "mercy",
   "theme": "Mercy",
   "status": "draft",
-  "registers": ["redemption", "tenderness"],
-  "regions": ["europe", "west-asia", "north-america", "global"],
-  "eras": ["ancient", "early-modern", "contemporary"],
+  "registers": [
+    "redemption",
+    "tenderness"
+  ],
+  "regions": [
+    "europe",
+    "west-asia",
+    "north-america",
+    "global"
+  ],
+  "eras": [
+    "ancient",
+    "early-modern",
+    "contemporary"
+  ],
   "facets": {
     "person": {
       "key": "person",
@@ -20,7 +32,16 @@
           "author": "Eva Mozes Kor",
           "note": "Seed draft: source indicative, not verified to charter standard."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Eva%20Mozes%20Kor.jpg",
+        "commonsFile": "File:Eva Mozes Kor.jpg",
+        "alt": "Portrait photograph of Eva Mozes Kor speaking at an Oregon State University event in 2016.",
+        "attribution": "Oregon State University / Wikimedia Commons, CC BY-SA 2.0.",
+        "license": "CC-BY-SA-2.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Eva_Mozes_Kor.jpg",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/"
+      }
     },
     "picture": {
       "key": "picture",
@@ -37,11 +58,13 @@
         }
       ],
       "image": {
-        "src": "images/placeholder.svg",
-        "alt": "Draft placeholder image standing in for Rembrandt's Return of the Prodigal Son.",
-        "attribution": "Draft placeholder image, not a final selection. Source and license a real image before publication.",
-        "license": "CC0",
-        "sourceUrl": "https://example.org/pantheon-draft-placeholder"
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Rembrandt%20Harmensz%20van%20Rijn%20-%20Return%20of%20the%20Prodigal%20Son%20-%20Google%20Art%20Project.jpg",
+        "commonsFile": "File:Rembrandt Harmensz van Rijn - Return of the Prodigal Son - Google Art Project.jpg",
+        "alt": "Rembrandt painting of the prodigal son kneeling before his father while surrounding figures stand in shadow.",
+        "attribution": "Rembrandt van Rijn, c. 1668. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Rembrandt_Harmensz_van_Rijn_-_Return_of_the_Prodigal_Son_-_Google_Art_Project.jpg",
+        "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
       }
     },
     "poem": {
@@ -62,7 +85,16 @@
           "author": "William Shakespeare",
           "note": "Seed draft: poem text, rights, and pointer are unverified placeholders. The work is public domain but this has not been confirmed for this build."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Britannica%20Shakespeare%20Chandos%20Portrait.jpg",
+        "commonsFile": "File:Britannica Shakespeare Chandos Portrait.jpg",
+        "alt": "The Chandos portrait of William Shakespeare, reproduced in the 1911 Encyclopaedia Britannica.",
+        "attribution": "Attributed to Richard Burbage, 17th century; reproduced in Encyclopaedia Britannica, 1911. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Britannica_Shakespeare_Chandos_Portrait.jpg",
+        "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
+      }
     },
     "principle": {
       "key": "principle",
@@ -76,7 +108,16 @@
           "author": "Gerry Johnstone",
           "note": "Seed draft, SOURCE RISK: the 'forty percent' reduction figure is unverified and likely overstated; confirm or cut before publication."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Justicia%20restaurativa%20%28Restorative%20Justice%29.png",
+        "commonsFile": "File:Justicia restaurativa (Restorative Justice).png",
+        "alt": "Diagram labelled Justicia restaurativa showing restorative justice concepts arranged around a circular process.",
+        "attribution": "Gipcae / Wikimedia Commons, CC BY-SA 3.0.",
+        "license": "CC-BY-SA-3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Justicia_restaurativa_(Restorative_Justice).png",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+      }
     },
     "passage": {
       "key": "passage",
@@ -90,7 +131,16 @@
           "title": "Gospel of Matthew 18:21-22",
           "note": "Seed draft: translation and citation indicative; verify the rendering before publication."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/The%20Evangelists%20Matthew%20and%20Mark%20from%20a%20Gospel%20Book%2C%20St.%20Matthew%2C%20Walters%20Manuscript%20W.530.D-E%2C%20fol.%20W.530.Er.jpg",
+        "commonsFile": "File:The Evangelists Matthew and Mark from a Gospel Book, St. Matthew, Walters Manuscript W.530.D-E, fol. W.530.Er.jpg",
+        "alt": "Miniature of Saint Matthew from a twelfth-century Gospel book associated with Mount Athos.",
+        "attribution": "Walters Art Museum Illuminated Manuscripts. CC0, via Wikimedia Commons.",
+        "license": "CC0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_Evangelists_Matthew_and_Mark_from_a_Gospel_Book,_St._Matthew,_Walters_Manuscript_W.530.D-E,_fol._W.530.Er.jpg",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+      }
     },
     "parallel": {
       "key": "parallel",
@@ -103,20 +153,38 @@
           "title": "David Bradley and the origin of Control-Alt-Delete",
           "note": "Seed draft, WEAK PARALLEL by design: the analogy is forced and clichéd; a candidate for cut or replacement."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Three-finger%20salute.svg",
+        "commonsFile": "File:Three-finger salute.svg",
+        "alt": "Diagram of a QWERTY keyboard with the Control, Alt, and Delete keys highlighted.",
+        "attribution": "Sven / Wikimedia Commons, CC BY-SA 3.0 or GFDL.",
+        "license": "CC-BY-SA-3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Three-finger_salute.svg",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+      }
     }
   },
   "resonanceThreads": [
     {
-      "facets": ["person", "passage"],
+      "facets": [
+        "person",
+        "passage"
+      ],
       "note": "Eva Kor's choice to forgive without counting is Matthew's seventy times seven lived out in the worst place imaginable."
     },
     {
-      "facets": ["picture", "poem"],
+      "facets": [
+        "picture",
+        "poem"
+      ],
       "note": "Rembrandt's father and Portia's gentle rain both insist that mercy is freely given, not earned or strained."
     },
     {
-      "facets": ["principle", "parallel"],
+      "facets": [
+        "principle",
+        "parallel"
+      ],
       "note": "Restorative justice and the reboot both promise a fresh start, but one repairs the wound and the other only hides it; the link to the parallel is deliberately loose."
     }
   ],

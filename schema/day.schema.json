@@ -101,7 +101,7 @@
         "alt": { "type": "string", "minLength": 1 },
         "attribution": { "type": "string", "minLength": 1 },
         "license": {
-          "enum": ["PD", "CC0", "CC-BY", "CC-BY-SA", "CC-BY-4.0", "CC-BY-SA-4.0"]
+          "enum": ["PD", "CC0", "CC-BY", "CC-BY-SA", "CC-BY-2.0", "CC-BY-3.0", "CC-BY-4.0", "CC-BY-SA-2.0", "CC-BY-SA-3.0", "CC-BY-SA-4.0", "Apache-2.0", "No known copyright restrictions"]
         },
         "licenseUrl": { "type": "string", "format": "uri" },
         "sourceUrl": { "type": "string", "format": "uri" }

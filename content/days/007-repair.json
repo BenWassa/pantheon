@@ -4,9 +4,21 @@
   "slug": "repair",
   "theme": "Repair",
   "status": "draft",
-  "registers": ["redemption"],
-  "regions": ["sub-saharan-africa", "east-asia", "north-america", "west-asia", "europe"],
-  "eras": ["ancient", "early-modern", "contemporary"],
+  "registers": [
+    "redemption"
+  ],
+  "regions": [
+    "sub-saharan-africa",
+    "east-asia",
+    "north-america",
+    "west-asia",
+    "europe"
+  ],
+  "eras": [
+    "ancient",
+    "early-modern",
+    "contemporary"
+  ],
   "facets": {
     "person": {
       "key": "person",
@@ -22,7 +34,16 @@
           "year": 1999,
           "note": "Seed draft: source indicative, not verified to charter standard."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Desmond_Tutu_(headshot).jpg",
+        "commonsFile": "File:Desmond Tutu (headshot).jpg",
+        "alt": "Headshot photograph of Desmond Tutu smiling at an event in 2014.",
+        "attribution": "Anvcomp / Wikimedia Commons, CC BY-SA 4.0.",
+        "license": "CC-BY-SA-4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Desmond_Tutu_(headshot).jpg",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
     },
     "picture": {
       "key": "picture",
@@ -37,11 +58,13 @@
         }
       ],
       "image": {
-        "src": "images/placeholder.svg",
-        "alt": "Draft placeholder image standing in for a kintsugi-repaired bowl.",
-        "attribution": "Draft placeholder image, not a final selection. Source and license a real image before publication.",
-        "license": "CC0",
-        "sourceUrl": "https://example.org/pantheon-draft-placeholder"
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Kintsugi.jpg",
+        "commonsFile": "File:Kintsugi.jpg",
+        "alt": "A repaired ceramic vessel with visible kintsugi seams.",
+        "attribution": "Guggger / Wikimedia Commons, CC BY-SA 4.0.",
+        "license": "CC-BY-SA-4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kintsugi.jpg",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
       }
     },
     "poem": {
@@ -62,7 +85,16 @@
           "author": "Leonard Cohen",
           "note": "Seed draft, SOURCE RISK: this song is in copyright and the body quotes its refrain. The quotation must be licensed, paraphrased, or cut before publication; rights and pointer are unverified."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Leonard_Cohen.jpg",
+        "commonsFile": "File:Leonard Cohen.jpg",
+        "alt": "Leonard Cohen performing in 2008.",
+        "attribution": "Baggio / Wikimedia Commons, CC BY 3.0.",
+        "license": "CC-BY-3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Leonard_Cohen.jpg",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/"
+      }
     },
     "principle": {
       "key": "principle",
@@ -75,7 +107,16 @@
           "title": "The Right to Repair: a primer",
           "note": "Seed draft, SOURCE RISK: the 'fastest growing waste stream' claim is unverified; confirm against a current source or soften before publication."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Repair_Cafe_by_Ilvy_Njiokiktjien.jpg",
+        "commonsFile": "File:Repair Cafe by Ilvy Njiokiktjien.jpg",
+        "alt": "People working together at a Repair Café table.",
+        "attribution": "Ilvy Njiokiktjien / Stichting Repair Café, CC BY-SA 3.0, via Wikimedia Commons.",
+        "license": "CC-BY-SA-3.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Repair_Cafe_by_Ilvy_Njiokiktjien.jpg",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+      }
     },
     "passage": {
       "key": "passage",
@@ -89,7 +130,16 @@
           "title": "Tikkun olam in the Mishnah and Lurianic Kabbalah",
           "note": "Seed draft: the Lurianic reading is one tradition among several; verify the attribution before publication."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Kabbalistic_Tree_of_Life_(Sephiroth)_HARI.jpg",
+        "commonsFile": "File:Kabbalistic Tree of Life (Sephiroth) HARI.jpg",
+        "alt": "Diagram of the Kabbalistic Tree of Life with the Sephiroth.",
+        "attribution": "הי שלום / Wikimedia Commons, CC BY-SA 4.0.",
+        "license": "CC-BY-SA-4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Kabbalistic_Tree_of_Life_(Sephiroth)_HARI.jpg",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+      }
     },
     "parallel": {
       "key": "parallel",
@@ -102,20 +152,39 @@
           "title": "The reconstruction of Notre-Dame de Paris",
           "note": "Seed draft: source indicative; the 'eight hundred years' figure is approximate and should be checked."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Notre-Dame_reconstruction_(5).jpg",
+        "commonsFile": "File:Notre-Dame reconstruction (5).jpg",
+        "alt": "Reconstruction site at Notre-Dame de Paris Cathedral in May 2024.",
+        "attribution": "Ibex73 / Wikimedia Commons, CC BY 4.0.",
+        "license": "CC-BY-4.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Notre-Dame_reconstruction_(5).jpg",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+      }
     }
   },
   "resonanceThreads": [
     {
-      "facets": ["picture", "poem", "passage"],
+      "facets": [
+        "picture",
+        "poem",
+        "passage"
+      ],
       "note": "Kintsugi's golden seams, Cohen's crack that lets the light in, and tikkun olam's scattered sparks are one idea in three traditions: the break is not the end of the thing but the way meaning enters it."
     },
     {
-      "facets": ["person", "parallel"],
+      "facets": [
+        "person",
+        "parallel"
+      ],
       "note": "Tutu's Truth Commission and the rebuilding of Notre-Dame both insist that real repair means facing what was broken in the open, not papering over it."
     },
     {
-      "facets": ["principle", "picture"],
+      "facets": [
+        "principle",
+        "picture"
+      ],
       "note": "The right to repair and kintsugi both treat a broken object as something owed a second life rather than thrown away."
     }
   ],

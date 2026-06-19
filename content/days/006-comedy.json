@@ -4,9 +4,19 @@
   "slug": "comedy",
   "theme": "Comedy",
   "status": "draft",
-  "registers": ["comedy"],
-  "regions": ["europe", "north-america", "global"],
-  "eras": ["post-classical", "modern", "contemporary"],
+  "registers": [
+    "comedy"
+  ],
+  "regions": [
+    "europe",
+    "north-america",
+    "global"
+  ],
+  "eras": [
+    "post-classical",
+    "modern",
+    "contemporary"
+  ],
   "facets": {
     "person": {
       "key": "person",
@@ -20,7 +30,16 @@
           "author": "Charlie Chaplin",
           "note": "Seed draft: source indicative. The throwaway sentence 'The films were funny.' is deliberately weak and a candidate for cut or rewrite."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Charlie%20Chaplin.jpg",
+        "commonsFile": "File:Charlie Chaplin.jpg",
+        "alt": "Charlie Chaplin in costume as the Tramp, wearing a bowler hat and cane.",
+        "attribution": "P. D. Jankens, 1915. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Charlie_Chaplin.jpg"
+      }
     },
     "picture": {
       "key": "picture",
@@ -35,11 +54,13 @@
         }
       ],
       "image": {
-        "src": "images/placeholder.svg",
-        "alt": "Draft placeholder image; no artwork has been selected for this facet.",
-        "attribution": "Draft placeholder image, not a final selection. Choose, source, and license a real image before publication.",
-        "license": "CC0",
-        "sourceUrl": "https://example.org/pantheon-draft-placeholder"
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/The%20court%20jester%20%281906%29%20%2814751017834%29.jpg",
+        "commonsFile": "File:The court jester (1906) (14751017834).jpg",
+        "alt": "Illustration from the 1906 book The Court Jester showing a costumed jester.",
+        "attribution": "Internet Archive Book Images / New York Public Library, from Cornelia Baker, The Court Jester, 1906. No known copyright restrictions, via Wikimedia Commons.",
+        "license": "No known copyright restrictions",
+        "licenseUrl": "https://www.flickr.com/commons/usage/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_court_jester_(1906)_(14751017834).jpg"
       }
     },
     "poem": {
@@ -60,7 +81,16 @@
           "author": "Lewis Carroll",
           "note": "Seed draft: poem text, rights, and pointer are unverified placeholders. The work is public domain but this has not been confirmed for this build."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/TheJabberwocky.png",
+        "commonsFile": "File:TheJabberwocky.png",
+        "alt": "John Tenniel illustration of the Jabberwock for Lewis Carroll’s Through the Looking-Glass.",
+        "attribution": "John Tenniel, 1871. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:TheJabberwocky.png"
+      }
     },
     "principle": {
       "key": "principle",
@@ -73,7 +103,16 @@
           "title": "Theories of humour: incongruity, superiority, relief",
           "note": "Seed draft: attributions to Kant and Schopenhauer are indicative and should be checked before publication."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/ArthurSchopenhauer.jpg",
+        "commonsFile": "File:ArthurSchopenhauer.jpg",
+        "alt": "Portrait of Arthur Schopenhauer, one of the philosophers associated with incongruity theory of humour.",
+        "attribution": "Unknown artist, 1832. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:ArthurSchopenhauer.jpg"
+      }
     },
     "passage": {
       "key": "passage",
@@ -87,7 +126,16 @@
           "title": "Mark Twain misquotations",
           "note": "Seed draft, SOURCE RISK by design: the famous wording is a known misquotation. The facet is about the misattribution itself; verify Twain's actual phrasing before publication."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Portrait%20of%20Mark%20Twain.jpg",
+        "commonsFile": "File:Portrait of Mark Twain.jpg",
+        "alt": "Portrait of Mark Twain published no later than 1904.",
+        "attribution": "Kate Rogers Nowell, no later than 1904. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_Mark_Twain.jpg"
+      }
     },
     "parallel": {
       "key": "parallel",
@@ -100,20 +148,38 @@
           "title": "Oxford word of the year 2015",
           "note": "Seed draft, WEAK PARALLEL by design: forced link to the jester, flat clichés, and an empty closing line. A strong candidate for cut or full rewrite."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Emoji%20u1f602.svg",
+        "commonsFile": "File:Emoji u1f602.svg",
+        "alt": "Google Noto face-with-tears-of-joy emoji.",
+        "attribution": "Google Noto Emoji project, 2017. Apache License 2.0, via Wikimedia Commons.",
+        "license": "Apache-2.0",
+        "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Emoji_u1f602.svg"
+      }
     }
   },
   "resonanceThreads": [
     {
-      "facets": ["poem", "principle"],
+      "facets": [
+        "poem",
+        "principle"
+      ],
       "note": "Jabberwocky's harmless violation of sense is the incongruity theory in action: you laugh because the expected meaning is set up and then cheerfully broken."
     },
     {
-      "facets": ["person", "passage"],
+      "facets": [
+        "person",
+        "passage"
+      ],
       "note": "Chaplin's Tramp keeping his dignity and the polished Twain quip both show comedy editing hardship into something the audience can love."
     },
     {
-      "facets": ["picture", "parallel"],
+      "facets": [
+        "picture",
+        "parallel"
+      ],
       "note": "The court jester and the laughing emoji are both licensed outlets for humour; this thread is deliberately weak, linking the day's two flattest facets."
     }
   ],

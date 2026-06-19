@@ -4,9 +4,20 @@
   "slug": "exile",
   "theme": "Exile",
   "status": "draft",
-  "registers": ["elegy"],
-  "regions": ["mediterranean", "west-asia", "europe", "global"],
-  "eras": ["ancient", "modern", "contemporary"],
+  "registers": [
+    "elegy"
+  ],
+  "regions": [
+    "mediterranean",
+    "west-asia",
+    "europe",
+    "global"
+  ],
+  "eras": [
+    "ancient",
+    "modern",
+    "contemporary"
+  ],
   "facets": {
     "person": {
       "key": "person",
@@ -20,7 +31,16 @@
           "author": "Ovid",
           "note": "Seed draft: the year of death (17 or 18 CE) and the reason for exile are uncertain and flagged; verify before publication."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Statue%20of%20Roman%20poet%20Ovid%20in%20Constan%C5%A3a%2C%20Romania.jpg",
+        "commonsFile": "File:Statue of Roman poet Ovid in Constanţa, Romania.jpg",
+        "alt": "Statue of the Roman poet Ovid in Constanța, Romania, the ancient city of Tomis where he was exiled.",
+        "attribution": "Kurt Wichmann / Wikimedia Commons, CC BY 3.0.",
+        "license": "CC-BY-3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Statue_of_Roman_poet_Ovid_in_Constan%C5%A3a,_Romania.jpg"
+      }
     },
     "picture": {
       "key": "picture",
@@ -35,11 +55,13 @@
         }
       ],
       "image": {
-        "src": "images/placeholder.svg",
-        "alt": "Draft placeholder image; no artwork has been selected for this facet.",
-        "attribution": "Draft placeholder image, not a final selection. Choose, source, and license a real image before publication.",
-        "license": "CC0",
-        "sourceUrl": "https://example.org/pantheon-draft-placeholder"
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Ford%20Madox%20Brown%2C%20The%20last%20of%20England.jpg",
+        "commonsFile": "File:Ford Madox Brown, The last of England.jpg",
+        "alt": "Ford Madox Brown’s painting The Last of England, showing emigrants crowded together as they leave by sea.",
+        "attribution": "Ford Madox Brown, The Last of England, 1852–1855. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Ford_Madox_Brown,_The_last_of_England.jpg"
       }
     },
     "poem": {
@@ -60,7 +82,16 @@
           "author": "C. P. Cavafy",
           "note": "Seed draft: translation, rights, and pointer are unverified placeholders. Confirm which translation is licensed before publication."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Constantine%20Cavafy%2C%20ca%201900.jpg",
+        "commonsFile": "File:Constantine Cavafy, ca 1900.jpg",
+        "alt": "Portrait photograph of Constantine P. Cavafy taken around 1900.",
+        "attribution": "Unknown photographer, c. 1900. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Constantine_Cavafy,_ca_1900.jpg"
+      }
     },
     "principle": {
       "key": "principle",
@@ -73,7 +104,16 @@
           "title": "Diaspora: An Introduction",
           "note": "Seed draft: source indicative, not verified to charter standard."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Antique%20jew%20diaspora%20map%20fr.svg",
+        "commonsFile": "File:Antique jew diaspora map fr.svg",
+        "alt": "Map showing the Jewish diaspora in antiquity across the Mediterranean and Near East.",
+        "attribution": "Pethrus and historicair / Wikimedia Commons, CC BY-SA 4.0.",
+        "license": "CC-BY-SA-4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Antique_jew_diaspora_map_fr.svg"
+      }
     },
     "passage": {
       "key": "passage",
@@ -87,7 +127,16 @@
           "title": "Psalm 137",
           "note": "Seed draft: the 'three thousand years' dating is approximate and flagged; verify translation and citation before publication."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Jews%20Mourning%20in%20Exile%20-%20Eduard%20Bendemann%20-%20Wallraf-Richartz-Museum%20%26%20Fondation%20Corboud-6071.jpg",
+        "commonsFile": "File:Jews Mourning in Exile - Eduard Bendemann - Wallraf-Richartz-Museum & Fondation Corboud-6071.jpg",
+        "alt": "Eduard Bendemann’s painting Jews Mourning in Exile, showing grieving figures associated with Psalm 137.",
+        "attribution": "Raimond Spekking / Wikimedia Commons, CC BY-SA 4.0; photograph of Eduard Bendemann, Jews Mourning in Exile, 1832.",
+        "license": "CC-BY-SA-4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Jews_Mourning_in_Exile_-_Eduard_Bendemann_-_Wallraf-Richartz-Museum_&_Fondation_Corboud-6071.jpg"
+      }
     },
     "parallel": {
       "key": "parallel",
@@ -101,20 +150,38 @@
           "author": "Carl Sagan and others",
           "note": "Seed draft: source indicative. Note this repeats Voyager from the Vastness day; reviewers may flag the reuse."
         }
-      ]
+      ],
+      "image": {
+        "src": "https://commons.wikimedia.org/wiki/Special:FilePath/The%20Sounds%20of%20Earth%20Record%20Cover%20-%20GPN-2000-001978.jpg",
+        "commonsFile": "File:The Sounds of Earth Record Cover - GPN-2000-001978.jpg",
+        "alt": "The gold-colored cover of the Voyager Golden Record, with engraved playback instructions.",
+        "attribution": "NASA/JPL, 1977. Public domain, via Wikimedia Commons.",
+        "license": "PD",
+        "licenseUrl": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:The_Sounds_of_Earth_Record_Cover_-_GPN-2000-001978.jpg"
+      }
     }
   },
   "resonanceThreads": [
     {
-      "facets": ["person", "poem"],
+      "facets": [
+        "person",
+        "poem"
+      ],
       "note": "Ovid begging Rome to recall him and Cavafy telling the traveler not to hurry home are two answers to the same exile: one cannot return, the other learns not to want to."
     },
     {
-      "facets": ["passage", "principle"],
+      "facets": [
+        "passage",
+        "principle"
+      ],
       "note": "Psalm 137's harps on the willows and the idea of diaspora both hold the paradox of keeping a homeland alive precisely by being kept from it."
     },
     {
-      "facets": ["picture", "parallel"],
+      "facets": [
+        "picture",
+        "parallel"
+      ],
       "note": "The refugee boat and the Voyager record both send a human signal across a hostile void; this thread is deliberately loose, anchored to the day's weakest facet."
     }
   ],

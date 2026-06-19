@@ -58,8 +58,14 @@ export type ImageLicense =
   | 'CC0'
   | 'CC-BY'
   | 'CC-BY-SA'
+  | 'CC-BY-2.0'
+  | 'CC-BY-3.0'
   | 'CC-BY-4.0'
-  | 'CC-BY-SA-4.0';
+  | 'CC-BY-SA-2.0'
+  | 'CC-BY-SA-3.0'
+  | 'CC-BY-SA-4.0'
+  | 'Apache-2.0'
+  | 'No known copyright restrictions';
 
 export interface ImageRef {
   src: string; // local path under /content/images OR a Commons file URL

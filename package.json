@@ -19,6 +19,7 @@
     "test:watch": "vitest",
     "validate": "tsx scripts/validate.ts",
     "build-manifest": "tsx scripts/build-manifest.ts",
+    "ingest-images": "tsx scripts/ingest-images.ts",
     "sync": "tsx scripts/sync.ts",
     "map": "tsx scripts/map.ts",
     "scout": "tsx scripts/scout.ts",
