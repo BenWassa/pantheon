@@ -10,7 +10,7 @@
   "facets": {
     "person": {
       "key": "person",
-      "oneWord": "Mercury",
+      "oneWord": "Qin",
       "title": "Qin Shi Huang",
       "image": {
         "src": "https://commons.wikimedia.org/wiki/Special:FilePath/Portrait_of_Qin_Shi_Huang.jpg",
@@ -40,7 +40,7 @@
     },
     "picture": {
       "key": "picture",
-      "oneWord": "Splash",
+      "oneWord": "Icarus",
       "title": "Landscape with the Fall of Icarus",
       "body": "Begin with the wide green harbor and the work going on inside it. A ploughman leans into his furrow. A shepherd tilts his face to the sky. An angler bends over the water. Everything is calm, prosperous, ordinary. Now look to the lower right, beside the stern of the ship. Two pale legs are vanishing into the sea, and a faint splash marks where a body went under. That is Icarus, fallen from the sky a moment ago, drowning while no one turns to look. The catastrophe is given a corner. The painting puts the whole weight of its meaning into how little space it spares for ruin.",
       "sources": [
@@ -65,7 +65,7 @@
     },
     "poem": {
       "key": "poem",
-      "oneWord": "Leisurely",
+      "oneWord": "Auden",
       "title": "Musée des Beaux Arts",
       "poet": "W. H. Auden",
       "image": {
@@ -127,7 +127,7 @@
     },
     "passage": {
       "key": "passage",
-      "oneWord": "Brim",
+      "oneWord": "Laozi",
       "title": "Tao Te Ching, Chapter 9",
       "attribution": "Laozi, Tao Te Ching, chapter 9 (trans. James Legge, 1891)",
       "image": {
