@@ -80,7 +80,7 @@ export type PoemText =
 
 interface FacetBase {
   key: FacetKey;
-  oneWord: string; // the single word shown on the dark grid
+  oneWord: string; // the day-specific hook shown on the dark grid
   title: string; // revealed heading
   body: string; // 80-130 words, no em dashes
   sources: Source[]; // >= 1 required

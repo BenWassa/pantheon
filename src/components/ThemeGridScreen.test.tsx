@@ -23,10 +23,14 @@ beforeEach(() => {
 });
 
 describe('ThemeGridScreen', () => {
-  it('renders the theme and the six one-word tiles, hiding the bodies', () => {
+  it('renders the theme, facet labels, and one-word hooks, hiding the bodies', () => {
     render(<ThemeGridScreen day={hubris} />);
     expect(screen.getByRole('heading', { name: 'Hubris' })).toBeInTheDocument();
-    expect(screen.getByText('Emperor')).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Reveal the Person facet: Mercury/ }),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Picture')).toBeInTheDocument();
+    expect(screen.getByText('Splash')).toBeInTheDocument();
     // The body text is hidden until a tile is tapped.
     expect(screen.queryByText(/Qin Shi Huang/)).not.toBeInTheDocument();
   });
@@ -41,7 +45,7 @@ describe('ThemeGridScreen', () => {
     const user = userEvent.setup();
     render(<ThemeGridScreen day={hubris} />);
 
-    await user.click(screen.getByRole('button', { name: /Reveal the person facet/ }));
+    await user.click(screen.getByRole('button', { name: /Reveal the Person facet/ }));
 
     expect(screen.getByRole('heading', { name: 'Qin Shi Huang' })).toBeInTheDocument();
     expect(useAppStore.getState().persisted.records[1]?.facetsRead.person).toBeTruthy();

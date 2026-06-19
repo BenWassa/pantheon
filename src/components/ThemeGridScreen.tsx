@@ -37,6 +37,7 @@ export function ThemeGridScreen({ day }: { day: Day }) {
             key={key}
             facetKey={key}
             index={i}
+            image={key === 'picture' ? day.facets.picture.image : undefined}
             oneWord={day.facets[key].oneWord}
             read={Boolean(facetsRead[key])}
             onOpen={() => handleOpen(key)}

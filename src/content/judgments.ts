@@ -18,7 +18,7 @@ export type JudgmentLevel =
   | 'day' // the whole day: coherence, resonance, narrative force
   | 'facet' // one facet as a unit
   | 'title' // a facet's revealed heading
-  | 'oneWord' // the single word shown on the dark grid
+  | 'oneWord' // the day-specific hook shown on the dark grid
   | 'sentence'; // one sentence of a facet body: clarity, rhythm, claims, copy
 
 export const JUDGMENT_LEVELS: readonly JudgmentLevel[] = [

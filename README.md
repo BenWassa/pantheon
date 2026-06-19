@@ -4,10 +4,12 @@ A personal daily-learning app. One theme a day, six resonant facets, explored at
 reader's pace. An antidote to shallow feeds, built by and for one reader. The goal is
 depth and delight, not reach.
 
-Each day presents one theme as six words on a dark field, one per facet. Each facet is
-hidden until tapped, then reveals a short, sourced piece: a **Person**, a **Picture**, a
-**Poem**, a **Principle**, a **Passage**, and a **Parallel**. The six are chosen to
-rhyme. A new theme unlocks once per day; the sequence waits if you miss a day.
+Each day presents one theme as six facet tiles on a dark field. Each tile carries the
+fixed facet type and a single evocative word for that day's entry; the Picture tile also
+uses the image itself as a thumbnail. Each facet is hidden until tapped, then reveals a
+short, sourced piece: a **Person**, a **Picture**, a **Poem**, a **Principle**, a
+**Passage**, and a **Parallel**. The six are chosen to rhyme. A new theme unlocks once
+per day; the sequence waits if you miss a day.
 
 See [`prd-1.md`](prd-1.md) for the product spec, [`editorial-charter.md`](editorial-charter.md)
 for the standard every day of content is held to, [`data-model.md`](data-model.md)
