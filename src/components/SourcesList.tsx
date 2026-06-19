@@ -18,7 +18,7 @@ export function SourcesList({ sources }: { sources: Source[] }) {
       <ul className="mt-2 space-y-1.5">
         {sources.map((s, i) => (
           <li key={i} className="text-xs leading-relaxed text-ink-muted">
-            <span className="text-ink-faint">{s.kind === 'primary' ? 'Primary. ' : ''}</span>
+            <span className="text-ink-faint">{s.kind === 'primary' ? 'Main source. ' : ''}</span>
             {s.url ? (
               <a
                 href={s.url}

@@ -18,7 +18,13 @@ export default function App() {
   }
 
   if (error) {
-    return <EmptyState title="Something went quiet" message={error} />;
+    return (
+      <EmptyState
+        title="Something went quiet"
+        message="Today's theme didn't load. Check your connection and try again."
+        action={{ label: 'Try again', onClick: () => void init() }}
+      />
+    );
   }
 
   if (!loadedDay) {

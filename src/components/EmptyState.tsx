@@ -28,16 +28,27 @@ export function EmptyState({
   title,
   message,
   pulse = false,
+  action,
 }: {
   title: string;
   message: string;
   pulse?: boolean;
+  action?: { label: string; onClick: () => void };
 }) {
   return (
     <div className="animate-veil flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
       <Mark pulse={pulse} />
       <h1 className="font-display text-2xl text-ink">{title}</h1>
       <p className="mt-3 max-w-sm text-sm leading-relaxed text-ink-muted">{message}</p>
+      {action && (
+        <button
+          type="button"
+          onClick={action.onClick}
+          className="mt-6 rounded border border-night-raised px-4 py-1.5 text-sm text-ink-muted transition-colors hover:border-ember/40 hover:text-ink focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ember/60"
+        >
+          {action.label}
+        </button>
+      )}
     </div>
   );
 }

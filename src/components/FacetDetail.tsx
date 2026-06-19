@@ -7,23 +7,41 @@ import { SourcesList } from './SourcesList';
 
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export function FacetDetail({ facet, onClose }: { facet: Facet; onClose: () => void }) {
-  const panelRef = useRef<HTMLDivElement>(null);
-  const closeRef = useRef<HTMLButtonElement>(null);
+interface Props {
+  facet: Facet;
+  onClose: () => void;
+  onPrev: (() => void) | null;
+  onNext: (() => void) | null;
+  prevWord: string | null;
+  nextWord: string | null;
+}
 
-  // Manage the dialog's lifecycle: lock background scroll, restore focus on close,
-  // close on Escape, and keep Tab focus within the panel.
+export function FacetDetail({ facet, onClose, onPrev, onNext, prevWord, nextWord }: Props) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
   useEffect(() => {
     const previouslyFocused = document.activeElement as HTMLElement | null;
     const { overflow } = document.body.style;
     document.body.style.overflow = 'hidden';
 
-    // Move focus into the dialog so keyboard and screen-reader users land here.
-    closeRef.current?.focus();
+    // Focus the heading so screen readers announce the facet title first,
+    // not the close control.
+    headingRef.current?.focus();
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose();
+        return;
+      }
+      if (e.key === 'ArrowLeft' && onPrev) {
+        e.preventDefault();
+        onPrev();
+        return;
+      }
+      if (e.key === 'ArrowRight' && onNext) {
+        e.preventDefault();
+        onNext();
         return;
       }
       if (e.key !== 'Tab') return;
@@ -53,16 +71,16 @@ export function FacetDetail({ facet, onClose }: { facet: Facet; onClose: () => v
       document.body.style.overflow = overflow;
       previouslyFocused?.focus?.();
     };
-  }, [onClose]);
+  }, [onClose, onPrev, onNext]);
 
   return (
     <div
-      className="animate-veil fixed inset-0 z-20 overflow-y-auto bg-night/95 backdrop-blur-sm"
+      className="animate-veil fixed inset-0 z-20 flex flex-col overflow-y-auto bg-night/95 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-label={`${FACET_LABELS[facet.key]}: ${facet.title}`}
     >
-      {/* A full-bleed dismiss surface behind the panel. Clicking off the content closes. */}
+      {/* Full-bleed dismiss surface behind the panel. */}
       <button
         type="button"
         tabIndex={-1}
@@ -70,16 +88,23 @@ export function FacetDetail({ facet, onClose }: { facet: Facet; onClose: () => v
         onClick={onClose}
         className="fixed inset-0 -z-10 cursor-default"
       />
-      <div ref={panelRef} className="animate-lift mx-auto min-h-full max-w-2xl px-6 py-10">
+
+      {/* Scrollable content */}
+      <div ref={panelRef} className="animate-lift mx-auto w-full max-w-2xl flex-1 px-6 py-10">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-[0.7rem] uppercase tracking-widest2 text-ember">
               {FACET_LABELS[facet.key]}
             </p>
-            <h2 className="mt-1 font-display text-2xl text-ink">{facet.title}</h2>
+            <h2
+              ref={headingRef}
+              tabIndex={-1}
+              className="mt-1 font-display text-2xl text-ink focus-visible:outline-none"
+            >
+              {facet.title}
+            </h2>
           </div>
           <button
-            ref={closeRef}
             type="button"
             onClick={onClose}
             aria-label="Close"
@@ -102,6 +127,48 @@ export function FacetDetail({ facet, onClose }: { facet: Facet; onClose: () => v
           <SourcesList sources={facet.sources} />
         </div>
       </div>
+
+      {/* Sticky navigation footer */}
+      {(onPrev || onNext) && (
+        <div className="sticky bottom-0 z-10 border-t border-night-raised bg-night/95 px-6 py-3">
+          <div className="mx-auto flex max-w-2xl items-center justify-between">
+            {onPrev ? (
+              <button
+                type="button"
+                onClick={onPrev}
+                className="group flex flex-col items-start text-left focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ember/60"
+                aria-label={`Previous facet: ${prevWord}`}
+              >
+                <span className="text-[0.65rem] uppercase tracking-widest2 text-ink-faint transition-colors group-hover:text-ink-muted">
+                  Previous
+                </span>
+                <span className="font-display text-base text-ink-muted transition-colors group-hover:text-ink">
+                  {prevWord}
+                </span>
+              </button>
+            ) : (
+              <span />
+            )}
+            {onNext ? (
+              <button
+                type="button"
+                onClick={onNext}
+                className="group flex flex-col items-end text-right focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ember/60"
+                aria-label={`Next facet: ${nextWord}`}
+              >
+                <span className="text-[0.65rem] uppercase tracking-widest2 text-ink-faint transition-colors group-hover:text-ink-muted">
+                  Next
+                </span>
+                <span className="font-display text-base text-ink-muted transition-colors group-hover:text-ink">
+                  {nextWord}
+                </span>
+              </button>
+            ) : (
+              <span />
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

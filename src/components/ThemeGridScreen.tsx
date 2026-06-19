@@ -22,9 +22,22 @@ export function ThemeGridScreen({ day }: { day: Day }) {
   const facetsRead = records[day.index]?.facetsRead ?? {};
   const openFacet: Facet | null = openKey ? day.facets[openKey] : null;
 
+  const openIndex = openKey ? FACET_ORDER.indexOf(openKey) : -1;
+  const prevKey = openIndex > 0 ? FACET_ORDER[openIndex - 1] : null;
+  const nextKey = openIndex >= 0 && openIndex < FACET_ORDER.length - 1 ? FACET_ORDER[openIndex + 1] : null;
+
   function handleOpen(key: FacetKey) {
     setOpenKey(key);
-    readFacet(key);
+  }
+
+  function handleClose() {
+    if (openKey) readFacet(openKey);
+    setOpenKey(null);
+  }
+
+  function handleNav(key: FacetKey) {
+    if (openKey) readFacet(openKey);
+    setOpenKey(key);
   }
 
   return (
@@ -45,7 +58,16 @@ export function ThemeGridScreen({ day }: { day: Day }) {
         ))}
       </div>
 
-      {openFacet ? <FacetDetail facet={openFacet} onClose={() => setOpenKey(null)} /> : null}
+      {openFacet ? (
+        <FacetDetail
+          facet={openFacet}
+          onClose={handleClose}
+          onPrev={prevKey ? () => handleNav(prevKey) : null}
+          onNext={nextKey ? () => handleNav(nextKey) : null}
+          prevWord={prevKey ? day.facets[prevKey].oneWord : null}
+          nextWord={nextKey ? day.facets[nextKey].oneWord : null}
+        />
+      ) : null}
     </div>
   );
 }

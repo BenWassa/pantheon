@@ -41,13 +41,17 @@ describe('ThemeGridScreen', () => {
     expect(record?.firstOpenedAt).toBeTruthy();
   });
 
-  it('reveals a facet on tap and marks it read', async () => {
+  it('reveals a facet on tap and marks it read on close', async () => {
     const user = userEvent.setup();
     render(<ThemeGridScreen day={hubris} />);
 
     await user.click(screen.getByRole('button', { name: /Reveal the Person facet/ }));
-
     expect(screen.getByRole('heading', { name: 'Qin Shi Huang' })).toBeInTheDocument();
+
+    // readFacet is deferred to close so misclicks don't corrupt the read state.
+    expect(useAppStore.getState().persisted.records[1]?.facetsRead.person).toBeFalsy();
+
+    await user.click(screen.getByRole('button', { name: 'Close' }));
     expect(useAppStore.getState().persisted.records[1]?.facetsRead.person).toBeTruthy();
   });
 });

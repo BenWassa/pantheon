@@ -14,7 +14,11 @@ export function DayHeader({
 
   return (
     <header className="mb-10 text-center">
-      <p className="text-[0.7rem] uppercase tracking-widest2 text-ink-faint">Day {index}</p>
+      <p className="text-[0.7rem] uppercase tracking-widest2 text-ink-faint">
+        Day {index}
+        <span className="mx-1.5 opacity-30">&middot;</span>
+        {new Date().toLocaleDateString('en-GB', { month: 'long', day: 'numeric' })}
+      </p>
       <h1 className="mt-2 font-display text-4xl text-ink sm:text-5xl">{theme}</h1>
 
       {/* A whisper-quiet record of today: six points, lit as each facet is revealed. */}

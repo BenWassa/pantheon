@@ -16,8 +16,10 @@ afterEach(() => {
   document.body.style.overflow = '';
 });
 
+const noNav = { onPrev: null, onNext: null, prevWord: null, nextWord: null };
+
 describe('FacetDetail', () => {
-  it('moves focus to the panel on open and restores it on close', async () => {
+  it('moves focus to the heading on open and restores it on close', async () => {
     const user = userEvent.setup();
     const opener = document.createElement('button');
     opener.textContent = 'open';
@@ -26,10 +28,10 @@ describe('FacetDetail', () => {
     expect(document.activeElement).toBe(opener);
 
     const onClose = vi.fn();
-    render(<FacetDetail facet={facet} onClose={onClose} />);
+    render(<FacetDetail facet={facet} onClose={onClose} {...noNav} />);
 
-    // Focus lands on the Close button inside the dialog.
-    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Close' }));
+    // Focus lands on the heading inside the dialog.
+    expect(document.activeElement).toBe(screen.getByRole('heading', { name: facet.title }));
 
     // Escape closes; once unmounted, focus returns to the opener.
     await user.keyboard('{Escape}');
@@ -39,7 +41,7 @@ describe('FacetDetail', () => {
   });
 
   it('locks background scroll while open and frees it on unmount', () => {
-    const { unmount } = render(<FacetDetail facet={facet} onClose={() => {}} />);
+    const { unmount } = render(<FacetDetail facet={facet} onClose={() => {}} {...noNav} />);
     expect(document.body.style.overflow).toBe('hidden');
     unmount();
     expect(document.body.style.overflow).toBe('');
@@ -48,8 +50,28 @@ describe('FacetDetail', () => {
   it('closes when the Close button is clicked', async () => {
     const user = userEvent.setup();
     const onClose = vi.fn();
-    render(<FacetDetail facet={facet} onClose={onClose} />);
+    render(<FacetDetail facet={facet} onClose={onClose} {...noNav} />);
     await user.click(screen.getByRole('button', { name: 'Close' }));
     expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls onPrev and onNext when nav buttons are clicked', async () => {
+    const user = userEvent.setup();
+    const onPrev = vi.fn();
+    const onNext = vi.fn();
+    render(
+      <FacetDetail
+        facet={facet}
+        onClose={vi.fn()}
+        onPrev={onPrev}
+        onNext={onNext}
+        prevWord="Spark"
+        nextWord="Echo"
+      />,
+    );
+    await user.click(screen.getByRole('button', { name: /previous facet/i }));
+    expect(onPrev).toHaveBeenCalledTimes(1);
+    await user.click(screen.getByRole('button', { name: /next facet/i }));
+    expect(onNext).toHaveBeenCalledTimes(1);
   });
 });

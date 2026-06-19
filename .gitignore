@@ -11,6 +11,8 @@ dist-ssr
 # generated content artifacts (rebuilt by build-manifest)
 public/content
 content/manifest.json
+graphify-out/
+.graphify_*.json
 
 # test coverage
 coverage
