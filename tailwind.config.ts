@@ -45,11 +45,24 @@ export default {
           '0%': { opacity: '0', transform: 'translateY(12px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        // The hero image blooming to full size: the moment of reveal, earned.
+        unveil: {
+          '0%': { opacity: '0', transform: 'scale(1.06)' },
+          '100%': { opacity: '1', transform: 'scale(1)' },
+        },
+        // A faint ember tracing down the hairline: "there is more below".
+        cue: {
+          '0%': { transform: 'translateY(-6px)', opacity: '0' },
+          '45%': { opacity: '1' },
+          '100%': { transform: 'translateY(26px)', opacity: '0' },
+        },
       },
       animation: {
         rise: 'rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both',
         veil: 'veil 0.25s ease-out both',
         lift: 'lift 0.4s cubic-bezier(0.22, 1, 0.36, 1) both',
+        unveil: 'unveil 0.8s cubic-bezier(0.22, 1, 0.36, 1) both',
+        cue: 'cue 1.9s cubic-bezier(0.4, 0, 0.2, 1) infinite',
       },
     },
   },
