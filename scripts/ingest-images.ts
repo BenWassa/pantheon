@@ -76,8 +76,7 @@ for (const sourcedFile of sourcedFiles) {
 
     const existing = canonicalFacet?.image as Record<string, unknown> | undefined;
     const isPlaceholder =
-      !existing ||
-      (typeof existing.src === 'string' && existing.src.includes('placeholder'));
+      !existing || (typeof existing.src === 'string' && existing.src.includes('placeholder'));
 
     if (existing && !isPlaceholder) {
       // Only overwrite if the sourced image is a different/better file

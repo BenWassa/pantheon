@@ -24,7 +24,8 @@ export function ThemeGridScreen({ day }: { day: Day }) {
 
   const openIndex = openKey ? FACET_ORDER.indexOf(openKey) : -1;
   const prevKey = openIndex > 0 ? FACET_ORDER[openIndex - 1] : null;
-  const nextKey = openIndex >= 0 && openIndex < FACET_ORDER.length - 1 ? FACET_ORDER[openIndex + 1] : null;
+  const nextKey =
+    openIndex >= 0 && openIndex < FACET_ORDER.length - 1 ? FACET_ORDER[openIndex + 1] : null;
 
   function handleOpen(key: FacetKey) {
     setOpenKey(key);
