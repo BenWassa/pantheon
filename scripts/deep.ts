@@ -41,7 +41,8 @@ if (existsSync(filePath)) {
   process.exit(1);
 }
 
-const TODO = 'TODO: write 80-130 words to charter standard, with sources below.';
+const TODO =
+  'TODO: write 80-130 words to charter standard, with sources below. Shape it, do not list facts: see the facet-authoring skill (.claude/skills/facet-authoring/SKILL.md).';
 
 function scaffoldFacet(key: FacetKey) {
   const base = {
