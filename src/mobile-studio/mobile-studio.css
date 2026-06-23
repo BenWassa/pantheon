@@ -21,15 +21,24 @@
 }
 
 @keyframes reaction-pop {
-  0% { transform: scale(1); }
-  40% { transform: scale(1.4); }
-  70% { transform: scale(0.9); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.28);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes sheet-rise {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 .enter-from-bottom {
@@ -41,7 +50,7 @@
 }
 
 .reaction-pop {
-  animation: reaction-pop 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: reaction-pop 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .sheet-rise {

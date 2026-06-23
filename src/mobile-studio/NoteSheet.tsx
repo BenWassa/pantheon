@@ -152,7 +152,7 @@ export function NoteSheet({ open, targetLabel, initial, onClose, onSave }: NoteS
                 ].join(' ')}
               >
                 <span className="text-lg leading-none">{meta.glyph}</span>
-                <span className="font-sans text-[0.55rem] uppercase tracking-widest2">
+                <span className="font-sans text-[0.625rem] uppercase tracking-widest2">
                   {meta.label}
                 </span>
               </button>
@@ -186,7 +186,7 @@ export function NoteSheet({ open, targetLabel, initial, onClose, onSave }: NoteS
           <div className="space-y-4 px-5 pb-2 pt-3">
             {/* Tags */}
             <div>
-              <p className="mb-2 font-sans text-[0.55rem] uppercase tracking-widest2 text-ink-faint">
+              <p className="mb-2 font-sans text-[0.625rem] uppercase tracking-widest2 text-ink-faint">
                 Tags
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -215,7 +215,7 @@ export function NoteSheet({ open, targetLabel, initial, onClose, onSave }: NoteS
             {/* Severity — only meaningful for a negative verdict. */}
             {verdict && verdict !== 'keep' ? (
               <div>
-                <p className="mb-2 font-sans text-[0.55rem] uppercase tracking-widest2 text-ink-faint">
+                <p className="mb-2 font-sans text-[0.625rem] uppercase tracking-widest2 text-ink-faint">
                   Severity
                 </p>
                 <div className="flex gap-2">
@@ -244,7 +244,7 @@ export function NoteSheet({ open, targetLabel, initial, onClose, onSave }: NoteS
 
             {/* Suggestion */}
             <div>
-              <p className="mb-2 font-sans text-[0.55rem] uppercase tracking-widest2 text-ink-faint">
+              <p className="mb-2 font-sans text-[0.625rem] uppercase tracking-widest2 text-ink-faint">
                 Suggested rewrite
               </p>
               <textarea

@@ -28,7 +28,7 @@ import type { BackendMode, StudioBackend } from './types';
 function CardSkeleton() {
   return (
     <div className="flex h-full flex-col bg-night animate-pulse">
-      <div className="h-[42dvh] flex-shrink-0 bg-night-soft" />
+      <div className="h-[34dvh] flex-shrink-0 bg-night-soft" />
       <div className="flex-1 px-5 pt-5">
         <div className="mb-3 h-10 w-40 rounded bg-night-raised" />
         <div className="mb-6 h-4 w-56 rounded bg-night-raised" />
@@ -309,28 +309,9 @@ export function MobileStudio() {
   const showEmpty = !loading && !error && days.length === 0;
 
   return (
-    <div className="fixed inset-0 flex flex-col bg-night text-ink">
-      <DayPicker
-        theme={day?.theme ?? '…'}
-        dayNumber={day?.index ?? dayIndex + 1}
-        status={day?.status}
-        facetIndex={facetIndex}
-        facetVerdicts={facetVerdicts}
-        dayVerdict={dayVerdict}
-        mode={mode}
-        pendingCount={opinionCount}
-        canPrevDay={dayIndex > 0}
-        canNextDay={dayIndex < days.length - 1}
-        onPrevDay={prevDay}
-        onNextDay={nextDay}
-        onSelectFacet={selectFacet}
-        onJudgeDay={() => day && setNoteContext({ kind: 'day' })}
-        onOpenSync={() =>
-          mode === 'local' ? setSyncOpen(true) : setToast('Live — saved to the ledger.')
-        }
-      />
-
-      <div ref={elementRef} className="min-h-0 flex-1 will-change-transform" {...handlers}>
+    <div className="fixed inset-0 overflow-hidden bg-night text-ink">
+      {/* Full-screen reading deck */}
+      <div ref={elementRef} className="absolute inset-0 will-change-transform" {...handlers}>
         {loading ? (
           <CardSkeleton />
         ) : error ? (
@@ -355,6 +336,29 @@ export function MobileStudio() {
         ) : (
           <CardSkeleton />
         )}
+      </div>
+
+      {/* Floating header — scrim so it reads over the hero, content scrolls under */}
+      <div className="absolute inset-x-0 top-0 z-20">
+        <DayPicker
+          theme={day?.theme ?? '…'}
+          dayNumber={day?.index ?? dayIndex + 1}
+          status={day?.status}
+          facetIndex={facetIndex}
+          facetVerdicts={facetVerdicts}
+          dayVerdict={dayVerdict}
+          mode={mode}
+          pendingCount={opinionCount}
+          canPrevDay={dayIndex > 0}
+          canNextDay={dayIndex < days.length - 1}
+          onPrevDay={prevDay}
+          onNextDay={nextDay}
+          onSelectFacet={selectFacet}
+          onJudgeDay={() => day && setNoteContext({ kind: 'day' })}
+          onOpenSync={() =>
+            mode === 'local' ? setSyncOpen(true) : setToast('Live — saved to the ledger.')
+          }
+        />
       </div>
 
       <VerdictBar
