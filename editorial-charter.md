@@ -40,8 +40,14 @@ A day whose facets merely sit beside each other has failed, even if each facet i
 - No em dashes. Use commas, colons, and periods.
 - No cliche standing in for insight. "Pride comes before a fall" is a starting point, not a thought.
 - Earn every note of awe. Understatement is stronger than superlative.
+- A facet is a shape, not a list of facts. It carries one controlling idea, turns on a hinge, and lands its last line. A body that recites true things in the order they happened has failed even when every claim is sourced.
 
 The Hubris day is the calibration sample. A new draft should feel like it belongs beside it.
+
+How to give a facet that shape, and the per-type craft (each of the six wants a
+different shape: Person an arc, Picture guided looking, Parallel a late
+surprise, and so on), lives in the [`facet-authoring` skill](.claude/skills/facet-authoring/SKILL.md).
+Reach for it when writing a new body or revising a flat one.
 
 ## The credibility bar
 

@@ -96,6 +96,12 @@ This is the loop the vision asks for: instinctive reactions in the feed become a
 small, prioritized list of edits that move the corpus from rough abundance toward a
 curated, high-trust library worthy of Pantheon.
 
+When you act on the queue, revise with the [`facet-authoring` skill](.claude/skills/facet-authoring/SKILL.md).
+Its revision protocol turns a `fix`/`flat` verdict (and the `voice`, `rhythm`,
+`clarity`, `cliché`, `copy` tags) into concrete moves: name the controlling idea,
+find the hinge, fix the opening and the landing, cut the inventory. `source` flags
+stay on the trust list and are never traded against prose quality.
+
 ## Where it sits in the pipeline
 
 The content pipeline (`map → scout → deep → validate → sync`) produces and guards
