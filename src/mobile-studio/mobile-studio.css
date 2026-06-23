@@ -1,0 +1,58 @@
+@keyframes enter-from-bottom {
+  from {
+    transform: translateY(100dvh);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes enter-from-top {
+  from {
+    transform: translateY(-100dvh);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes reaction-pop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.4); }
+  70% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+@keyframes sheet-rise {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.enter-from-bottom {
+  animation: enter-from-bottom 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.enter-from-top {
+  animation: enter-from-top 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.reaction-pop {
+  animation: reaction-pop 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.sheet-rise {
+  animation: sheet-rise 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter-from-bottom,
+  .enter-from-top,
+  .reaction-pop,
+  .sheet-rise {
+    animation: none;
+  }
+}

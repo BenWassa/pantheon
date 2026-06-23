@@ -14,13 +14,50 @@ judgment system that happens to present as a fast, feed-like review surface.
 ## Running it
 
 ```bash
-npm run studio          # opens the Studio against the dev server
+npm run studio          # desktop review surface (keyboard-driven), dev server
+npm run studio:mobile   # mobile review "game" (swipe deck), opens /mobile-studio.html
+npm run studio:host     # dev server on the LAN — open the printed address on a phone
 npm run studio:report   # turns the captured judgments into a revision queue
 ```
 
-The Studio is **dev-only**. Its API is a Vite middleware that runs only under
-`vite serve`, so the reader's production build stays backend-free and never ships a
-line of Studio code or a single judgment.
+The desktop Studio's API is a Vite middleware that runs only under `vite serve`, so
+the reader's production build stays backend-free and never ships a line of Studio
+code or a single judgment.
+
+## Two surfaces, one ledger
+
+Both surfaces capture the **same `Judgment` shape** (`src/content/judgments.ts`) and
+collapse onto the same target id, so a verdict made on the phone and one made on the
+desktop are interchangeable and feed the same `studio:report`.
+
+| | desktop (`/studio.html`) | mobile (`/mobile-studio.html`) |
+| --- | --- | --- |
+| input | keyboard (1–4 verdicts, hotkeys) | swipe deck + a four-verdict tap bar |
+| lenses | day / facet / line (down to sentence) | facet (one card) + whole-day |
+| detail | tags, severity, note, suggestion | same, in the Note sheet |
+| where judgments go | the on-disk ledger via the dev API | the ledger when live; the browser otherwise |
+
+### Mobile, two ways to run
+
+- **Live (recommended for drafts).** Run `npm run studio:host` and open the printed
+  network address on your phone (same Wi-Fi). The phone reaches the dev API, so it
+  reviews **every day at every status** and writes judgments straight into
+  `content/judgments.jsonl`. The mode chip reads **Live**. Nothing is deployed; no
+  draft leaves your machine.
+- **Local (GitHub Pages).** Installed from the deployed site, the mobile Studio is
+  its own home-screen app (`public/studio.webmanifest`). With no dev API it reads
+  the deployed `studio-manifest.json` — **every day at every status** — and stores
+  judgments in the browser. The mode chip reads **Local · N**; tap it to **export**
+  the judgments as JSONL (append them to `content/judgments.jsonl`) or
+  **import/merge** a file back. No data dead-end, no backend.
+
+During the beta, the public build ships **all day files plus `studio-manifest.json`**,
+so the deployed mobile Studio can review drafts too. The reader's own
+`manifest.json` stays published-only, so unpublished days are present but unlinked
+(the `noindex` Studio page is the only thing that reads them). Only the judgment
+ledger is withheld from the build. When the beta ends, restrict the studio manifest
+(and the copied day files) to published days to take drafts back out of the public
+build.
 
 ## Reviewing at multiple scales
 

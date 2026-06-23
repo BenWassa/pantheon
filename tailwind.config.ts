@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss';
 
 // The Nocturnal Index: dark, restrained, typographic.
 export default {
-  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  content: ['./index.html', './mobile-studio.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -18,6 +18,15 @@ export default {
           faint: '#8a8680',
         },
         ember: '#c9a35b', // a single restrained accent
+        // The four Studio verdicts, as muted as the rest of the palette: a quiet
+        // sage for keep, neutral ink for flat, the ember for fix, a faded clay for
+        // cut. Used only on the private review surface, never in the reader.
+        verdict: {
+          keep: '#7fb38a',
+          flat: '#9a958a',
+          fix: '#c9a35b',
+          cut: '#c2766b',
+        },
       },
       fontFamily: {
         // Fraunces: a soft, literary display serif for themes and titles.

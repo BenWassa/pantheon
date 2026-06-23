@@ -1,10 +1,31 @@
 import { defineConfig } from 'vitest/config';
+import type { Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath, URL } from 'node:url';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { studioServer } from './scripts/lib/studioServer.ts';
 
 const base = process.env.GITHUB_PAGES === 'true' ? '/pantheon/' : '/';
+
+// vite-plugin-pwa injects the reader's webmanifest into every HTML entry. The
+// studio is a separate, installable app: after the build, point its page at its
+// own manifest so "add to home screen" launches the studio, not the reader.
+function studioPwaIdentity(): Plugin {
+  return {
+    name: 'pantheon-studio-pwa-identity',
+    apply: 'build',
+    closeBundle() {
+      const file = fileURLToPath(new URL('./dist/mobile-studio.html', import.meta.url));
+      if (!existsSync(file)) return;
+      const html = readFileSync(file, 'utf8').replace(
+        /(<link rel="manifest" href=")[^"]*(")/,
+        `$1${base}studio.webmanifest$2`,
+      );
+      writeFileSync(file, html);
+    },
+  };
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -45,7 +66,7 @@ export default defineConfig({
       },
       workbox: {
         // Precache the app shell. Content and fonts are cached at runtime below.
-        globPatterns: ['**/*.{js,css,html,svg,woff2}'],
+        globPatterns: ['**/*.{js,css,html,svg,woff2,webmanifest}'],
         navigateFallback: `${base}index.html`,
         cleanupOutdatedCaches: true,
         runtimeCaching: [
@@ -87,7 +108,16 @@ export default defineConfig({
       },
       devOptions: { enabled: false },
     }),
+    studioPwaIdentity(),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        'mobile-studio': fileURLToPath(new URL('./mobile-studio.html', import.meta.url)),
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

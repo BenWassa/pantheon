@@ -8,6 +8,8 @@
     "predev": "tsx scripts/build-manifest.ts && tsx scripts/validate.ts",
     "dev": "vite",
     "studio": "vite --open /studio.html",
+    "studio:mobile": "vite --open /mobile-studio.html",
+    "studio:host": "vite --host",
     "studio:report": "tsx scripts/studio-report.ts",
     "prebuild": "tsx scripts/build-manifest.ts && tsx scripts/validate.ts",
     "build": "tsc --noEmit && vite build",

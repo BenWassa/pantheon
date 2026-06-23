@@ -46,7 +46,9 @@ Open the printed local URL. The app starts on Day 1, "Hubris".
 | `npm run build-manifest` | regenerate `content/manifest.json` and copy content to `public/` |
 | `npm run sync` | reconcile the entity ledger's `usedInDays`/status from the day files (`-- --check` to fail on drift) |
 | `npm run ingest-images` | merge verified Wikimedia image data from `*-wikimedia-sourced-verified.json` files into canonical day files, then delete the sourced files (`-- --dry-run` to preview) |
-| `npm run studio` | open the private review layer (the Studio) for judging AI-generated content |
+| `npm run studio` | open the private review layer (the desktop Studio) for judging AI-generated content |
+| `npm run studio:mobile` | open the mobile Studio — a swipe-deck review "game" (`/mobile-studio.html`) |
+| `npm run studio:host` | run the dev server on the LAN so the mobile Studio can be used from a phone |
 | `npm run studio:report` | turn captured judgments into a prioritized revision queue |
 
 ## Content pipeline
@@ -66,14 +68,17 @@ Coverage is queried, not remembered: the scripts read the actual content every r
 
 ## Review layer (Studio)
 
-The Studio is a private, dev-only judgment layer for AI-generated content. It presents
-the corpus as a fast feed at three scales (whole day, single facet, single line) and
-captures instinctive verdicts (keep / flat / fix / cut), signal tags, and notes into a
-durable, git-tracked ledger (`content/judgments.jsonl`). `npm run studio:report` turns
-those judgments into a prioritized revision queue and surfaces trust risks. The reader
-build never includes the Studio, the ledger, or any unpublished draft day. The repo ships
-a seed corpus of deliberately uneven **draft** days for testing the review loop; see the
-"First testing session" script in [`studio.md`](studio.md).
+The Studio is a private judgment layer for AI-generated content, on two surfaces: a
+keyboard-driven desktop feed (`/studio.html`, dev-only) and a swipe-deck mobile "game"
+(`/mobile-studio.html`) you can run from a phone. Both capture instinctive verdicts
+(keep / flat / fix / cut), signal tags, and notes into the same durable, git-tracked
+ledger (`content/judgments.jsonl`); `npm run studio:report` turns those judgments into a
+prioritized revision queue and surfaces trust risks. The reader build never includes the
+desktop Studio API or the ledger. During the beta the deployed build does ship the draft
+day files (so the mobile Studio can review them), but the reader's manifest stays
+published-only, so drafts are present yet unlinked. The repo ships a seed corpus of
+deliberately uneven **draft** days for testing the review loop; see the "First testing
+session" script in [`studio.md`](studio.md).
 
 The pipeline is a loop: **map** finds the biggest gap, **scout --write** records a candidate
 against it, **deep** scaffolds the day, the author researches and fills it, **validate** holds it
