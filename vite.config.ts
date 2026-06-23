@@ -2,6 +2,7 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath, URL } from 'node:url';
+import { resolve } from 'node:path';
 import { studioServer } from './scripts/lib/studioServer.ts';
 
 const base = process.env.GITHUB_PAGES === 'true' ? '/pantheon/' : '/';
@@ -88,6 +89,14 @@ export default defineConfig({
       devOptions: { enabled: false },
     }),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        'mobile-studio': resolve(__dirname, 'mobile-studio.html'),
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

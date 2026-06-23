@@ -2,7 +2,7 @@ import type { Config } from 'tailwindcss';
 
 // The Nocturnal Index: dark, restrained, typographic.
 export default {
-  content: ['./index.html', './src/**/*.{ts,tsx}'],
+  content: ['./index.html', './mobile-studio.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
