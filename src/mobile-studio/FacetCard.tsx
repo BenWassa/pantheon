@@ -1,23 +1,24 @@
-import type { Facet, ImageRef } from '@/content/types';
-import { contentUrl } from '@/content/urls';
+import { useState } from 'react';
+import type { Facet } from '@/content/types';
+import type { Verdict } from '@/content/judgments';
 import { FACET_LABELS } from '@/lib/facetLabels';
-
-function imageUrl(image: ImageRef): string {
-  // Local paths start with /content/; external URLs pass through unchanged.
-  return image.src.startsWith('/content/') ? contentUrl(image.src) : image.src;
-}
+import { facetImageUrl } from './images';
+import { VERDICT_META } from './verdictMeta';
 
 interface FacetCardProps {
   facet: Facet;
   enterFrom: 'bottom' | 'top' | null;
   scrollRef: React.RefObject<HTMLDivElement>;
+  /** The current verdict on this facet, if any, shown as a quiet corner mark. */
+  verdict?: Verdict;
 }
 
-export function FacetCard({ facet, enterFrom, scrollRef }: FacetCardProps) {
+export function FacetCard({ facet, enterFrom, scrollRef, verdict }: FacetCardProps) {
   const enterClass =
     enterFrom === 'bottom' ? 'enter-from-bottom' : enterFrom === 'top' ? 'enter-from-top' : '';
 
   const image = 'image' in facet ? facet.image : undefined;
+  const [sourcesOpen, setSourcesOpen] = useState(false);
 
   return (
     <div className={`flex h-full flex-col bg-night ${enterClass}`}>
@@ -25,7 +26,7 @@ export function FacetCard({ facet, enterFrom, scrollRef }: FacetCardProps) {
       {image ? (
         <div className="relative h-[42dvh] flex-shrink-0 overflow-hidden bg-night-soft">
           <img
-            src={imageUrl(image)}
+            src={facetImageUrl(image)}
             alt={image.alt}
             loading="eager"
             decoding="async"
@@ -38,10 +39,19 @@ export function FacetCard({ facet, enterFrom, scrollRef }: FacetCardProps) {
 
       {/* Scrollable content */}
       <div ref={scrollRef} className="flex-1 overflow-y-auto overscroll-contain px-5 pb-6 pt-5">
-        {/* Facet label */}
-        <p className="font-sans text-[0.6rem] uppercase tracking-widest2 text-ember">
-          {FACET_LABELS[facet.key]}
-        </p>
+        {/* Facet label + current verdict mark */}
+        <div className="flex items-center justify-between">
+          <p className="font-sans text-[0.6rem] uppercase tracking-widest2 text-ember">
+            {FACET_LABELS[facet.key]}
+          </p>
+          {verdict ? (
+            <span
+              className={`font-sans text-[0.6rem] uppercase tracking-widest2 ${VERDICT_META[verdict].color}`}
+            >
+              {VERDICT_META[verdict].glyph} {VERDICT_META[verdict].label}
+            </span>
+          ) : null}
+        </div>
 
         {/* Reveal word */}
         <h1 className="mt-1 font-display text-[2.5rem] leading-tight text-ink">{facet.oneWord}</h1>
@@ -88,10 +98,38 @@ export function FacetCard({ facet, enterFrom, scrollRef }: FacetCardProps) {
           <p className="mt-4 font-sans text-xs italic text-ink-faint">— {facet.attribution}</p>
         ) : null}
 
-        {/* Source hint */}
-        <p className="mt-6 font-sans text-[0.6rem] text-ink-faint">
+        {/* Sources — collapsed by default; the reviewer expands them to judge trust. */}
+        <button
+          type="button"
+          onClick={() => setSourcesOpen((o) => !o)}
+          aria-expanded={sourcesOpen}
+          className="mt-6 flex items-center gap-1.5 font-sans text-[0.6rem] uppercase tracking-widest2 text-ink-faint active:text-ink"
+        >
           {facet.sources.length === 1 ? '1 source' : `${facet.sources.length} sources`}
-        </p>
+          <span aria-hidden="true">{sourcesOpen ? '▾' : '▸'}</span>
+        </button>
+        {sourcesOpen ? (
+          <ul className="mt-2 space-y-2 border-l border-night-raised pl-3">
+            {facet.sources.map((s, i) => (
+              <li key={i} className="font-body text-xs leading-relaxed text-ink-faint">
+                <span className="text-ink-muted">{s.title}</span>
+                {s.author ? `, ${s.author}` : ''}
+                {s.year ? ` (${s.year})` : ''}
+                {s.url ? (
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-1 text-ember"
+                  >
+                    ↗
+                  </a>
+                ) : null}
+                {s.note ? <span className="italic"> — {s.note}</span> : null}
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </div>
   );

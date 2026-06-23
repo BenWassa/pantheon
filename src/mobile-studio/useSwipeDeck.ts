@@ -19,9 +19,13 @@ export function useSwipeDeck({
   contentScrollRef,
 }: SwipeOptions) {
   const elementRef = useRef<HTMLDivElement | null>(null);
+  const startX = useRef(0);
   const startY = useRef(0);
   const startTime = useRef(0);
   const active = useRef(false);
+  // Once a gesture is judged horizontal (a sideways flick, or letting the content
+  // scroll) we stop steering the deck for the rest of that touch.
+  const abandoned = useRef(false);
 
   // Keep callbacks in refs so onTouchEnd doesn't go stale.
   const onNextRef = useRef(onNext);
@@ -29,42 +33,60 @@ export function useSwipeDeck({
   onNextRef.current = onNext;
   onPrevRef.current = onPrev;
 
+  const resetTransform = useCallback(() => {
+    const el = elementRef.current;
+    if (el) {
+      el.style.transition = 'none';
+      el.style.transform = '';
+    }
+  }, []);
+
   const onTouchStart = useCallback((e: React.TouchEvent) => {
+    startX.current = e.touches[0]?.clientX ?? 0;
     startY.current = e.touches[0]?.clientY ?? 0;
     startTime.current = Date.now();
     active.current = true;
+    abandoned.current = false;
     const el = elementRef.current;
     if (el) el.style.transition = 'none';
   }, []);
 
   const onTouchMove = useCallback(
     (e: React.TouchEvent) => {
-      if (!active.current) return;
-      const delta = (e.touches[0]?.clientY ?? startY.current) - startY.current;
+      if (!active.current || abandoned.current) return;
+      const dx = (e.touches[0]?.clientX ?? startX.current) - startX.current;
+      const dy = (e.touches[0]?.clientY ?? startY.current) - startY.current;
 
-      // When the content area is scrolled down, vertical drag-up scrolls the content
+      // A mostly-horizontal drag is not deck navigation; leave it to the browser.
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) {
+        abandoned.current = true;
+        resetTransform();
+        return;
+      }
+
+      // When the content area is scrolled down, a drag-up scrolls the content
       // rather than navigating to the next card.
       const scrollEl = contentScrollRef?.current;
-      if (delta < 0 && scrollEl && scrollEl.scrollTop > 4) {
-        active.current = false;
-        const el = elementRef.current;
-        if (el) {
-          el.style.transition = 'none';
-          el.style.transform = '';
-        }
+      if (dy < 0 && scrollEl && scrollEl.scrollTop > 4) {
+        abandoned.current = true;
+        resetTransform();
         return;
       }
 
       const el = elementRef.current;
-      if (el) el.style.transform = `translateY(${delta}px)`;
+      if (el) el.style.transform = `translateY(${dy}px)`;
     },
-    [contentScrollRef],
+    [contentScrollRef, resetTransform],
   );
 
   const onTouchEnd = useCallback(
     (e: React.TouchEvent) => {
       if (!active.current) return;
       active.current = false;
+      if (abandoned.current) {
+        resetTransform();
+        return;
+      }
 
       const endY = e.changedTouches[0]?.clientY ?? startY.current;
       const delta = endY - startY.current;
@@ -94,7 +116,7 @@ export function useSwipeDeck({
         el.style.transform = '';
       }
     },
-    [threshold, velocityThreshold],
+    [threshold, velocityThreshold, resetTransform],
   );
 
   return {

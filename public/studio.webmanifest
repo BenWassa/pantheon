@@ -1,0 +1,17 @@
+{
+  "name": "Pantheon Studio",
+  "short_name": "Studio",
+  "id": "./mobile-studio",
+  "start_url": "mobile-studio.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0a0a0c",
+  "theme_color": "#0a0a0c",
+  "categories": ["productivity"],
+  "icons": [
+    { "src": "pwa-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "pwa-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "pwa-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
