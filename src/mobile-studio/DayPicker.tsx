@@ -46,7 +46,7 @@ export function DayPicker({
   onOpenSync,
 }: DayPickerProps) {
   return (
-    <header className="flex flex-col gap-2 px-4 pb-2 pt-[max(0.5rem,env(safe-area-inset-top))]">
+    <header className="flex flex-col gap-2 bg-gradient-to-b from-night via-night/85 to-transparent px-4 pb-8 pt-[max(0.5rem,env(safe-area-inset-top))]">
       {/* Mode chip + status badge */}
       <div className="flex items-center justify-between">
         <button
@@ -57,7 +57,7 @@ export function DayPicker({
               ? 'Live: judgments are saved to the ledger'
               : `Local: ${pendingCount} judgment${pendingCount === 1 ? '' : 's'} to sync`
           }
-          className="flex items-center gap-1.5 rounded-full border border-night-raised px-2.5 py-1 font-sans text-[0.55rem] uppercase tracking-widest2 text-ink-faint active:text-ink"
+          className="flex items-center gap-1.5 rounded-full border border-night-raised px-2.5 py-1 font-sans text-[0.625rem] uppercase tracking-widest2 text-ink-faint active:text-ink"
         >
           <span className={mode === 'live' ? 'text-verdict-keep' : 'text-ember'} aria-hidden="true">
             ●
@@ -65,11 +65,11 @@ export function DayPicker({
           {mode === 'live' ? 'Live' : `Local · ${pendingCount}`}
         </button>
         {status ? (
-          <span className="font-sans text-[0.55rem] uppercase tracking-widest2 text-ink-faint">
+          <span className="font-sans text-[0.625rem] uppercase tracking-widest2 text-ink-faint">
             Day {dayNumber} · {STATUS_LABEL[status]}
           </span>
         ) : (
-          <span className="font-sans text-[0.55rem] uppercase tracking-widest2 text-ink-faint">
+          <span className="font-sans text-[0.625rem] uppercase tracking-widest2 text-ink-faint">
             Day {dayNumber}
           </span>
         )}
@@ -146,7 +146,7 @@ export function DayPicker({
               onClick={() => onSelectFacet(i)}
               aria-label={`Go to facet ${i + 1} of 6${verdict ? `, ${verdict}` : ''}`}
               aria-current={isCurrent}
-              className="flex h-5 items-center px-0.5"
+              className="flex h-7 items-center px-1"
             >
               <span
                 className={[

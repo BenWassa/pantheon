@@ -11,8 +11,8 @@ interface VerdictBarProps {
   onOpenNote: () => void;
 }
 
-// The game's core control: one tap is a full judgment. Four verdicts, big targets,
-// a haptic tick. The Notes button opens the detail sheet for the same target.
+// The game's core control, floated over the reading area so the card can run nearly
+// full-screen. One tap is a full judgment; the Note button opens the detail sheet.
 export function VerdictBar({
   verdict,
   hasDetail,
@@ -31,46 +31,55 @@ export function VerdictBar({
   }
 
   return (
-    <div className="flex items-stretch border-t border-night-raised bg-night pb-[max(0.5rem,env(safe-area-inset-bottom))]">
-      {VERDICTS.map((v) => {
-        const meta = VERDICT_META[v];
-        const active = verdict === v;
-        const popping = popKey === v;
-        return (
-          <button
-            key={v}
-            type="button"
-            disabled={disabled}
-            onClick={() => handle(v)}
-            aria-label={`${meta.label}: ${meta.hint}`}
-            aria-pressed={active}
-            className={[
-              'flex flex-1 flex-col items-center justify-center gap-1 py-3 transition-colors disabled:opacity-30',
-              active ? meta.color : 'text-ink-faint active:text-ink',
-            ].join(' ')}
-          >
-            <span className={['text-2xl leading-none', popping ? 'reaction-pop' : ''].join(' ')}>
-              {meta.glyph}
-            </span>
-            <span className="font-sans text-[0.6rem] uppercase tracking-widest2">{meta.label}</span>
-          </button>
-        );
-      })}
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex justify-center px-3 pb-[max(0.9rem,env(safe-area-inset-bottom))]">
+      <div className="pointer-events-auto flex items-center gap-0.5 rounded-2xl border border-ink-faint/20 bg-night/90 p-1.5 shadow-lg shadow-black/40 backdrop-blur-sm">
+        {VERDICTS.map((v) => {
+          const meta = VERDICT_META[v];
+          const active = verdict === v;
+          const popping = popKey === v;
+          return (
+            <button
+              key={v}
+              type="button"
+              disabled={disabled}
+              onClick={() => handle(v)}
+              aria-label={`${meta.label}: ${meta.hint}`}
+              aria-pressed={active}
+              className={[
+                'flex w-[3.65rem] flex-col items-center gap-1 rounded-xl py-2.5 transition-colors duration-150 disabled:opacity-30',
+                active ? `bg-ink/[0.06] ${meta.color}` : 'text-ink-faint active:text-ink',
+              ].join(' ')}
+            >
+              <span className={['text-xl leading-none', popping ? 'reaction-pop' : ''].join(' ')}>
+                {meta.glyph}
+              </span>
+              <span className="font-sans text-[0.625rem] uppercase tracking-widest2">
+                {meta.label}
+              </span>
+            </button>
+          );
+        })}
 
-      {/* Notes / detail */}
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={onOpenNote}
-        aria-label={hasDetail ? 'Edit note and detail' : 'Add note and detail'}
-        className="relative flex w-16 flex-col items-center justify-center gap-1 border-l border-night-raised py-3 text-ink-faint transition-colors active:text-ink disabled:opacity-30"
-      >
-        <span className="text-2xl leading-none">✎</span>
-        <span className="font-sans text-[0.6rem] uppercase tracking-widest2">Note</span>
-        {hasDetail ? (
-          <span className="absolute right-3 top-2.5 h-1.5 w-1.5 rounded-full bg-ember" />
-        ) : null}
-      </button>
+        <div className="mx-0.5 h-10 w-px bg-ink-faint/15" aria-hidden="true" />
+
+        {/* Note / detail */}
+        <button
+          type="button"
+          disabled={disabled}
+          onClick={onOpenNote}
+          aria-label={hasDetail ? 'Edit note and detail' : 'Add note and detail'}
+          className={[
+            'relative flex w-[3.15rem] flex-col items-center gap-1 rounded-xl py-2.5 transition-colors duration-150 disabled:opacity-30',
+            hasDetail ? 'text-ember' : 'text-ink-faint active:text-ink',
+          ].join(' ')}
+        >
+          <span className="text-xl leading-none">✎</span>
+          <span className="font-sans text-[0.625rem] uppercase tracking-widest2">Note</span>
+          {hasDetail ? (
+            <span className="absolute right-2.5 top-2 h-1.5 w-1.5 rounded-full bg-ember" />
+          ) : null}
+        </button>
+      </div>
     </div>
   );
 }

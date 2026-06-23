@@ -7,7 +7,9 @@ export const VERDICT_META: Record<
   Verdict,
   { glyph: string; label: string; color: string; hint: string }
 > = {
-  keep: { glyph: '♥', label: 'Keep', color: 'text-verdict-keep', hint: 'Alive. It belongs.' },
+  // A geometric fill-level system, not social iconography: full = alive, empty =
+  // lifeless, half = partial, struck = rejected.
+  keep: { glyph: '●', label: 'Keep', color: 'text-verdict-keep', hint: 'Alive. It belongs.' },
   flat: {
     glyph: '○',
     label: 'Flat',
