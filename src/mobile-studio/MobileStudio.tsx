@@ -310,8 +310,13 @@ export function MobileStudio() {
 
   return (
     <div className="fixed inset-0 overflow-hidden bg-night text-ink">
-      {/* Full-screen reading deck */}
-      <div ref={elementRef} className="absolute inset-0 will-change-transform" {...handlers}>
+      {/* Full-screen reading deck. touch-pan-y lets the browser own vertical
+          scrolling (reading) while horizontal swipes navigate between cards. */}
+      <div
+        ref={elementRef}
+        className="absolute inset-0 touch-pan-y will-change-transform"
+        {...handlers}
+      >
         {loading ? (
           <CardSkeleton />
         ) : error ? (
