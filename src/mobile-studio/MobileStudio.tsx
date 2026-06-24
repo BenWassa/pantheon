@@ -28,7 +28,7 @@ import type { BackendMode, StudioBackend } from './types';
 function CardSkeleton() {
   return (
     <div className="flex h-full flex-col bg-night animate-pulse">
-      <div className="h-[34dvh] flex-shrink-0 bg-night-soft" />
+      <div className="h-[22dvh] flex-shrink-0 bg-night-soft" />
       <div className="flex-1 px-5 pt-5">
         <div className="mb-3 h-10 w-40 rounded bg-night-raised" />
         <div className="mb-6 h-4 w-56 rounded bg-night-raised" />
@@ -365,6 +365,9 @@ export function MobileStudio() {
           }
         />
       </div>
+
+      {/* Soft fade so text meets the floating verdict pill gracefully, not an abrupt cut */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-night via-night/80 to-transparent" />
 
       <VerdictBar
         verdict={currentVerdict}
