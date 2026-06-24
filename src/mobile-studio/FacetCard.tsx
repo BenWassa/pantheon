@@ -27,7 +27,7 @@ export function FacetCard({ facet, enterFrom, scrollRef, verdict }: FacetCardPro
       <div ref={scrollRef} className="h-full overflow-y-auto overscroll-contain">
         {/* Hero image — part of the scroll, the header floats over its top */}
         {image ? (
-          <div className="relative h-[30dvh] w-full overflow-hidden bg-night-soft">
+          <div className="relative h-[22dvh] w-full overflow-hidden bg-night-soft">
             <img
               src={facetImageUrl(image)}
               alt={image.alt}
@@ -43,7 +43,7 @@ export function FacetCard({ facet, enterFrom, scrollRef, verdict }: FacetCardPro
 
         {/* Content — held to a prose measure, clearing the floating header (when
             there is no hero) and the floating verdict pill at the bottom. */}
-        <div className={`mx-auto max-w-prose px-5 pb-36 ${image ? 'pt-4' : 'pt-32'}`}>
+        <div className={`mx-auto max-w-prose px-5 pb-28 ${image ? 'pt-3' : 'pt-32'}`}>
           {/* Facet label + current verdict mark */}
           <div className="flex items-center justify-between">
             <p className="font-sans text-[0.7rem] uppercase tracking-widest2 text-ember">
