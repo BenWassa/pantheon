@@ -57,7 +57,7 @@ export function DayPicker({
               ? 'Live: judgments are saved to the ledger'
               : `Local: ${pendingCount} judgment${pendingCount === 1 ? '' : 's'} to sync`
           }
-          className="flex items-center gap-1.5 rounded-full border border-night-raised px-2.5 py-1 font-sans text-[0.625rem] uppercase tracking-widest2 text-ink-faint active:text-ink"
+          className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-night-raised px-2.5 py-1 font-sans text-[0.625rem] uppercase tracking-widest2 text-ink-faint active:text-ink"
         >
           <span className={mode === 'live' ? 'text-verdict-keep' : 'text-ember'} aria-hidden="true">
             ●
@@ -82,7 +82,7 @@ export function DayPicker({
           onClick={onPrevDay}
           disabled={!canPrevDay}
           aria-label="Previous day"
-          className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-night-raised text-ink-faint transition-colors disabled:opacity-25 active:bg-night-raised"
+          className="pointer-events-auto flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-night-raised text-ink-faint transition-colors disabled:opacity-25 active:bg-night-raised"
         >
           <svg
             viewBox="0 0 24 24"
@@ -101,7 +101,7 @@ export function DayPicker({
           type="button"
           onClick={onJudgeDay}
           aria-label={`Judge the whole day: ${theme}`}
-          className="flex min-w-0 flex-1 items-center justify-center gap-2"
+          className="pointer-events-auto flex min-w-0 flex-1 items-center justify-center gap-2"
         >
           <span className="truncate font-display text-base uppercase tracking-widest2 text-ink">
             {theme}
@@ -118,7 +118,7 @@ export function DayPicker({
           onClick={onNextDay}
           disabled={!canNextDay}
           aria-label="Next day"
-          className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full border border-night-raised text-ink-faint transition-colors disabled:opacity-25 active:bg-night-raised"
+          className="pointer-events-auto flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-night-raised text-ink-faint transition-colors disabled:opacity-25 active:bg-night-raised"
         >
           <svg
             viewBox="0 0 24 24"
@@ -146,7 +146,7 @@ export function DayPicker({
               onClick={() => onSelectFacet(i)}
               aria-label={`Go to facet ${i + 1} of 6${verdict ? `, ${verdict}` : ''}`}
               aria-current={isCurrent}
-              className="flex h-7 items-center px-1"
+              className="pointer-events-auto flex h-7 items-center px-1"
             >
               <span
                 className={[

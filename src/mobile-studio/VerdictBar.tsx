@@ -46,11 +46,11 @@ export function VerdictBar({
               aria-label={`${meta.label}: ${meta.hint}`}
               aria-pressed={active}
               className={[
-                'flex h-11 w-12 flex-col items-center justify-center gap-0.5 rounded-full transition-colors duration-150 disabled:opacity-30',
+                'flex h-[3.4rem] w-[3.4rem] flex-col items-center justify-center gap-1 rounded-full transition-colors duration-150 disabled:opacity-30',
                 active ? `bg-ink/[0.07] ${meta.color}` : 'text-ink-faint active:text-ink',
               ].join(' ')}
             >
-              <span className={['text-lg leading-none', popping ? 'reaction-pop' : ''].join(' ')}>
+              <span className={['text-2xl leading-none', popping ? 'reaction-pop' : ''].join(' ')}>
                 {meta.glyph}
               </span>
               <span className="font-sans text-[0.6rem] uppercase tracking-widest2">
@@ -60,7 +60,7 @@ export function VerdictBar({
           );
         })}
 
-        <div className="mx-0.5 h-6 w-px bg-ink-faint/15" aria-hidden="true" />
+        <div className="mx-0.5 h-8 w-px bg-ink-faint/15" aria-hidden="true" />
 
         {/* Note / detail */}
         <button
@@ -69,11 +69,11 @@ export function VerdictBar({
           onClick={onOpenNote}
           aria-label={hasDetail ? 'Edit note and detail' : 'Add note and detail'}
           className={[
-            'relative flex h-11 w-11 flex-col items-center justify-center gap-0.5 rounded-full transition-colors duration-150 disabled:opacity-30',
+            'relative flex h-[3.4rem] w-[3.4rem] flex-col items-center justify-center gap-1 rounded-full transition-colors duration-150 disabled:opacity-30',
             hasDetail ? 'text-ember' : 'text-ink-faint active:text-ink',
           ].join(' ')}
         >
-          <span className="text-lg leading-none">✎</span>
+          <span className="text-2xl leading-none">✎</span>
           <span className="font-sans text-[0.6rem] uppercase tracking-widest2">Note</span>
           {hasDetail ? (
             <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-ember" />

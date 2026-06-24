@@ -343,8 +343,10 @@ export function MobileStudio() {
         )}
       </div>
 
-      {/* Floating header — scrim so it reads over the hero, content scrolls under */}
-      <div className="absolute inset-x-0 top-0 z-20">
+      {/* Floating header — scrim so it reads over the hero, content scrolls under.
+          pointer-events-none lets taps fall through the scrim to the image; the
+          controls re-enable themselves. */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-20">
         <DayPicker
           theme={day?.theme ?? '…'}
           dayNumber={day?.index ?? dayIndex + 1}
@@ -367,7 +369,7 @@ export function MobileStudio() {
       </div>
 
       {/* Soft fade so text meets the floating verdict pill gracefully, not an abrupt cut */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-24 bg-gradient-to-t from-night via-night/80 to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-28 bg-gradient-to-t from-night via-night/85 to-transparent" />
 
       <VerdictBar
         verdict={currentVerdict}

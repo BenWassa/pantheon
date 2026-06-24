@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { Facet } from '@/content/types';
 import type { Verdict } from '@/content/judgments';
 import { FACET_LABELS } from '@/lib/facetLabels';
+import { ImageLightbox } from '@/components/ImageLightbox';
 import { facetImageUrl } from './images';
 import { VERDICT_META } from './verdictMeta';
 
@@ -19,15 +20,22 @@ export function FacetCard({ facet, enterFrom, scrollRef, verdict }: FacetCardPro
 
   const image = 'image' in facet ? facet.image : undefined;
   const [sourcesOpen, setSourcesOpen] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   return (
     <div className={`h-full bg-night ${enterClass}`}>
       {/* The whole card scrolls, so the reading area runs nearly full-screen and the
           hero scrolls away. The header and verdict pill float over it. */}
       <div ref={scrollRef} className="h-full overflow-y-auto overscroll-contain">
-        {/* Hero image — part of the scroll, the header floats over its top */}
+        {/* Hero image — tap to view full screen. Part of the scroll, so it slides
+            away as you read; the header floats over its top. */}
         {image ? (
-          <div className="relative h-[22dvh] w-full overflow-hidden bg-night-soft">
+          <button
+            type="button"
+            onClick={() => setLightboxOpen(true)}
+            aria-label="View image full screen"
+            className="relative block h-[22dvh] w-full overflow-hidden bg-night-soft"
+          >
             <img
               src={facetImageUrl(image)}
               alt={image.alt}
@@ -38,12 +46,28 @@ export function FacetCard({ facet, enterFrom, scrollRef, verdict }: FacetCardPro
             {/* Gradients so the floating header (top) and the title (bottom) read clearly */}
             <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-night to-transparent" />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-night to-transparent" />
-          </div>
+            {/* Tap-to-expand affordance */}
+            <span className="absolute bottom-3 right-3 flex items-center gap-1 rounded-full border border-ink-faint/25 bg-night/55 px-2.5 py-1 font-sans text-[0.6rem] uppercase tracking-widest2 text-ink-muted backdrop-blur-sm">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="h-3 w-3"
+                aria-hidden="true"
+              >
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+              </svg>
+              View
+            </span>
+          </button>
         ) : null}
 
         {/* Content — held to a prose measure, clearing the floating header (when
             there is no hero) and the floating verdict pill at the bottom. */}
-        <div className={`mx-auto max-w-prose px-5 pb-28 ${image ? 'pt-3' : 'pt-32'}`}>
+        <div className={`mx-auto max-w-prose px-5 pb-32 ${image ? 'pt-3' : 'pt-32'}`}>
           {/* Facet label + current verdict mark */}
           <div className="flex items-center justify-between">
             <p className="font-sans text-[0.7rem] uppercase tracking-widest2 text-ember">
@@ -143,6 +167,10 @@ export function FacetCard({ facet, enterFrom, scrollRef, verdict }: FacetCardPro
           ) : null}
         </div>
       </div>
+
+      {image && lightboxOpen ? (
+        <ImageLightbox image={image} onClose={() => setLightboxOpen(false)} />
+      ) : null}
     </div>
   );
 }
