@@ -27,7 +27,7 @@ export function FacetCard({ facet, enterFrom, scrollRef, verdict }: FacetCardPro
       <div ref={scrollRef} className="h-full overflow-y-auto overscroll-contain">
         {/* Hero image — part of the scroll, the header floats over its top */}
         {image ? (
-          <div className="relative h-[34dvh] w-full overflow-hidden bg-night-soft">
+          <div className="relative h-[30dvh] w-full overflow-hidden bg-night-soft">
             <img
               src={facetImageUrl(image)}
               alt={image.alt}
