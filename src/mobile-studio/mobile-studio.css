@@ -1,21 +1,24 @@
-@keyframes enter-from-bottom {
+/* A new card sliding in behind an outgoing swipe. "next" came from the right edge
+   (you swiped left to advance); "prev" came from the left. Kept short and eased so
+   the turn reads as one continuous motion, not a pop. */
+@keyframes enter-from-next {
   from {
-    transform: translateY(40%);
-    opacity: 0.4;
+    transform: translateX(18%);
+    opacity: 0.5;
   }
   to {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 1;
   }
 }
 
-@keyframes enter-from-top {
+@keyframes enter-from-prev {
   from {
-    transform: translateY(-40%);
-    opacity: 0.4;
+    transform: translateX(-18%);
+    opacity: 0.5;
   }
   to {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 1;
   }
 }
@@ -41,12 +44,12 @@
   }
 }
 
-.enter-from-bottom {
-  animation: enter-from-bottom 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.enter-from-next {
+  animation: enter-from-next 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.enter-from-top {
-  animation: enter-from-top 280ms cubic-bezier(0.22, 1, 0.36, 1) both;
+.enter-from-prev {
+  animation: enter-from-prev 240ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .reaction-pop {
@@ -58,8 +61,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .enter-from-bottom,
-  .enter-from-top,
+  .enter-from-next,
+  .enter-from-prev,
   .reaction-pop,
   .sheet-rise {
     animation: none;

@@ -3,6 +3,7 @@ import type { Judgment } from '@/content/judgments';
 import {
   appendLocal,
   exportJsonl,
+  exportSummary,
   loadLocal,
   mergeJudgments,
   parseImport,
@@ -70,6 +71,23 @@ describe('localLog', () => {
       mk('b', '2026-01-01T00:00:00.000Z', 'cut', 'picture'),
     ]);
     expect(text.trim().split('\n')).toHaveLength(2);
+  });
+
+  it('summarises the current opinion per target as readable Markdown', () => {
+    const older = mk('a', '2026-01-01T00:00:00.000Z', 'keep', 'person');
+    const newer = mk('b', '2026-01-02T00:00:00.000Z', 'cut', 'person'); // same target, later
+    const other = mk('c', '2026-01-01T00:00:00.000Z', 'fix', 'picture');
+    const md = exportSummary([older, newer, other]);
+    expect(md).toContain('# Pantheon Studio — decisions');
+    expect(md).toContain('## Day 1 · hubris');
+    // Latest verdict on the person facet wins (Cut, not Keep).
+    expect(md).toContain('**Cut** — Person');
+    expect(md).not.toContain('**Keep** — Person');
+    expect(md).toContain('**Fix** — Picture');
+  });
+
+  it('summarises empty input without throwing', () => {
+    expect(exportSummary([])).toContain('No decisions captured yet');
   });
 
   it('parses JSON-array and JSONL imports, and empty input', () => {
