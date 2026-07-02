@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react';
 import { latestByTarget, type Judgment } from '@/content/judgments';
-import { exportJsonl, mergeJudgments, parseImport } from './localLog';
+import { exportJsonl, exportSummary, mergeJudgments, parseImport } from './localLog';
+import type { BackendMode } from './types';
 
 interface SyncSheetProps {
   open: boolean;
+  mode: BackendMode;
   judgments: Judgment[];
   onClose: () => void;
   onImport: (merged: Judgment[]) => void;
@@ -12,7 +14,7 @@ interface SyncSheetProps {
 // Local mode keeps judgments in the browser. This sheet is how they leave it: an
 // export in the exact JSONL the ledger uses (append it to content/judgments.jsonl),
 // plus an import that merges a file back in. No backend, no data dead-end.
-export function SyncSheet({ open, judgments, onClose, onImport }: SyncSheetProps) {
+export function SyncSheet({ open, mode, judgments, onClose, onImport }: SyncSheetProps) {
   const [status, setStatus] = useState<string | null>(null);
   const [showImport, setShowImport] = useState(false);
   const [importText, setImportText] = useState('');
@@ -22,31 +24,42 @@ export function SyncSheet({ open, judgments, onClose, onImport }: SyncSheetProps
 
   const opinions = latestByTarget(judgments).size;
   const jsonl = exportJsonl(judgments);
-  const filename = `pantheon-judgments-${new Date().toISOString().slice(0, 10)}.jsonl`;
+  const stamp = new Date().toISOString().slice(0, 10);
+  const filename = `pantheon-judgments-${stamp}.jsonl`;
+  const summaryFilename = `pantheon-decisions-${stamp}.md`;
 
   function flash(message: string) {
     setStatus(message);
     setTimeout(() => setStatus(null), 2200);
   }
 
+  function downloadFile(text: string, name: string, type: string) {
+    const blob = new Blob([text], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = name;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   async function handleCopy() {
     try {
       await navigator.clipboard.writeText(jsonl);
-      flash('Copied to clipboard.');
+      flash('JSONL copied to clipboard.');
     } catch {
       flash('Copy failed — use Download.');
     }
   }
 
   function handleDownload() {
-    const blob = new Blob([jsonl], { type: 'application/x-ndjson' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
-    flash('Downloaded.');
+    downloadFile(jsonl, filename, 'application/x-ndjson');
+    flash('Ledger JSONL downloaded.');
+  }
+
+  function handleSummary() {
+    downloadFile(exportSummary(judgments), summaryFilename, 'text/markdown');
+    flash('Decisions summary downloaded.');
   }
 
   async function handleShare() {
@@ -126,19 +139,28 @@ export function SyncSheet({ open, judgments, onClose, onImport }: SyncSheetProps
         </div>
 
         <p className="px-5 pb-3 pt-2 font-body text-xs leading-relaxed text-ink-faint">
-          Export the current opinions as JSONL, then append the file to{' '}
-          <span className="text-ink-muted">content/judgments.jsonl</span> to fold them into the
-          revision report.
+          {mode === 'live' ? (
+            <>
+              Live — your decisions are already saved to the ledger. You can still export a copy
+              here.
+            </>
+          ) : (
+            <>Your decisions live on this device. Export them so nothing is lost.</>
+          )}
         </p>
 
-        <div className="grid grid-cols-3 gap-2 px-4">
+        {/* A readable record of your decisions — for you. */}
+        <p className="px-5 pb-1.5 font-sans text-[0.6rem] uppercase tracking-widest2 text-ink-faint">
+          Your decisions
+        </p>
+        <div className="grid grid-cols-2 gap-2 px-4">
           <button
             type="button"
-            onClick={handleDownload}
+            onClick={handleSummary}
             disabled={opinions === 0}
-            className="rounded-xl border border-night-raised py-3 font-sans text-[0.65rem] uppercase tracking-widest2 text-ink active:bg-night-raised disabled:opacity-30"
+            className="rounded-xl border border-ember/50 py-3 font-sans text-[0.65rem] uppercase tracking-widest2 text-ember active:bg-night-raised disabled:opacity-30"
           >
-            Download
+            Summary · .md
           </button>
           <button
             type="button"
@@ -148,13 +170,28 @@ export function SyncSheet({ open, judgments, onClose, onImport }: SyncSheetProps
           >
             Share
           </button>
+        </div>
+
+        {/* The raw JSONL the revision report ingests. */}
+        <p className="px-5 pb-1.5 pt-4 font-sans text-[0.6rem] uppercase tracking-widest2 text-ink-faint">
+          For the ledger · append to <span className="text-ink-muted">content/judgments.jsonl</span>
+        </p>
+        <div className="grid grid-cols-2 gap-2 px-4">
+          <button
+            type="button"
+            onClick={handleDownload}
+            disabled={opinions === 0}
+            className="rounded-xl border border-night-raised py-3 font-sans text-[0.65rem] uppercase tracking-widest2 text-ink active:bg-night-raised disabled:opacity-30"
+          >
+            Download · .jsonl
+          </button>
           <button
             type="button"
             onClick={handleCopy}
             disabled={opinions === 0}
             className="rounded-xl border border-night-raised py-3 font-sans text-[0.65rem] uppercase tracking-widest2 text-ink active:bg-night-raised disabled:opacity-30"
           >
-            Copy
+            Copy JSONL
           </button>
         </div>
 

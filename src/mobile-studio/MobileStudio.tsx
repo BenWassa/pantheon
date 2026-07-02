@@ -79,7 +79,7 @@ export function MobileStudio() {
   const [judgments, setJudgments] = useState<Judgment[]>([]);
   const [dayIndex, setDayIndex] = useState(0);
   const [facetIndex, setFacetIndex] = useState(0);
-  const [enterFrom, setEnterFrom] = useState<'bottom' | 'top' | null>(null);
+  const [enterFrom, setEnterFrom] = useState<'next' | 'prev' | null>(null);
   const [noteContext, setNoteContext] = useState<NoteContext>(null);
   const [syncOpen, setSyncOpen] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -87,6 +87,7 @@ export function MobileStudio() {
   const [toast, setToast] = useState<string | null>(null);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+  const advanceTimer = useRef<number | null>(null);
   const judgmentsRef = useRef<Judgment[]>([]);
   judgmentsRef.current = judgments;
   const backendRef = useRef<StudioBackend | null>(null);
@@ -121,6 +122,14 @@ export function MobileStudio() {
   useEffect(() => {
     init();
   }, [init]);
+
+  // Cancel any pending auto-advance if the studio unmounts.
+  useEffect(
+    () => () => {
+      if (advanceTimer.current !== null) window.clearTimeout(advanceTimer.current);
+    },
+    [],
+  );
 
   const day = days[dayIndex] ?? null;
   const currentFacetKey = FACET_ORDER[facetIndex] ?? 'person';
@@ -158,12 +167,15 @@ export function MobileStudio() {
 
   // ---- Navigation -----------------------------------------------------------
 
+  const canPrev = dayIndex > 0 || facetIndex > 0;
+  const canNext = facetIndex < FACET_ORDER.length - 1 || dayIndex < days.length - 1;
+
   const navNext = useCallback(() => {
     if (facetIndex < FACET_ORDER.length - 1) {
-      setEnterFrom('bottom');
+      setEnterFrom('next');
       setFacetIndex(facetIndex + 1);
     } else if (dayIndex < days.length - 1) {
-      setEnterFrom('bottom');
+      setEnterFrom('next');
       setDayIndex(dayIndex + 1);
       setFacetIndex(0);
     }
@@ -171,10 +183,10 @@ export function MobileStudio() {
 
   const navPrev = useCallback(() => {
     if (facetIndex > 0) {
-      setEnterFrom('top');
+      setEnterFrom('prev');
       setFacetIndex(facetIndex - 1);
     } else if (dayIndex > 0) {
-      setEnterFrom('top');
+      setEnterFrom('prev');
       setDayIndex(dayIndex - 1);
       setFacetIndex(FACET_ORDER.length - 1);
     }
@@ -185,7 +197,7 @@ export function MobileStudio() {
 
   const selectFacet = useCallback(
     (i: number) => {
-      setEnterFrom(i > facetIndex ? 'bottom' : i < facetIndex ? 'top' : null);
+      setEnterFrom(i > facetIndex ? 'next' : i < facetIndex ? 'prev' : null);
       setFacetIndex(i);
     },
     [facetIndex],
@@ -193,7 +205,7 @@ export function MobileStudio() {
 
   const prevDay = useCallback(() => {
     if (dayIndex > 0) {
-      setEnterFrom('top');
+      setEnterFrom('prev');
       setDayIndex(dayIndex - 1);
       setFacetIndex(0);
     }
@@ -201,7 +213,7 @@ export function MobileStudio() {
 
   const nextDay = useCallback(() => {
     if (dayIndex < days.length - 1) {
-      setEnterFrom('bottom');
+      setEnterFrom('next');
       setDayIndex(dayIndex + 1);
       setFacetIndex(0);
     }
@@ -210,7 +222,8 @@ export function MobileStudio() {
   const { elementRef, handlers } = useSwipeDeck({
     onNext: navNext,
     onPrev: navPrev,
-    contentScrollRef: scrollRef,
+    canNext,
+    canPrev,
   });
 
   // ---- Recording ------------------------------------------------------------
@@ -258,7 +271,13 @@ export function MobileStudio() {
       if (!day) return;
       commit(facetTarget(day, currentFacetKey), { verdict });
       // Keep the game moving, like the desktop Studio: advance after the tap pulse.
-      window.setTimeout(() => navNextRef.current(), 200);
+      // Debounced so a quick correction (Keep → Cut) records the last verdict and
+      // advances exactly once, instead of skipping a card.
+      if (advanceTimer.current !== null) window.clearTimeout(advanceTimer.current);
+      advanceTimer.current = window.setTimeout(() => {
+        advanceTimer.current = null;
+        navNextRef.current();
+      }, 220);
     },
     [day, currentFacetKey, commit],
   );
@@ -362,9 +381,7 @@ export function MobileStudio() {
           onNextDay={nextDay}
           onSelectFacet={selectFacet}
           onJudgeDay={() => day && setNoteContext({ kind: 'day' })}
-          onOpenSync={() =>
-            mode === 'local' ? setSyncOpen(true) : setToast('Live — saved to the ledger.')
-          }
+          onOpenSync={() => setSyncOpen(true)}
         />
       </div>
 
@@ -389,6 +406,7 @@ export function MobileStudio() {
 
       <SyncSheet
         open={syncOpen}
+        mode={mode}
         judgments={judgments}
         onClose={() => setSyncOpen(false)}
         onImport={handleImport}

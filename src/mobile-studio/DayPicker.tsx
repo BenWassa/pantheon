@@ -54,8 +54,8 @@ export function DayPicker({
           onClick={onOpenSync}
           aria-label={
             mode === 'live'
-              ? 'Live: judgments are saved to the ledger'
-              : `Local: ${pendingCount} judgment${pendingCount === 1 ? '' : 's'} to sync`
+              ? 'Live: judgments saved to the ledger. Tap to export a copy.'
+              : `Local: ${pendingCount} judgment${pendingCount === 1 ? '' : 's'} on device. Tap to export.`
           }
           className="pointer-events-auto flex items-center gap-1.5 rounded-full border border-night-raised px-2.5 py-1 font-sans text-[0.625rem] uppercase tracking-widest2 text-ink-faint active:text-ink"
         >
